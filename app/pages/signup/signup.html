@@ -1,0 +1,60 @@
+<ion-header>
+  <ion-navbar>
+    <button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>Signup</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content class="login-page">
+
+  <ion-list>
+    <div class="logo">
+      <img src="../../img/appicon.svg">
+    </div>
+
+    <form [formGroup]="signUpForm" (ngSubmit)="onSignup(signUpForm.value, signUpForm.valid)" novalidate>
+      <ion-item>
+        <ion-label floating primary>First name</ion-label>
+        <ion-input type="text" value="" formControlName="firstName"></ion-input>
+      </ion-item>
+      <p *ngIf="!signUpForm.controls.firstName.valid && signUpForm.controls.firstName.touched" danger padding-left>
+        First name is required (minimum 3 characters)
+      </p>
+
+      <ion-item>
+        <ion-label floating primary>Last name</ion-label>
+        <ion-input type="text" value="" formControlName="lastName"></ion-input>
+      </ion-item>
+      <p *ngIf="!signUpForm.controls.lastName.valid && signUpForm.controls.lastName.touched" danger padding-left>
+        Last name is required (minimum 3 characters)
+      </p>
+
+      <ion-item>
+        <ion-label floating primary>Email</ion-label>
+        <ion-input type="email" value="" formControlName="username"></ion-input>
+      </ion-item>
+      <p *ngIf="!signUpForm.controls.username.valid && signUpForm.controls.username.touched" danger padding-left>
+        Invalid email !
+      </p>
+
+      <ion-item>
+        <ion-label floating primary>Password</ion-label>
+        <ion-input type="password" value="" formControlName="password"></ion-input>
+      </ion-item>
+
+      <p *ngIf="!signUpForm.controls.password.valid && signUpForm.controls.password.touched" danger padding-left>
+        Password is required
+      </p>
+      <p [hidden]="!errorMessage" danger padding-left>
+        {{ errorMessage }}
+      </p>
+
+      <div padding>
+        <button [disabled]="!signUpForm.valid" type="submit" primary block>Create</button>
+      </div>
+    </form>
+  </ion-list>
+
+</ion-content>

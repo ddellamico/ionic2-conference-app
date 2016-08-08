@@ -1,0 +1,157 @@
+{
+  "name": "ionic-conference-app",
+  "version": "0.0.1",
+  "description": "Ionic Conference App",
+  "keywords": [
+    "ionic2",
+    "angular2",
+    "webpack",
+    "typescript",
+    "jwt"
+  ],
+  "author": {
+    "name": "Damien Dell'Amico",
+    "email": "damien.dellamico@gmail.com",
+    "url": "https://github.com/ddellamico"
+  },
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ddellamico/ionic-conference-app.git"
+  },
+  "scripts": {
+    "stats": "better-npm-run stats",
+    "dev": "better-npm-run dev",
+    "serve": "better-npm-run serve",
+    "build": "better-npm-run build",
+    "ios": "better-npm-run ios",
+    "android": "better-npm-run android",
+    "commit": "git-cz",
+    "release": "standard-version --no-verify",
+    "push": "git push --follow-tags origin master",
+    "lint": "tslint \"app/**/*.ts\"",
+    "docs": "typedoc --options typedoc.json --exclude '**/*.spec.ts' ./app/",
+    "outdated": "npm outdated --depth 0"
+  },
+  "betterScripts": {
+    "dev": {
+      "command": "webpack-dev-server",
+      "env": {
+        "NODE_ENV": "development"
+      }
+    },
+    "serve": {
+      "command": "ionic serve",
+      "env": {
+        "NODE_ENV": "development"
+      }
+    },
+    "build": {
+      "command": "webpack",
+      "env": {
+        "NODE_ENV": "production"
+      }
+    },
+    "ios": {
+      "command": "ionic run ios --livereload",
+      "env": {
+        "NODE_ENV": "development",
+        "PLATFORM": "ios"
+      }
+    },
+    "android": {
+      "command": "ionic run android",
+      "env": {
+        "NODE_ENV": "development",
+        "PLATFORM": "android"
+      }
+    },
+    "stats": {
+      "command": "webpack --profile --json > stats.json",
+      "env": {
+        "NODE_ENV": "development"
+      }
+    }
+  },
+  "dependencies": {
+    "es6-shim": "0.35.0",
+    "reflect-metadata": "0.1.3",
+    "zone.js": "^0.6.12",
+    "@angular/common": "^2.0.0-rc.4",
+    "@angular/compiler": "^2.0.0-rc.4",
+    "@angular/core": "^2.0.0-rc.4",
+    "@angular/forms": "^0.2.0",
+    "@angular/http": "^2.0.0-rc.4",
+    "@angular/platform-browser": "^2.0.0-rc.4",
+    "@angular/platform-browser-dynamic": "^2.0.0-rc.4",
+    "@angular/router": "^2.0.0-rc.2",
+    "angular2-jwt": "^0.1.18",
+    "ionic-angular": "^2.0.0-beta.11",
+    "ionic-native": "^1.3.10",
+    "ionicons": "3.0.0",
+    "lodash": "^4.14.0",
+    "rxjs": "^5.0.0-beta.6"
+  },
+  "devDependencies": {
+    "awesome-typescript-loader": "^1.1.1",
+    "better-npm-run": "0.0.10",
+    "clean-webpack-plugin": "^0.1.9",
+    "codelyzer": "0.0.26",
+    "commitizen": "2.8.1",
+    "css-loader": "^0.23.1",
+    "cz-conventional-changelog": "^1.1.5",
+    "del": "2.2.0",
+    "extract-text-webpack-plugin": "^1.0.1",
+    "file-loader": "^0.8.5",
+    "ghooks": "^1.3.2",
+    "gulp": "3.9.1",
+    "gulp-shell": "^0.5.2",
+    "gulp-watch": "4.3.5",
+    "html-loader": "^0.4.3",
+    "html-webpack-plugin": "^2.22.0",
+    "ionic-gulp-webpack": "2.0.0",
+    "json-loader": "^0.5.4",
+    "node-sass": "^3.8.0",
+    "purifycss-webpack-plugin": "^2.0.3",
+    "run-sequence": "1.1.5",
+    "sass-loader": "^3.2.3",
+    "standard-version": "^2.2.1",
+    "stats-webpack-plugin": "^0.4.0",
+    "style-loader": "^0.13.1",
+    "tslint": "^3.10.1",
+    "typedoc": "^0.4.4",
+    "typescript": "^2.0.0-beta",
+    "url-loader": "^0.5.7",
+    "validate-commit-msg": "^2.6.1",
+    "webpack": "^1.13.1",
+    "webpack-dev-server": "^1.14.1",
+    "webpack-merge": "^0.14.0",
+    "webpack-validator": "^2.2.2",
+    "yargs": "^4.8.1"
+  },
+  "config": {
+    "ghooks": {
+      "pre-commit": "npm run lint",
+      "commit-msg": "validate-commit-msg"
+    },
+    "commitizen": {
+      "path": "./node_modules/cz-conventional-changelog"
+    }
+  },
+  "cordovaPlugins": [
+    "cordova-plugin-whitelist",
+    {
+      "locator": "https://github.com/VersoSolutions/CordovaClipboard",
+      "id": "com.verso.cordova.clipboard"
+    },
+    {
+      "locator": "https://github.com/apache/cordova-plugin-splashscreen.git",
+      "id": "cordova-plugin-splashscreen"
+    },
+    "cordova-plugin-crosswalk-webview"
+  ],
+  "cordovaPlatforms": [
+    "ios",
+    "android"
+  ]
+}
