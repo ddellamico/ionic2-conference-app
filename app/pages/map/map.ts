@@ -6,7 +6,14 @@ import { MapModel } from '../../core/providers/map/map-model';
   template: require('./map.html')
 })
 export class MapPage {
+
+  private map = null;
+
   constructor(private mapService: MapService) {
+  }
+
+  ionViewDidEnter() {
+    this.resizeMap();
   }
 
   ionViewLoaded() {
@@ -14,7 +21,7 @@ export class MapPage {
         const mapEle = document.getElementById('map');
 
         const markerCenter = mapData.find(d => d.center);
-        const map = new google.maps.Map(mapEle, {
+        this.map = new google.maps.Map(mapEle, {
           center: markerCenter.position(),
           zoom: 16
         });
@@ -26,21 +33,27 @@ export class MapPage {
 
           const marker = new google.maps.Marker({
             position: markerData.position(),
-            map: map,
+            map: this.map,
             title: markerData.name
           });
 
           marker.addListener('click', () => {
-            infoWindow.open(map, marker);
+            infoWindow.open(this.map, marker);
           });
         });
 
-        google.maps.event.addListenerOnce(map, 'idle', () => {
-          google.maps.event.trigger(map, 'resize');
+        google.maps.event.addListenerOnce(this.map, 'idle', () => {
+          this.resizeMap();
           mapEle.classList.add('show-map');
         });
 
       },
       error => console.log(error));
+  }
+
+  private resizeMap(): void {
+    if (this.map) {
+      google.maps.event.trigger(this.map, 'resize');
+    }
   }
 }
