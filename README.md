@@ -1,7 +1,7 @@
 Ionic Conference App with JWT authentication
 ============================================
 
-This project is a Fork of <https://github.com/driftyco/ionic-conference-app> that uses Webpack and and consume REST API exposed by [API component](https://github.com/ddellamico/ionic-conference-api).
+This project is a "extended" version of <https://github.com/driftyco/ionic-conference-app> that uses Webpack and consume REST API exposed by [API component](https://github.com/ddellamico/ionic-conference-api).
 The API component for this application can be found [here](https://github.com/ddellamico/ionic-conference-api).
 
 **Api component live demo:**: https://ion-conf-api.damiendev.com
@@ -10,6 +10,8 @@ The main goal for this project is to provide a simple way to add authentication 
 
 Webpack configuration is heavily inspired from [survivejs.com](http://survivejs.com/webpack/introduction/)
 
+Furthermore a lot of changes has been made in "providers" (app/core folder), in order to mainly use RxJs instead of Promises. 
+
 More details coming soon!
 
 **Note: This project is under development.**
@@ -17,9 +19,10 @@ More details coming soon!
 ## Features
   * Ionic 2 beta 11 : <https://github.com/driftyco/ionic>
   * [TypeScript](http://www.typescriptlang.org/)
+  * [RxJS](https://github.com/Reactive-Extensions/RxJS)
   * JSON Web Token ([angular-jwt](https://github.com/auth0/angular-jwt)) authentication
   * [Webpack](http://webpack.github.io/)
-  * [Tslint](https://github.com/palantir/tslint)
+  * [tslint](https://github.com/palantir/tslint)
   * [Codelyzer](https://github.com/mgechev/codelyzer)
   * [Typedoc](https://github.com/TypeStrong/typedoc)
 
