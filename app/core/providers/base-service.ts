@@ -13,6 +13,7 @@ export class BaseService {
   constructor(public events: Events) {
   }
 
+  // TODO manage "unauthorized" extending AuthHttp class
   protected handleError(error: any): Observable<any> {
     const errMsg = (error.message) ? error.message :
       error.status ? `${error.status} - ${error.statusText}` : 'Server error';

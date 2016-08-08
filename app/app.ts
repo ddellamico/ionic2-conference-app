@@ -5,7 +5,7 @@ import { AuthHttp, AuthConfig } from 'angular2-jwt';
 import { ionicBootstrap, Events, Platform, Nav, MenuController } from 'ionic-angular';
 import { StatusBar, Splashscreen } from 'ionic-native';
 import { ConferenceService } from './core/providers/conference/conference-service';
-import { UserData } from './core/providers/user-data';
+
 import { AccountPage } from './pages/account/account';
 import { TabsPage } from './pages/tabs/tabs';
 import { LoginPage } from './pages/login/login';
@@ -117,7 +117,7 @@ class ConferenceApp {
 // See the theming docs for the default values:
 // http://ionicframework.com/docs/v2/theming/platform-specific-styles/
 
-ionicBootstrap(ConferenceApp, [HTTP_PROVIDERS, ConferenceService, UserData,
+ionicBootstrap(ConferenceApp, [HTTP_PROVIDERS, ConferenceService,
   ScheduleService, SpeakerService, MapService, NotificationService,
   disableDeprecatedForms(), // disable deprecated forms
   provideForms(), // enable new forms module

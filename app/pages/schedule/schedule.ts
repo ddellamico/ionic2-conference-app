@@ -1,10 +1,10 @@
 import { Component, ViewChild } from '@angular/core';
 import { App, ModalController, AlertController, NavController, ItemSliding, List } from 'ionic-angular';
 import { ConferenceService } from '../../core/providers/conference/conference-service';
-import { UserData } from '../../core/providers/user-data';
 import { ScheduleFilterPage } from '../schedule-filter/schedule-filter';
 import { SessionDetailPage } from '../session-detail/session-detail';
 import { ScheduleGroupModel } from '../../core/providers/schedule/schedule-group-model';
+import { UserModel } from '../../core/providers/auth/user-model';
 
 @Component({
   template: require('./schedule.html')
@@ -27,8 +27,7 @@ export class SchedulePage {
               private nav: NavController,
               private alertCtrl: AlertController,
               private modalCtrl: ModalController,
-              private conferenceService: ConferenceService,
-              private user: UserData) {
+              private conferenceService: ConferenceService) {
   }
 
   ionViewDidEnter() {
@@ -74,13 +73,13 @@ export class SchedulePage {
 
   addFavorite(slidingItem: ItemSliding, sessionData) {
 
-    if (this.user.hasFavorite(sessionData.name)) {
+    if (UserModel.hasFavorite(sessionData.name)) {
       // woops, they already favorited it! What shall we do!?
       // prompt them to remove it
       this.removeFavorite(slidingItem, sessionData, 'Favorite already added');
     } else {
       // remember this session as a user favorite
-      this.user.addFavorite(sessionData.name);
+      UserModel.addFavorite(sessionData.name);
       // create an alert instance
       let alert = this.alertCtrl.create({
         title: 'Favorite Added',
@@ -114,7 +113,7 @@ export class SchedulePage {
           text: 'Remove',
           handler: () => {
             // they want to remove this session from their favorites
-            this.user.removeFavorite(sessionData.name);
+            UserModel.removeFavorite(sessionData.name);
             this.updateSchedule();
 
             // close the sliding item and hide the option buttons

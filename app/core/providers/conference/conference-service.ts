@@ -8,7 +8,6 @@ import { Injectable } from '@angular/core';
 import { Events } from 'ionic-angular';
 import { Observable } from 'rxjs/Observable';
 import { cloneDeep }  from 'lodash';
-import { UserData } from '../user-data';
 import { ScheduleService } from '../schedule/schedule-service';
 import { SpeakerService } from '../speakers/speaker-service';
 import { ScheduleModel } from '../schedule/schedule-model';
@@ -17,14 +16,14 @@ import { ConferenceModel } from './conference-model';
 import { SessionModel } from '../schedule/session-model';
 import { BaseService } from '../base-service';
 import '../../helpers/rxjs-operators';
+import { UserModel } from '../auth/user-model';
 
 @Injectable()
 export class ConferenceService extends BaseService {
 
   private conferenceModelCached: ConferenceModel = null;
 
-  constructor(events: Events, private scheduleService: ScheduleService, private speakerService: SpeakerService,
-              private user: UserData) {
+  constructor(events: Events, private scheduleService: ScheduleService, private speakerService: SpeakerService) {
     super(events);
   }
 
@@ -161,7 +160,7 @@ export class ConferenceService extends BaseService {
     // then this session does not pass the segment test
     let matchesSegment = false;
     if (segment === 'favorites') {
-      if (this.user.hasFavorite(session.name)) {
+      if (UserModel.hasFavorite(session.name)) {
         matchesSegment = true;
       }
     } else {
