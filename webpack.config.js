@@ -6,7 +6,6 @@
 
 const path = require('path');
 const webpack = require('webpack');
-const yargs = require('yargs');
 const helpers = require('./webpack.helper');
 const pkg = require('./package.json');
 
@@ -16,8 +15,6 @@ const pkg = require('./package.json');
 const validate = require('webpack-validator');
 const Joi = require('webpack-validator').Joi;
 const merge = require('webpack-merge');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
-const ForkCheckerPlugin = require('awesome-typescript-loader').ForkCheckerPlugin;
 
 /*
  * Webpack Constants
@@ -102,15 +99,6 @@ const common = {
    * See: http://webpack.github.io/docs/configuration.html#plugins
    */
   plugins: [
-
-    /*
-     * Plugin: ForkCheckerPlugin
-     * Description: Do type checking in a separate process, so webpack don't need to wait.
-     *
-     * See: https://github.com/s-panferov/awesome-typescript-loader#forkchecker-boolean-defaultfalse
-     */
-    new ForkCheckerPlugin(),
-
     /**
      * Plugin: DefinePlugin
      * Description: Define free variables.
@@ -128,24 +116,6 @@ const common = {
         'CLIENT_ID': JSON.stringify(process.env.CLIENT_ID),
         'CLIENT_SECRET': JSON.stringify(process.env.CLIENT_SECRET),
       }
-    }),
-
-    /*
-     * Plugin: HtmlWebpackPlugin
-     * Description: Simplifies creation of HTML files to serve your webpack bundles.
-     * This is especially useful for webpack bundles that include a hash in the filename
-     * which changes every compilation.
-     *
-     * See: https://github.com/ampedandwired/html-webpack-plugin
-     */
-    new HtmlWebpackPlugin({
-      template: path.join(paths.src, 'index.html'),
-      inject: 'body'
-    }),
-
-    new webpack.SourceMapDevToolPlugin({
-      filename: '[file].map',
-      exclude: /^vendor?/
     })
   ],
 
@@ -165,19 +135,6 @@ const common = {
      * See: http://webpack.github.io/docs/configuration.html#module-loaders
      */
     loaders: [
-
-      /*
-       * Typescript loader support for .ts
-       *
-       * See: https://github.com/s-panferov/awesome-typescript-loader
-       */
-      {
-        test: /\.ts$/,
-        loader: 'awesome-typescript',
-        include: paths.src,
-        exclude: /(node_modules)/
-      },
-
       /*
        * Json loader support for *.json files.
        *
@@ -235,12 +192,29 @@ switch (process.env.npm_lifecycle_event) {
         ]
       },
       helpers.clean(paths.www),
+      helpers.setupTypescript(paths.src),
       helpers.extractBundle({
         name: 'vendor',
         entries: vendors
       }),
-      // helpers.minify(),
+      helpers.indexTemplate({
+        template: path.join(paths.src, 'index.html')
+      }),
+      helpers.minify(),
       helpers.extractSass(paths.style)
+    );
+    break;
+  case 'test':
+    config = merge(common, {
+        entry: {}, // The entry point from the common Webpack configuration has to be removed or tests will fail
+        /**
+         * Source map for Karma from the help of karma-sourcemap-loader &  karma-webpack
+         * See: https://github.com/webpack/karma-webpack#source-maps
+         */
+        devtool: 'inline-source-map',
+      },
+      helpers.setupTypescript(paths.src),
+      helpers.setupSourceMaps()
     );
     break;
   default:
@@ -248,10 +222,14 @@ switch (process.env.npm_lifecycle_event) {
     config = merge(common, {
         devtool: 'eval-source-map',
       },
+      helpers.setupTypescript(paths.src),
       helpers.setupSass(paths.style),
       helpers.extractBundle({
         name: 'vendor',
         entries: vendors
+      }),
+      helpers.indexTemplate({
+        template: path.join(paths.src, 'index.html')
       })
     );
     if (helpers.isWebpackDevServer()) {
