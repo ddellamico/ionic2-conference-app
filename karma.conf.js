@@ -56,7 +56,7 @@ module.exports = function karmaConfig(config) {
     browserNoActivityTimeout: 30000,
 
     // enable / disable watching file and executing tests whenever any file changes
-    autoWatch: true,
+    autoWatch: false,
 
     // Configure code coverage reporter
     coverageReporter: {
@@ -70,7 +70,13 @@ module.exports = function karmaConfig(config) {
     // Hide webpack build information from output
     webpackMiddleware: {
       noInfo: true
-    }
+    },
+
+    /*
+     * Continuous Integration mode
+     * if true, Karma captures browsers, runs the tests and exits
+     */
+    singleRun: true
   });
 };
 
