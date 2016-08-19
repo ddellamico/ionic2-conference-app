@@ -96,7 +96,7 @@ export class AuthService extends BaseService {
         return this.handleError(err);
       });
   }
-  
+
   public logout(): Observable<any> {
     return Observable.forkJoin(
       Observable.fromPromise(this.storage.remove(this.TOKEN_KEY)),
