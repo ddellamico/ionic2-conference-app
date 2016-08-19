@@ -1,5 +1,6 @@
-Ionic Conference App with JWT authentication
-============================================
+#Ionic Conference App with JWT authentication
+
+[![Commitizen friendly](https://img.shields.io/badge/commitizen-friendly-brightgreen.svg?style=flat-square)](http://commitizen.github.io/cz-cli/) [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square)](http://makeapullrequest.com)
 
 This project is a "extended" version of <https://github.com/driftyco/ionic-conference-app> that uses Webpack and consume REST API exposed by [API component](https://github.com/ddellamico/ionic-conference-api).
 The API component for this application can be found [here](https://github.com/ddellamico/ionic-conference-api).
@@ -62,6 +63,12 @@ More details coming soon!
   # use git commit directly with correct message convention.
   git commit -m "chore(ghooks): Add pre-commit and commit-msg ghook"
   ```
+
+## Tests
+
+```sh
+$ npm test
+```
 
 ## License
 
