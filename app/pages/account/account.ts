@@ -33,7 +33,6 @@ export class AccountPage {
   }
 
   logout() {
-    this.authService.logout();
-    this.nav.setRoot(LoginPage);
+    this.authService.logout().subscribe(() => this.nav.setRoot(LoginPage));
   }
 }
