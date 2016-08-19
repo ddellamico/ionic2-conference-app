@@ -4,7 +4,7 @@
  * @license   GPL-3.0
  */
 
-// CODE SAMPLES : https://scotch.io/tutorials/using-angular-2s-model-driven-forms-with-formgroup-and-formcontrol
+// Reference https://scotch.io/tutorials/using-angular-2s-model-driven-forms-with-formgroup-and-formcontrol
 
 import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
