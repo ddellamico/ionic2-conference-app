@@ -54,7 +54,7 @@
       }
     },
     "ios": {
-      "command": "ionic run ios --livereload",
+      "command": "ionic run ios",
       "env": {
         "NODE_ENV": "development",
         "PLATFORM": "ios"
@@ -114,7 +114,7 @@
     "ionic-gulp-webpack": "2.0.0",
     "jasmine-core": "^2.4.1",
     "json-loader": "^0.5.4",
-    "karma": "^1.2.0",
+    "karma": "1.2.0",
     "karma-chrome-launcher": "^1.0.1",
     "karma-coverage": "^1.0.0",
     "karma-jasmine": "^1.0.2",
@@ -152,16 +152,14 @@
     }
   },
   "cordovaPlugins": [
-    "cordova-plugin-whitelist",
+    "cordova-plugin-whitelist@1.2.2",
     {
       "locator": "https://github.com/VersoSolutions/CordovaClipboard",
       "id": "com.verso.cordova.clipboard"
     },
-    {
-      "locator": "https://github.com/apache/cordova-plugin-splashscreen.git",
-      "id": "cordova-plugin-splashscreen"
-    },
-    "cordova-plugin-crosswalk-webview"
+    "cordova-plugin-splashscreen@3.2.2",
+    "cordova-plugin-crosswalk-webview@1.7.0",
+    "cordova-plugin-inappbrowser@1.4.0"
   ],
   "cordovaPlatforms": [
     "ios",
