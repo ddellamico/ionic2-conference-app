@@ -46,12 +46,8 @@ export class AuthService extends BaseService {
 
     return this.http.post(url, payload.toString(), options)
       .map((res: Response) => <any>res.json())
-      .mergeMap((res: any) => {
-        return Observable.fromPromise(this.validateToken(res.access_token));
-      })
-      .catch((err: any) => {
-        return this.handleError(err);
-      });
+      .mergeMap((res: any) => this.validateToken(res.access_token))
+      .catch((err: any) => this.handleError(err));
   }
 
   public getLoggedUser(): Promise<UserModel> {
@@ -107,26 +103,20 @@ export class AuthService extends BaseService {
     }).catch((err: any) => this.handleError(err));
   }
 
-  // TODO convert to Observable
-  private validateToken(token: string): Promise<any> {
-    return new Promise((resolve, reject) => {
-      if (!token || this.jwtHelper.isTokenExpired(token)) {
-        return reject('Invalid token');
-      }
-      const decoded: any = this.jwtHelper.decodeToken(token);
-      this.storage.set(this.TOKEN_KEY, token)
-        .then(() => {
-          const _user = decoded.user;
-          this.loggedUser = new UserModel(_user._id, _user.firstName, _user.lastName, _user.username, _user.roles);
-          return this.storage.set(this.USER_KEY, JSON.stringify(this.loggedUser));
-        })
-        .then(() => {
-          this.events.publish(AuthEvents.USER_LOGIN);
-          resolve(true);
-        })
-        .catch((err) => {
-          reject(err);
-        });
-    });
+  private validateToken(token: string): Observable<boolean> {
+    if (!token || this.jwtHelper.isTokenExpired(token)) {
+      return Observable.throw('Invalid token');
+    }
+    return Observable.fromPromise(this.storage.set(this.TOKEN_KEY, token))
+      .map(() => {
+        const decoded: any = this.jwtHelper.decodeToken(token);
+        const _user = decoded.user;
+        this.loggedUser = new UserModel(_user._id, _user.firstName, _user.lastName, _user.username, _user.roles);
+        return Observable.fromPromise(this.storage.set(this.USER_KEY, JSON.stringify(this.loggedUser)));
+      })
+      .map(() => {
+        this.events.publish(AuthEvents.USER_LOGIN);
+        return true;
+      });
   }
 }
