@@ -9,7 +9,7 @@
 var webpackConfig = require('./webpack.config.js');
 
 module.exports = function karmaConfig(config) {
-  config.set({
+  var configuration = {
 
     // base path that will be used to resolve all patterns (e.g. files, exclude)
     basePath: '.',
@@ -72,11 +72,24 @@ module.exports = function karmaConfig(config) {
       noInfo: true
     },
 
+    customLaunchers: {
+      Chrome_travis_ci: {
+        base: 'Chrome',
+        flags: ['--no-sandbox']
+      }
+    },
+
     /*
      * Continuous Integration mode
      * if true, Karma captures browsers, runs the tests and exits
      */
     singleRun: true
-  });
+  };
+
+  if(process.env.TRAVIS){
+    configuration.browsers = ['Chrome_travis_ci'];
+  }
+
+  config.set(configuration);
 };
 
