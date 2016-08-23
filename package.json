@@ -129,7 +129,6 @@
     "karma-spec-reporter": "0.0.26",
     "karma-webpack": "^1.7.0",
     "node-sass": "^3.8.0",
-    "phantomjs-polyfill": "0.0.2",
     "phantomjs-prebuilt": "^2.1.7",
     "purifycss-webpack-plugin": "^2.0.3",
     "run-sequence": "1.1.5",
@@ -150,7 +149,7 @@
   },
   "config": {
     "ghooks": {
-      "pre-commit": "npm run lint",
+      "pre-commit": "npm run lint && npm test",
       "commit-msg": "validate-commit-msg"
     },
     "commitizen": {

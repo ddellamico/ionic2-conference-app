@@ -218,7 +218,6 @@ switch (process.env.npm_lifecycle_event) {
     );
     break;
   default:
-    console.log('running default config. npm_lifecycle_event ===> ', process.env.npm_lifecycle_event);
     config = merge(common, {
         devtool: 'eval-source-map',
       },
