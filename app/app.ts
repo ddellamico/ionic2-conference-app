@@ -52,7 +52,7 @@ export class ConferenceApp {
   constructor(private events: Events,
               private authService: AuthService,
               private conferenceService: ConferenceService,
-              platform: Platform) {
+              private platform: Platform) {
     // Call any initial plugins when ready
     platform.ready().then(() => {
       StatusBar.styleDefault();

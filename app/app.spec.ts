@@ -47,9 +47,12 @@ describe('ConferenceApp', () => {
     provide(Platform, {useClass: PlatformMock}),
   ]);
 
+  let platform;
   beforeEach(inject([Events, AuthService, ConferenceService, Platform], (_events: Events, _authService: AuthService,
                                                                          _conferenceService: ConferenceService,
                                                                          _platform: Platform) => {
+    platform = _platform;
+    spyOn(_platform, 'ready').and.callThrough();
     conferenceApp = new ConferenceApp(_events, _authService, _conferenceService, _platform);
   }));
 
@@ -59,6 +62,10 @@ describe('ConferenceApp', () => {
 
   it('should have a root page', () => {
     expect(conferenceApp['rootPage']).not.toBe(null);
+  });
+
+  it('should call platform ready', () => {
+    expect(platform.ready ).toHaveBeenCalled();
   });
 
   it('should have 4 main pages', () => {

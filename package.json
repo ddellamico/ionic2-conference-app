@@ -24,7 +24,7 @@
     "dev": "better-npm-run dev",
     "serve": "better-npm-run serve",
     "build": "better-npm-run build",
-    "test": "karma start",
+    "test": "better-npm-run test",
     "ios": "better-npm-run ios",
     "android": "better-npm-run android",
     "commit": "git-cz",
@@ -51,6 +51,12 @@
       "command": "webpack",
       "env": {
         "NODE_ENV": "production"
+      }
+    },
+    "test": {
+      "command": "karma start",
+      "env": {
+        "NODE_ENV": "test"
       }
     },
     "ios": {
