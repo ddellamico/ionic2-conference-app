@@ -11,7 +11,6 @@ import { Observable } from 'rxjs/Observable';
 import { AuthHttp } from 'angular2-jwt';
 import { BaseService } from '../base-service';
 import { MapModel } from './map-model';
-import '../../helpers/rxjs-operators';
 
 @Injectable()
 export class MapService extends BaseService {

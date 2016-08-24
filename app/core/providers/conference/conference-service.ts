@@ -15,7 +15,6 @@ import { SpeakerModel } from '../speakers/speaker-model';
 import { ConferenceModel } from './conference-model';
 import { SessionModel } from '../schedule/session-model';
 import { BaseService } from '../base-service';
-import '../../helpers/rxjs-operators';
 import { UserModel } from '../auth/user-model';
 
 @Injectable()

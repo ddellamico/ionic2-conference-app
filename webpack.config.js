@@ -38,10 +38,7 @@ const themes = {
 paths.style = path.join(__dirname, 'app', 'theme', themes[platform]);
 console.log('theme path ====> ', paths.style);
 
-/**
- * make Webpack to pick up your vendor dependencies automatically from package.json
- */
-const vendors = Object.keys(pkg.dependencies).filter(p => p.indexOf('ionicons') === -1);
+const vendorsPath = path.join(paths.src, 'index.vendors.ts');
 
 const common = {
   entry: {
@@ -193,14 +190,11 @@ switch (process.env.npm_lifecycle_event) {
       },
       helpers.clean(paths.www),
       helpers.setupTypescript(paths.src),
-      helpers.extractBundle({
-        name: 'vendor',
-        entries: vendors
-      }),
+      helpers.extractBundle({ name: 'vendors', entries: vendorsPath }),
       helpers.indexTemplate({
         template: path.join(paths.src, 'index.html')
       }),
-      helpers.minify(),
+      /*helpers.minify(),*/
       helpers.extractSass(paths.style)
     );
     break;
@@ -223,10 +217,7 @@ switch (process.env.npm_lifecycle_event) {
       },
       helpers.setupTypescript(paths.src),
       helpers.setupSass(paths.style),
-      helpers.extractBundle({
-        name: 'vendor',
-        entries: vendors
-      }),
+      helpers.extractBundle({ name: 'vendors', entries: vendorsPath }),
       helpers.indexTemplate({
         template: path.join(paths.src, 'index.html')
       })

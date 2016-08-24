@@ -10,7 +10,6 @@ import { Observable } from 'rxjs/Observable';
 import { JwtHelper, tokenNotExpired } from 'angular2-jwt';
 import { Storage, Events } from 'ionic-angular';
 import { AuthEvents } from '../../constants';
-import '../../helpers/rxjs-operators';
 import { BaseService } from '../base-service';
 import { UserModel } from './user-model';
 

@@ -13,8 +13,8 @@ import { REACTIVE_FORM_DIRECTIVES, FormGroup, FormBuilder } from '@angular/forms
 import { TabsPage } from '../tabs/tabs';
 import { SignupPage } from '../signup/signup';
 import { AuthService } from '../../core/providers/auth/auth-service';
-import { FormValidators } from '../../core/helpers/ux/form-validators';
-import { NotificationService } from '../../core/helpers/ux/notification-service';
+import { FormValidators } from '../../core/helpers/form-validators';
+import { NotificationService } from '../../core/helpers/notification-service';
 import { UxMessage } from '../../core/constants/ux-message';
 
 @Component({

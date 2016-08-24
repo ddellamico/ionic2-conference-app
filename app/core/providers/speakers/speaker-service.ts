@@ -11,7 +11,6 @@ import { Observable } from 'rxjs/Observable';
 import { AuthHttp } from 'angular2-jwt';
 import { BaseService } from '../base-service';
 import { SpeakerModel } from './speaker-model';
-import '../../helpers/rxjs-operators';
 
 @Injectable()
 export class SpeakerService extends BaseService {

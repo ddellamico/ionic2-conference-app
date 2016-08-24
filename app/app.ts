@@ -16,7 +16,7 @@ import { SpeakerService } from './core/providers/speakers/speaker-service';
 import { TutorialPage } from './pages/tutorial/tutorial';
 import { AuthEvents } from './core/constants';
 import { MapService } from './core/providers/map/map-service';
-import { NotificationService } from './core/helpers/ux/notification-service';
+import { NotificationService } from './core/helpers/notification-service';
 
 @Component({
   template: require('./app.html')

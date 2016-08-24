@@ -7,7 +7,6 @@
 import { Events } from 'ionic-angular';
 import { Observable } from 'rxjs/Observable';
 import { AuthEvents } from '../constants';
-import '../helpers/rxjs-operators';
 
 export class BaseService {
   constructor(public events: Events) {

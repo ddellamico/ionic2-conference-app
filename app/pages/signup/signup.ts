@@ -3,9 +3,9 @@ import { Validators } from '@angular/common';
 import { REACTIVE_FORM_DIRECTIVES, FormGroup, FormBuilder } from '@angular/forms';
 import { NavController } from 'ionic-angular';
 import { TabsPage } from '../tabs/tabs';
-import { FormValidators } from '../../core/helpers/ux/form-validators';
+import { FormValidators } from '../../core/helpers/form-validators';
 import { AuthService } from '../../core/providers/auth/auth-service';
-import { NotificationService } from '../../core/helpers/ux/notification-service';
+import { NotificationService } from '../../core/helpers/notification-service';
 import { UxMessage } from '../../core/constants/ux-message';
 
 @Component({

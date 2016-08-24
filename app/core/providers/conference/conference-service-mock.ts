@@ -5,7 +5,6 @@
  */
 
 import { Observable } from 'rxjs/Observable';
-import '../../helpers/rxjs-operators';
 
 export class ConferenceServiceMock {
 

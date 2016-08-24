@@ -10,7 +10,6 @@ import { Response } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 import { AuthHttp } from 'angular2-jwt';
 import { BaseService } from '../base-service';
-import '../../helpers/rxjs-operators';
 import { ScheduleModel } from './schedule-model';
 
 @Injectable()
