@@ -21,7 +21,11 @@ export class SpeakerService extends BaseService {
 
   public getSpeakers(): Observable<Array<SpeakerModel>> {
     return this.authHttp.get(`${process.env.API_URL}/speakers`)
-      .map((res: Response) => (res.json() as SpeakerModel[]))
+      .map((res: Response) => res.json())
+      .map((speakers: Array<any>) => {
+        return speakers.map(s => new SpeakerModel(s._id, s.name, s.sessions, s.twitter, s.about,
+          s.profilePic, s.location));
+      })
       .map((data: SpeakerModel[]) => {
         return data.sort((a, b) => {
           const aName: string = a.name.split(' ').pop();
