@@ -21,7 +21,10 @@ export class ScheduleService extends BaseService {
 
   public getSchedules(): Observable<Array<ScheduleModel>> {
     return this.authHttp.get(`${process.env.API_URL}/schedules`)
-      .map((res: Response) => (res.json() as ScheduleModel[]))
+      .map((res: Response) => res.json())
+      .map((schedules: Array<any>) => {
+        return schedules.map(s => new ScheduleModel(s._id, s.date, s.shownSessions, s.groups));
+      })
       .catch((err: any) => this.handleError(err));
   }
 }
