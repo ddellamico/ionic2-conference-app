@@ -33,22 +33,21 @@ export class SignupPage {
   onSignup(model: any, isValid: boolean) {
     if (!isValid) {
       this.notification.showAlert(UxMessage.SIGNUP_ERROR);
+      return;
     }
-    if (isValid) {
-      this.securityService.signUp(model.firstName, model.lastName,
-        model.username, model.password).subscribe(
-        loggedIn => {
-          if (loggedIn) {
-            this.nav.push(TabsPage);
-          } else {
-            this.notification.showAlert(UxMessage.SIGNUP_ERROR);
-          }
-        },
-        error => {
-          this.notification.showAlert(UxMessage.UNKNOWN_ERROR);
-          console.log(error);
+    this.securityService.signUp(model.firstName, model.lastName,
+      model.username, model.password).subscribe(
+      loggedIn => {
+        if (loggedIn) {
+          this.nav.push(TabsPage);
+        } else {
+          this.notification.showAlert(UxMessage.SIGNUP_ERROR);
         }
-      );
-    }
+      },
+      error => {
+        this.notification.showAlert(UxMessage.UNKNOWN_ERROR);
+        console.log(error);
+      }
+    );
   }
 }
