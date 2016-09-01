@@ -14,7 +14,7 @@ export class ConferenceServiceMock {
   }
 
   public getSchedulesAndSpeakers(): Observable<any> {
-    return Observable.from([]);
+    return Observable.of(this.fakeResponse);
   }
 
   public getTimeline(dayIndex: number, queryText: string = '', excludeTracks: Array<string> = [],
