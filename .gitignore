@@ -34,3 +34,5 @@ doc/
 typings/
 .env
 stats.json
+resources/android/
+resources/ios/
