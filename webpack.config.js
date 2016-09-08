@@ -156,11 +156,10 @@ const common = {
   }
 };
 
-console.log('process.env.npm_lifecycle_event ===> ', process.env.npm_lifecycle_event);
 let config;
-switch (process.env.npm_lifecycle_event) {
-  case 'build':
-  case 'stats':
+switch (process.env.NODE_ENV) {
+  case 'prod':
+  case 'production':
     config = merge(common, {
         output: {
           path: paths.www,
@@ -195,11 +194,12 @@ switch (process.env.npm_lifecycle_event) {
       helpers.indexTemplate({
         template: path.join(paths.src, 'index.html')
       }),
-      /*helpers.minify(),*/
+      helpers.minify(),
       helpers.extractSass(paths.style)
     );
     break;
   case 'test':
+  case 'testing':
     config = merge(common, {
         entry: {}, // The entry point from the common Webpack configuration has to be removed or tests will fail
         /**

@@ -12,7 +12,6 @@ var gulp = require('gulp'),
 gulp.task('serve:before', ['watch']);
 gulp.task('emulate:before', ['watch']);
 gulp.task('deploy:before', ['build']);
-gulp.task('build:before', ['build']);
 
 // TODO Fix bug with ionic run + livereloading : https://github.com/driftyco/ionic-cli/issues/984
 var shouldWatch = argv.indexOf('-l') > -1 || argv.indexOf('--livereload') > -1;
