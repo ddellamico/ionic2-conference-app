@@ -78,10 +78,14 @@ exports.minify = function () {
   return {
     plugins: [
       new webpack.optimize.UglifyJsPlugin({
-        sourceMap: false,
+        beautify: false,
+        comments: false,
         compress: {
-          warnings: false
-        }
+          warnings: false,
+          drop_console: true
+        },
+        // Mangling specific options
+        mangle: false
       })
     ]
   };

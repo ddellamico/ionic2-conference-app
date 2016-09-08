@@ -145,7 +145,8 @@ const common = {
         loader: 'file?name=img/[ext]/[name].[ext]'
       }, {
         test: /\.html$/,
-        loader: 'html'
+        // uglifyjsplugin breaking angular 2 templates: http://stackoverflow.com/questions/38983225/uglifyjsplugin-breaking-angular-2-templates
+        loader: 'html?-minimize'
       }, {
         test: [/ionicons\.svg/, /ionicons\.eot/, /ionicons\.ttf/, /ionicons\.woff/, /roboto-bold\.woff/, /roboto-medium\.woff/, /roboto-light\.woff/, /roboto-regular\.woff/, /roboto-bold\.ttf/, /roboto-medium\.ttf/, /roboto-light\.ttf/, /roboto-regular\.ttf/, /noto-sans-bold\.ttf/, /noto-sans-regular\.ttf/],
         loader: 'file?name=fonts/[name].[ext]'
