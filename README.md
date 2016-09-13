@@ -1,6 +1,6 @@
 #Ionic Conference App with JWT authentication
 
-[![Build Status](https://travis-ci.org/ddellamico/ionic-conference-app.svg?branch=master)](https://travis-ci.org/ddellamico/ionic-conference-app) [![Commitizen friendly](https://img.shields.io/badge/commitizen-friendly-brightgreen.svg?style=flat-square)](http://commitizen.github.io/cz-cli/) [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square)](http://makeapullrequest.com)
+[![Build Status](https://travis-ci.org/ddellamico/ionic2-conference-app.svg?branch=master)](https://travis-ci.org/ddellamico/ionic2-conference-app) [![Commitizen friendly](https://img.shields.io/badge/commitizen-friendly-brightgreen.svg?style=flat-square)](http://commitizen.github.io/cz-cli/) [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square)](http://makeapullrequest.com)
 
 This project is an "extended" version of <https://github.com/driftyco/ionic-conference-app> that uses Webpack and consume REST API exposed by [API component](https://github.com/ddellamico/ionic-conference-api).
 The API component for this application can be found [here](https://github.com/ddellamico/ionic-conference-api).
@@ -50,6 +50,17 @@ Furthermore a lot of changes has been made in "providers" (app/core folder), in 
   ```
   
   go to [http://0.0.0.0:8080](http://0.0.0.0:8080) or [http://localhost:8080](http://localhost:8080) in your browser
+
+## Commands
+  ```bash
+  $ npm run dev             --> run dev server with webpack-dev-server ( development )
+  $ npm run build           --> build files inside www folder ( production )
+  $ npm run test            --> run test with Karma
+  $ npm run ios:dev         --> start ios simulator (ionic run ios)
+  $ npm run ios:release     --> build files for ios platform and generate xcodeproj (ionic build ios)
+  $ npm run android:dev     --> start android simulator (ionic run android)
+  $ npm run android:release --> build files for android platform and generate apk (ionic build android)
+  ```
   
 ## Commit:
   
