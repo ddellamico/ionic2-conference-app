@@ -8,6 +8,7 @@ import { Injectable } from '@angular/core';
 import { Events } from 'ionic-angular';
 import { Observable } from 'rxjs/Observable';
 import { cloneDeep }  from 'lodash';
+import { Store } from '@ngrx/store';
 import { ScheduleService } from '../schedule/schedule-service';
 import { SpeakerService } from '../speakers/speaker-service';
 import { ScheduleModel } from '../schedule/schedule-model';
@@ -16,13 +17,19 @@ import { ConferenceModel } from './conference-model';
 import { SessionModel } from '../schedule/session-model';
 import { BaseService } from '../base-service';
 import { UserModel } from '../auth/user-model';
+import { AppState } from '../../../reducers/index';
+import { SpeakerActions } from '../../../actions/speaker-action';
 
 @Injectable()
 export class ConferenceService extends BaseService {
 
   private conferenceModelCached: ConferenceModel = null;
 
-  constructor(events: Events, private scheduleService: ScheduleService, private speakerService: SpeakerService) {
+  constructor(events: Events,
+              private store: Store<AppState>,
+              private speakerActions: SpeakerActions,
+              private scheduleService: ScheduleService,
+              private speakerService: SpeakerService) {
     super(events);
   }
 
@@ -80,6 +87,15 @@ export class ConferenceService extends BaseService {
         return Observable.of(data.speakers);
       })
       .catch((err: any) => this.handleError(err));
+  }
+
+  /***
+   * dispatch load action to store
+   */
+  public fetctSpeakers() {
+    this.store.dispatch(
+      this.speakerActions.loadCollection()
+    );
   }
 
   public getTracks(): Observable<Array<string>> {

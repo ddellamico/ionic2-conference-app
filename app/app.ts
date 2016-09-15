@@ -16,7 +16,14 @@ import { SpeakerService } from './core/providers/speakers/speaker-service';
 import { TutorialPage } from './pages/tutorial/tutorial';
 import { AuthEvents } from './core/constants';
 import { MapService } from './core/providers/map/map-service';
-import { NotificationService } from './core/helpers/notification-service';
+import { NotificationService } from './core/helpers/notifications';
+
+import { provideStore } from '@ngrx/store';
+import { runEffects } from '@ngrx/effects';
+
+import effects from './effects';
+import actions from './actions';
+import reducers from './reducers';
 
 @Component({
   template: require('./app.html')
@@ -125,5 +132,8 @@ ionicBootstrap(ConferenceApp, [HTTP_PROVIDERS, AuthService, ConferenceService,
     deps: [Http]
   }),
   provide(JwtHelper, {useFactory: () => new JwtHelper()}),
-  provide(Storage, {useFactory: () => new Storage(LocalStorage)})
-], {});
+  provide(Storage, {useFactory: () => new Storage(LocalStorage)}),
+  provideStore(reducers),
+  runEffects(effects),
+  actions
+]);

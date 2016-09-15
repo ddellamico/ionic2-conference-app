@@ -17,6 +17,15 @@ import '@angular/forms';
 import '@angular/http';
 import '@angular/router';
 
+// ngrx
+import '@ngrx/core';
+import '@ngrx/store';
+import '@ngrx/effects';
+import 'ngrx-store-freeze';
+import 'ngrx-store-logger';
+
+import '@ngrx/core/add/operator/select';
+
 // Ionic
 import 'ionic-angular';
 import 'ionic-native';
@@ -35,3 +44,6 @@ import 'rxjs/add/observable/of';
 import 'rxjs/add/observable/from';
 import 'rxjs/add/observable/forkJoin';
 import 'rxjs/add/observable/fromPromise';
+
+import 'rxjs/add/operator/switchMap';
+import 'rxjs/add/operator/let';

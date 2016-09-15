@@ -7,30 +7,46 @@
 import { Component } from '@angular/core';
 import { NavController, ActionSheetController } from 'ionic-angular';
 import { InAppBrowser } from 'ionic-native';
+import { Store } from '@ngrx/store';
+import { Observable } from 'rxjs/Observable';
+
 import { SpeakerDetailPage } from '../speaker-detail/speaker-detail';
 import { SessionDetailPage } from '../session-detail/session-detail';
 import { SpeakerModel } from '../../core/providers/speakers/speaker-model';
 import { ConferenceService } from '../../core/providers/conference/conference-service';
+import { SpeakerListComponent } from '../../components/speaker-list/speaker-list.component';
+import { UtilService } from '../../core/helpers/utils';
+import { AppState } from '../../reducers/index';
+import { SpeakerSelector } from '../../reducers/speaker/speaker-selector';
+
+import 'rxjs/add/operator/let';
+import { SpeakerActions } from '../../actions/speaker-action';
 
 @Component({
-  template: require('./speaker-list.html')
+  template: require('./speaker-list.html'),
+  directives: [SpeakerListComponent]
 })
 export class SpeakerListPage {
-  speakers: Array<SpeakerModel> = [];
+  public speakerList$: Observable<SpeakerModel[]>;
+  public isFetching$: Observable<boolean>;
 
-  constructor(private nav: NavController, private actionSheet: ActionSheetController,
+  constructor(private _store: Store<AppState>,
+              private nav: NavController,
+              private actionSheet: ActionSheetController,
               private conferenceService: ConferenceService) {
+
+    this.speakerList$ = this._store.let(SpeakerSelector.getSpeakerItems());
+    this.isFetching$ = this._store.let(SpeakerSelector.isLoading());
+
+    this.isFetching$.subscribe(val => console.log('isFetching$ ===> ', val));
   }
 
   ionViewDidEnter() {
-    this.loadSpeakers();
+    this.conferenceService.fetctSpeakers();
   }
 
-  loadSpeakers() {
-    return this.conferenceService.getSpeakers()
-      .subscribe(speakers => {
-        this.speakers = speakers;
-      }), error => console.log(error);
+  removeSpeaker(id) {
+    this._store.dispatch({type: SpeakerActions.REMOVE_SPEAKER, payload: id});
   }
 
   goToSessionDetail(session) {
@@ -39,6 +55,16 @@ export class SpeakerListPage {
 
   goToSpeakerDetail(speakerName: string) {
     this.nav.push(SpeakerDetailPage, speakerName);
+  }
+
+  addSpeaker() {
+    this._store.dispatch({
+      type: SpeakerActions.ADD_SPEAKER,
+      payload: {
+        id: UtilService.uid(),
+        name: 'pippone123'
+      }
+    });
   }
 
   goToSpeakerTwitter(speaker) {

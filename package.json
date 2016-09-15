@@ -33,8 +33,7 @@
     "push": "git push --follow-tags origin master",
     "lint": "tslint \"app/**/*.ts\"",
     "docs": "typedoc --options typedoc.json --exclude '**/*.spec.ts' ./app/",
-    "outdated": "npm outdated --depth 0",
-    "postinstall": "ionic state restore && typings install"
+    "outdated": "npm outdated --depth 0"
   },
   "betterScripts": {
     "dev": {
@@ -99,6 +98,9 @@
     "@angular/platform-browser": "2.0.0-rc.4",
     "@angular/platform-browser-dynamic": "2.0.0-rc.4",
     "@angular/router": "^2.0.0-rc.2",
+    "@ngrx/core": "1.0.1",
+    "@ngrx/store": "2.0.1",
+    "@ngrx/effects": "1.1.1",
     "angular2-jwt": "^0.1.18",
     "es6-shim": "0.35.0",
     "ionic-angular": "^2.0.0-beta.11",
@@ -107,10 +109,12 @@
     "lodash": "^4.14.0",
     "reflect-metadata": "0.1.3",
     "rxjs": "5.0.0-beta.6",
-    "zone.js": "0.6.12"
+    "zone.js": "0.6.12",
+    "ngrx-store-freeze": "0.1.0",
+    "ngrx-store-logger": "0.1.7"
   },
   "devDependencies": {
-    "awesome-typescript-loader": "^2.2.3",
+    "awesome-typescript-loader": "2.2.1",
     "better-npm-run": "0.0.11",
     "clean-webpack-plugin": "^0.1.9",
     "codelyzer": "0.0.28",
