@@ -1,0 +1,39 @@
+import { Component, Input } from '@angular/core';
+import { LoadingController } from 'ionic-angular';
+
+@Component({
+  selector: 'loading',
+  template: ``
+})
+export class LoadingComponent {
+
+  @Input() present: boolean = false;
+
+  private loading: any = null;
+
+  constructor(protected loadingCtrl: LoadingController) {
+  }
+
+  ngOnChanges({present}): void {
+    const {currentValue, previousValue} = present;
+    (currentValue && (currentValue !== previousValue)) ? this.displayLoading() : this.hideLoading();
+  }
+
+  displayLoading(): void {
+    this.loading = this.loadingCtrl.create({
+      content: 'Please wait...'
+    });
+    this.loading.present();
+  }
+
+  hideLoading(): void {
+    if (!this.loading) {
+      return;
+    }
+    // TODO why dismiss not working without setTimeout ?
+    setTimeout(() => {
+      this.loading.dismiss();
+      this.loading = null;
+    }, 100);
+  }
+}
