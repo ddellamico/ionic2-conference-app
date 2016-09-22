@@ -6,59 +6,99 @@
 
 // Reference https://scotch.io/tutorials/using-angular-2s-model-driven-forms-with-formgroup-and-formcontrol
 
-import { Component } from '@angular/core';
-import { NavController } from 'ionic-angular';
-import { Validators } from '@angular/common';
-import { REACTIVE_FORM_DIRECTIVES, FormGroup, FormBuilder } from '@angular/forms';
+import { Component, OnDestroy } from '@angular/core';
+import { NavController, AlertController, LoadingController } from 'ionic-angular';
+import { Observable } from 'rxjs/Observable';
+import { Subscription } from 'rxjs/Subscription';
+import { Store } from '@ngrx/store';
 import { TabsPage } from '../tabs/tabs';
 import { SignupPage } from '../signup/signup';
-import { AuthService } from '../../core/providers/auth/auth-service';
-import { FormValidators } from '../../core/helpers/validators';
 import { NotificationService } from '../../core/helpers/notifications';
 import { UxMessage } from '../../core/constants/ux-message';
+import { AppState } from '../../core/reducers/index';
+import { AuthSelector } from '../../core/selectors/auth-selector';
+import { AuthActions } from '../../core/actions/auth-action';
+import { AuthFormComponent } from './auth-form.component';
+import { BasePage } from '../base-page';
+import { LoadingComponent } from '../../components/loading/loading.component';
 
 @Component({
-  template: require('./login.html'),
-  directives: [REACTIVE_FORM_DIRECTIVES]
+  template: `
+  <ion-header>
+    <ion-navbar>
+      <button menuToggle>
+        <ion-icon name="menu"></ion-icon>
+      </button>
+      <ion-title>Login</ion-title>
+    </ion-navbar>
+  </ion-header>
+  <ion-content>
+    <ion-list>
+      <div class="logo">
+        <img src="${require(`../../img/appicon.png`)}">
+      </div>
+      <loading [present]="isFetching$ | async"></loading>
+      <auth-form [errorMessage]="error$ | async"
+                 (onLogin)="onLogin($event)"
+                 (onSignup)="onSignup($event)">
+      </auth-form>
+    </ion-list>
+  </ion-content>
+  `,
+  directives: [AuthFormComponent, LoadingComponent]
 })
-export class LoginPage {
-  authForm: FormGroup;
-  errorMessage: string = null;
+export class LoginPage extends BasePage {
 
-  constructor(private nav: NavController,
+  private loggedIn$: Observable<boolean>;
+  private isFetching$: Observable<boolean>;
+  private error$: Observable<string>;
+
+  private subscription: Subscription;
+  private submitted = false;
+
+  constructor(private store: Store<AppState>,
+              private authActions: AuthActions,
+              private nav: NavController,
               private notification: NotificationService,
-              private securityService: AuthService,
-              private fb: FormBuilder) {
+              protected alertCtrl: AlertController) {
+
+    super(alertCtrl);
+
+    this.isFetching$ = this.store.let(AuthSelector.isLoading());
+    this.error$ = this.store.let(AuthSelector.getErrorMessage());
+    this.loggedIn$ = this.store.let(AuthSelector.isLoggedIn());
+
+    this.subscription = this.loggedIn$
+      .subscribe(loggedIn => {
+        if (!this.submitted) return;
+        if (loggedIn) {
+          this.nav.push(TabsPage);
+        } else {
+          this.notification.showAlert(UxMessage.INVALID_CREDENTIALS);
+        }
+      });
   }
 
-  ngOnInit() {
-    this.authForm = this.fb.group({
-      username: ['', [Validators.required, FormValidators.emailValidator]],
-      password: ['', [Validators.required, Validators.minLength(3)]]
-    });
-  }
-
-  onLogin(model: any, isValid: boolean) {
+  onLogin({credentials, isValid}) {
     if (!isValid) {
       this.notification.showAlert(UxMessage.INVALID_CREDENTIALS);
+      return;
     }
-    this.securityService.token(model.username, model.password)
-      .subscribe(
-        loggedIn => {
-          if (loggedIn) {
-            this.nav.push(TabsPage);
-          } else {
-            this.notification.showAlert(UxMessage.INVALID_CREDENTIALS);
-          }
-        },
-        error => {
-          console.log(error);
-          this.notification.showAlert(UxMessage.UNKNOWN_ERROR);
-        }
-      );
+
+    const {username, password} = credentials;
+
+    this.store.dispatch(
+      this.authActions.auth(username, password)
+    );
+    this.submitted = true;
   }
 
   onSignup() {
     this.nav.push(SignupPage);
+  }
+
+  ngOnDestroy() {
+    // always remember to unsubscribe in ngOnDestroy
+    this.subscription.unsubscribe();
   }
 }
