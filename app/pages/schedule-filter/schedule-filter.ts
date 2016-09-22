@@ -1,49 +1,52 @@
 import { Component } from '@angular/core';
+import { Observable } from 'rxjs/Observable';
+import { Store } from '@ngrx/store';
 import { NavParams, ViewController } from 'ionic-angular';
-import { ConferenceService } from '../../core/providers/conference/conference-service';
+import { AppState } from '../../core/reducers/index';
+import { ScheduleActions } from '../../core/actions/schedule-action';
+import { ScheduleSelector } from '../../core/selectors/schedule-selector';
+import { TrackListComponent } from './track-list.component';
 
 @Component({
-  template: require('./schedule-filter.html')
+  template: `
+    <track-list
+      [tracks]="tracks$ | async"
+      (applyFilters)="applyFilters($event)"
+      (dismiss)="dismiss($event)"
+      (resetFilters)="resetFilters($event)">
+    </track-list>
+  `,
+  directives: [TrackListComponent]
 })
 export class ScheduleFilterPage {
-  tracks: Array<{name: string, isChecked: boolean}> = [];
+  private tracks$: Observable<Array<{name: string, isChecked: boolean}>>;
 
-  constructor(private conferenceService: ConferenceService,
+  constructor(private store: Store<AppState>,
+              private scheduleActions: ScheduleActions,
               private navParams: NavParams,
               private viewCtrl: ViewController) {
+
+    // passed in array of track names that should be excluded (unchecked)
+    const excludedTrackNames = this.navParams.data;
+    this.tracks$ = this.store.let(ScheduleSelector.getTrackers(excludedTrackNames));
   }
 
-  ngAfterViewInit() {
+  ionViewDidEnter() {
     this.getTracks();
   }
 
   getTracks() {
-    // passed in array of track names that should be excluded (unchecked)
-    const excludedTrackNames = this.navParams.data;
-    this.conferenceService.getTracks()
-      .subscribe((trackNames: Array<string>) => {
-          trackNames.forEach(trackName => {
-            this.tracks.push({
-              name: trackName,
-              isChecked: (excludedTrackNames.indexOf(trackName) === -1)
-            });
-          });
-        },
-        error => console.log(error),
-        () => console.log(JSON.stringify(this.tracks))
-      );
+    this.store.dispatch(
+      this.scheduleActions.loadTracks()
+    );
   }
 
   resetFilters() {
-    // reset all of the toggles to be checked
-    this.tracks.forEach(track => {
-      track.isChecked = true;
-    });
+    this.tracks$ = this.store.let(ScheduleSelector.getTrackers([]));
   }
 
-  applyFilters() {
-    // Pass back a new array of track names to exclude
-    let excludedTrackNames = this.tracks.filter(c => !c.isChecked).map(c => c.name);
+  applyFilters(tracks) {
+    const excludedTrackNames = tracks.filter(c => !c.isChecked).map(c => c.name);
     this.dismiss(excludedTrackNames);
   }
 

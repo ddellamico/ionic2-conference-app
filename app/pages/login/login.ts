@@ -6,8 +6,8 @@
 
 // Reference https://scotch.io/tutorials/using-angular-2s-model-driven-forms-with-formgroup-and-formcontrol
 
-import { Component, OnDestroy } from '@angular/core';
-import { NavController, AlertController, LoadingController } from 'ionic-angular';
+import { Component } from '@angular/core';
+import { NavController, AlertController } from 'ionic-angular';
 import { Observable } from 'rxjs/Observable';
 import { Subscription } from 'rxjs/Subscription';
 import { Store } from '@ngrx/store';

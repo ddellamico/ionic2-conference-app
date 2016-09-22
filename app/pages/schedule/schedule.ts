@@ -1,87 +1,87 @@
-import { Component, ViewChild } from '@angular/core';
-import { App, ModalController, AlertController, NavController, ItemSliding, List } from 'ionic-angular';
-import { ConferenceService } from '../../core/providers/conference/conference-service';
+import { Observable } from 'rxjs/Observable';
+import { Component } from '@angular/core';
+import { App, ModalController, AlertController, NavController } from 'ionic-angular';
+import { Store } from '@ngrx/store';
+import { AppState } from '../../core/reducers/index';
 import { ScheduleFilterPage } from '../schedule-filter/schedule-filter';
 import { SessionDetailPage } from '../session-detail/session-detail';
-import { ScheduleGroupModel } from '../../core/providers/schedule/schedule-group-model';
 import { UserModel } from '../../core/providers/auth/user-model';
+import { ScheduleComponent } from '../../components/schedule/schedule';
+import { TimelineFilter } from '../../core/providers/conference/timeline-filter-model';
+import { ScheduleActions } from '../../core/actions/schedule-action';
+import { ScheduleModel } from '../../core/providers/schedule/schedule-model';
+import { ScheduleSelector } from '../../core/selectors/schedule-selector';
+import { SessionModel } from '../../core/providers/schedule/session-model';
 
 @Component({
-  template: require('./schedule.html')
+  template: require('./schedule.html'),
+  directives: [ScheduleComponent]
 })
 export class SchedulePage {
-  // the list is a child of the schedule page
-  // @ViewChild('scheduleList') gets a reference to the list
-  // with the variable #scheduleList, `read: List` tells it to return
-  // the List and not a reference to the element
-  @ViewChild('scheduleList', {read: List}) scheduleList: List;
 
-  dayIndex = 0;
-  queryText = '';
-  segment = 'all';
-  excludeTracks = [];
-  shownSessions = 0;
-  groups: Array<ScheduleGroupModel> = [];
+  private filter: TimelineFilter = {
+    dayIndex: 0,
+    queryText: '',
+    excludeTracks: [],
+    segment: 'all'
+  };
+
+  private model$: Observable<ScheduleModel>;
+  private isFetching$: Observable<boolean>;
 
   constructor(private app: App,
+              private store: Store<AppState>,
               private nav: NavController,
               private alertCtrl: AlertController,
               private modalCtrl: ModalController,
-              private conferenceService: ConferenceService) {
+              private scheduleActions: ScheduleActions) {
+
+    this.model$ = this.store.let(ScheduleSelector.getSchedule());
+    this.isFetching$ = this.store.let(ScheduleSelector.isLoading());
   }
 
   ionViewDidEnter() {
     this.app.setTitle('Schedule');
-  }
-
-  ngAfterViewInit() {
     this.updateSchedule();
   }
 
   updateSchedule() {
-    // Close any open sliding items when the schedule updates
-    if (this.scheduleList) {
-      this.scheduleList.closeSlidingItems();
-    }
-    this.conferenceService.getTimeline(this.dayIndex, this.queryText, this.excludeTracks, this.segment)
-      .subscribe(data => {
-          this.shownSessions = data.shownSessions;
-          this.groups = data.groups;
-        },
-        error => console.log(error)
-      );
+    // dispatch load action to store
+    this.store.dispatch(
+      this.scheduleActions.loadCollection(this.filter)
+    );
   }
 
   presentFilter() {
-    let modal = this.modalCtrl.create(ScheduleFilterPage, this.excludeTracks);
+    const modal = this.modalCtrl.create(ScheduleFilterPage, this.filter.excludeTracks);
     modal.present();
 
     modal.onDidDismiss((data: any[]) => {
       if (data) {
-        this.excludeTracks = data;
+        this.filter.excludeTracks = data;
         this.updateSchedule();
       }
     });
-
   }
 
-  goToSessionDetail(sessionData) {
-    // go to the session detail page
-    // and pass in the session data
+  goToSessionDetail(sessionData: SessionModel) {
     this.nav.push(SessionDetailPage, sessionData);
   }
 
-  addFavorite(slidingItem: ItemSliding, sessionData) {
-
-    if (UserModel.hasFavorite(sessionData.name)) {
+  addFavorite({slidingItem, session}) {
+    if (UserModel.hasFavorite(session.name)) {
       // woops, they already favorited it! What shall we do!?
       // prompt them to remove it
-      this.removeFavorite(slidingItem, sessionData, 'Favorite already added');
+      this.removeFavorite({
+        slidingItem: slidingItem,
+        session: session,
+        title: 'Favorite already added'
+      });
     } else {
       // remember this session as a user favorite
-      UserModel.addFavorite(sessionData.name);
+      UserModel.addFavorite(session.name);
       // create an alert instance
-      let alert = this.alertCtrl.create({
+      const alert = this.alertCtrl.create({
         title: 'Favorite Added',
         buttons: [{
           text: 'OK',
@@ -96,8 +96,8 @@ export class SchedulePage {
     }
   }
 
-  removeFavorite(slidingItem: ItemSliding, sessionData, title) {
-    let alert = this.alertCtrl.create({
+  removeFavorite({slidingItem, session, title}) {
+    const alert = this.alertCtrl.create({
       title: title,
       message: 'Would you like to remove this session from your favorites?',
       buttons: [
@@ -113,7 +113,7 @@ export class SchedulePage {
           text: 'Remove',
           handler: () => {
             // they want to remove this session from their favorites
-            UserModel.removeFavorite(sessionData.name);
+            UserModel.removeFavorite(session.name);
             this.updateSchedule();
 
             // close the sliding item and hide the option buttons

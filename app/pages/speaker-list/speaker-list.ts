@@ -13,14 +13,11 @@ import { Observable } from 'rxjs/Observable';
 import { SpeakerDetailPage } from '../speaker-detail/speaker-detail';
 import { SessionDetailPage } from '../session-detail/session-detail';
 import { SpeakerModel } from '../../core/providers/speakers/speaker-model';
-import { ConferenceService } from '../../core/providers/conference/conference-service';
-import { SpeakerListComponent } from '../../components/speaker-list/speaker-list.component';
+import { SpeakerListComponent } from '../../components/speaker-list/speaker-list';
 import { UtilService } from '../../core/helpers/utils';
-import { AppState } from '../../reducers/index';
-import { SpeakerSelector } from '../../reducers/speaker/speaker-selector';
-
-import 'rxjs/add/operator/let';
-import { SpeakerActions } from '../../actions/speaker-action';
+import { AppState } from '../../core/reducers/index';
+import { SpeakerSelector } from '../../core/selectors/speaker-selector';
+import { SpeakerActions } from '../../core/actions/speaker-action';
 
 @Component({
   template: require('./speaker-list.html'),
@@ -33,16 +30,18 @@ export class SpeakerListPage {
   constructor(private _store: Store<AppState>,
               private nav: NavController,
               private actionSheet: ActionSheetController,
-              private conferenceService: ConferenceService) {
+              private speakerActions: SpeakerActions) {
 
     this.speakerList$ = this._store.let(SpeakerSelector.getSpeakerItems());
     this.isFetching$ = this._store.let(SpeakerSelector.isLoading());
 
-    this.isFetching$.subscribe(val => console.log('isFetching$ ===> ', val));
   }
 
   ionViewDidEnter() {
-    this.conferenceService.fetctSpeakers();
+    // dispatch load action to store
+    this._store.dispatch(
+      this.speakerActions.loadCollection()
+    );
   }
 
   removeSpeaker(id) {
@@ -53,8 +52,8 @@ export class SpeakerListPage {
     this.nav.push(SessionDetailPage, session);
   }
 
-  goToSpeakerDetail(speakerName: string) {
-    this.nav.push(SpeakerDetailPage, speakerName);
+  goToSpeakerDetail(speaker: SpeakerModel) {
+    this.nav.push(SpeakerDetailPage, speaker);
   }
 
   addSpeaker() {
