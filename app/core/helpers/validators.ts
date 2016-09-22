@@ -18,8 +18,9 @@ export class FormValidators {
     if (control.value.match(/[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/)) {
       /* tslint:enable */
       return null;
-    } else {
-      return {'invalidEmailAddress': true};
     }
+    return {
+      invalidEmailAddress: true
+    };
   }
 }

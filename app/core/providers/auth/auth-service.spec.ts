@@ -96,7 +96,7 @@ describe('AuthService', () => {
     backend.connections.subscribe((c: MockConnection) => c.mockRespond(baseResponse));
 
     return authService.token('user', 'passwd').subscribe(() => {
-        expect(events.publish).toHaveBeenCalledWith(AuthEvents.USER_LOGIN);
+        expect(events.publish).toHaveBeenCalledWith(true);
       }
     );
   });

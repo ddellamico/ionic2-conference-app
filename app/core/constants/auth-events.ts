@@ -5,10 +5,6 @@
  */
 
 export class AuthEvents {
-  public static get USER_LOGIN(): string {
-    return 'user:login';
-  }
-
   public static get USER_SIGNUP(): string {
     return 'user:signup';
   }

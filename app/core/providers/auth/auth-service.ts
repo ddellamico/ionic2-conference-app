@@ -26,7 +26,10 @@ export class AuthService extends BaseService {
     return _authenticated;
   }
 
-  constructor(private http: Http, private jwtHelper: JwtHelper, private storage: Storage, events: Events) {
+  constructor(private http: Http,
+              private jwtHelper: JwtHelper,
+              private storage: Storage,
+              events: Events) {
     super(events);
   }
 
@@ -45,10 +48,17 @@ export class AuthService extends BaseService {
 
     return this.http.post(url, payload.toString(), options)
       .map((res: Response) => <any>res.json())
-      .mergeMap((res: any) => this.validateToken(res.access_token))
+      .switchMap((res: any) => this.validateToken(res.access_token))
+      .map((user: UserModel) => {
+        if (user && user._id) {
+          this.loggedUser = user;
+        }
+        return !!(this.loggedUser);
+      })
       .catch((err: any) => this.handleError(err));
   }
 
+  // TODO convert to Observable
   public getLoggedUser(): Promise<UserModel> {
     if (this.loggedUser && this.loggedUser._id) {
       return Promise.resolve(this.loggedUser);
@@ -102,20 +112,19 @@ export class AuthService extends BaseService {
     }).catch((err: any) => this.handleError(err));
   }
 
-  private validateToken(token: string): Observable<boolean> {
+  private validateToken(token: string): Observable<any> {
     if (!token || this.jwtHelper.isTokenExpired(token)) {
       return Observable.throw('Invalid token');
     }
-    return Observable.fromPromise(this.storage.set(this.TOKEN_KEY, token))
-      .map(() => {
-        const decoded: any = this.jwtHelper.decodeToken(token);
-        const _user = decoded.user;
-        this.loggedUser = new UserModel(_user._id, _user.firstName, _user.lastName, _user.username, _user.roles);
-        return Observable.fromPromise(this.storage.set(this.USER_KEY, JSON.stringify(this.loggedUser)));
-      })
-      .map(() => {
-        this.events.publish(AuthEvents.USER_LOGIN);
-        return true;
-      });
+    const setToken$ = Observable.fromPromise(this.storage.set(this.TOKEN_KEY, token));
+
+    return setToken$.switchMap(() => {
+      const decoded: any = this.jwtHelper.decodeToken(token);
+      const _user = decoded.user;
+      const userModel = new UserModel(_user._id, _user.firstName, _user.lastName, _user.username, _user.roles);
+      return Observable.fromPromise(
+        this.storage.set(this.USER_KEY, JSON.stringify(this.loggedUser)).then(() => userModel)
+      );
+    });
   }
 }

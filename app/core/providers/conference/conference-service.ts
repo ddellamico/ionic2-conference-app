@@ -8,7 +8,6 @@ import { Injectable } from '@angular/core';
 import { Events } from 'ionic-angular';
 import { Observable } from 'rxjs/Observable';
 import { cloneDeep }  from 'lodash';
-import { Store } from '@ngrx/store';
 import { ScheduleService } from '../schedule/schedule-service';
 import { SpeakerService } from '../speakers/speaker-service';
 import { ScheduleModel } from '../schedule/schedule-model';
@@ -17,8 +16,8 @@ import { ConferenceModel } from './conference-model';
 import { SessionModel } from '../schedule/session-model';
 import { BaseService } from '../base-service';
 import { UserModel } from '../auth/user-model';
-import { AppState } from '../../../reducers/index';
-import { SpeakerActions } from '../../../actions/speaker-action';
+import { ScheduleGroupModel } from '../schedule/schedule-group-model';
+import { TimelineFilter } from './timeline-filter-model';
 
 @Injectable()
 export class ConferenceService extends BaseService {
@@ -26,8 +25,6 @@ export class ConferenceService extends BaseService {
   private conferenceModelCached: ConferenceModel = null;
 
   constructor(events: Events,
-              private store: Store<AppState>,
-              private speakerActions: SpeakerActions,
               private scheduleService: ScheduleService,
               private speakerService: SpeakerService) {
     super(events);
@@ -39,7 +36,7 @@ export class ConferenceService extends BaseService {
 
   public getSchedulesAndSpeakers(): Observable<ConferenceModel> {
     if (this.conferenceModelCached) {
-      return Observable.of(this.conferenceModelCached);
+      return Observable.of(cloneDeep(this.conferenceModelCached));
     }
     return Observable.forkJoin(
       this.scheduleService.getSchedules(),
@@ -53,30 +50,27 @@ export class ConferenceService extends BaseService {
     });
   }
 
-  public getTimeline(dayIndex: number, queryText: string = '', excludeTracks: Array<string> = [],
-                     segment: string = 'all'): Observable<ScheduleModel> {
+  public getTimeline(filters: TimelineFilter): Observable<ScheduleModel> {
     return this.getSchedulesAndSpeakers()
-      .mergeMap((data: ConferenceModel) => {
-        const day: ScheduleModel = data.schedules[dayIndex];
+      .map((data: ConferenceModel) => {
+        const day: ScheduleModel = data.schedules[filters.dayIndex];
         day.shownSessions = 0;
-        queryText = queryText.toLowerCase().replace(/,|\.|-/g, ' ');
-        const queryWords = queryText.split(' ').filter(w => !!w.trim().length);
+        filters.queryText = filters.queryText.toLowerCase().replace(/,|\.|-/g, ' ');
+        const queryWords = filters.queryText.split(' ').filter(w => !!w.trim().length);
 
-        day.groups.forEach(group => {
+        day.groups.forEach((group: ScheduleGroupModel) => {
           group.hide = true;
           group.sessions.forEach(session => {
             // check if this session should show or not
-            this.filterSession(session, queryWords, excludeTracks, segment);
-
+            this.filterSession(session, queryWords, filters.excludeTracks, filters.segment);
             if (!session.hide) {
               // if this session is not hidden then this group should show
               group.hide = false;
               day.shownSessions++;
             }
           });
-
         });
-        return Observable.of(day);
+        return day;
       })
       .catch((err: any) => this.handleError(err));
   }
@@ -87,15 +81,6 @@ export class ConferenceService extends BaseService {
         return Observable.of(data.speakers);
       })
       .catch((err: any) => this.handleError(err));
-  }
-
-  /***
-   * dispatch load action to store
-   */
-  public fetctSpeakers() {
-    this.store.dispatch(
-      this.speakerActions.loadCollection()
-    );
   }
 
   public getTracks(): Observable<Array<string>> {
@@ -182,7 +167,9 @@ export class ConferenceService extends BaseService {
       matchesSegment = true;
     }
 
-    // all tests must be true if it should not be hidden
-    session.hide = !(matchesQueryText && matchesTracks && matchesSegment);
+    session.hide = true;
+    if (matchesQueryText && matchesTracks && matchesSegment) {
+      session.hide = false;
+    }
   }
 }

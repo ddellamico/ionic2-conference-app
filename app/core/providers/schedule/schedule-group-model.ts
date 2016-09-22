@@ -8,7 +8,7 @@ import { SessionModel } from './session-model';
 
 export class ScheduleGroupModel {
   constructor(public time: Date,
-              public hide: boolean = false,
+              public hide: boolean,
               public sessions: Array<SessionModel>) {
   }
 }

@@ -10,6 +10,6 @@ export class ScheduleModel {
   constructor(public _id: string,
               public date: Date = new Date(),
               public shownSessions: number = 0,
-              public groups: Array<ScheduleGroupModel>) {
+              public groups: Array<ScheduleGroupModel> = []) {
   }
 }
