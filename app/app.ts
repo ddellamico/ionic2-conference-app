@@ -21,9 +21,9 @@ import { NotificationService } from './core/helpers/notifications';
 import { provideStore } from '@ngrx/store';
 import { runEffects } from '@ngrx/effects';
 
-import effects from './effects';
-import actions from './actions';
-import reducers from './reducers';
+import effects from './core/effects';
+import actions from './core/actions';
+import reducers from './core/reducers';
 
 @Component({
   template: require('./app.html')
@@ -89,9 +89,6 @@ export class ConferenceApp {
   }
 
   private listenToLoginEvents(): void {
-    this.events.subscribe(AuthEvents.USER_LOGIN, () => {
-      this.authenticated = true;
-    });
     this.events.subscribe(AuthEvents.USER_SIGNUP, () => {
       this.authenticated = true;
     });
