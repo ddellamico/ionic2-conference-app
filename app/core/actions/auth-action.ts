@@ -47,4 +47,37 @@ export class AuthActions {
       payload: err
     };
   }
+
+  static CHECK_TOKEN = '[Auth] Check Token';
+
+  checkToken(): Action {
+    return {
+      type: AuthActions.CHECK_TOKEN
+    };
+  }
+
+  static CHECK_TOKEN_SUCCESS = '[Auth] Check Token Success';
+
+  checkTokenSuccess(loggedIn: boolean): Action {
+    return {
+      type: AuthActions.CHECK_TOKEN_SUCCESS,
+      payload: loggedIn
+    };
+  }
+
+  static LOGOUT = '[Auth] Logout';
+
+  logout(): Action {
+    return {
+      type: AuthActions.LOGOUT
+    };
+  }
+
+  static LOGOUT_SUCCESS = '[Auth] Logout Success';
+
+  logoutSuccess(): Action {
+    return {
+      type: AuthActions.LOGOUT_SUCCESS
+    };
+  }
 }

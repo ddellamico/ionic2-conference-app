@@ -19,11 +19,29 @@ export class AuthEffect {
               private authActions: AuthActions) {
   }
 
+  // @Effect() checkTokenOnInit$ = Observable.of(AuthActions.CHECK_TOKEN);
+
+  @Effect() checkToken$ = this.updates$
+    .whenAction(AuthActions.CHECK_TOKEN)
+    .switchMap(() => AuthService.authenticated()
+      .map((loggedIn: boolean) => {
+        return this.authActions.checkTokenSuccess(loggedIn);
+      })
+    );
+
   @Effect() login$ = this.updates$
     .whenAction(AuthActions.AUTH)
     .map<any>(toPayload)
     .switchMap((payload) => this.authService.token(payload.username, payload.password)
       .map((loggedIn: boolean) => this.authActions.authSuccess(loggedIn))
-      .catch((err) => Observable.of(this.authActions.authError(err)))
+      .catch((err) =>
+        Observable.of(this.authActions.authError(err))
+      )
+    );
+
+  @Effect() logout$ = this.updates$
+    .whenAction(AuthActions.LOGOUT)
+    .switchMap(() => this.authService.logout()
+      .map((loggedIn: boolean) => this.authActions.logoutSuccess())
     );
 }

@@ -1,8 +1,12 @@
+/**
+ * @author    Damien Dell'Amico <damien.dellamico@gmail.com>
+ * @copyright Copyright (c) 2016
+ * @license   GPL-3.0
+ */
+
 import { Component } from '@angular/core';
 import { NavController, MenuController } from 'ionic-angular';
-import { TabsPage } from '../tabs/tabs';
-import { LoginPage } from '../login/login';
-import { AuthService } from '../../core/providers/auth/auth-service';
+import { AuthStoreService } from '../../core/store/auth.service';
 
 interface Slide {
   title: string;
@@ -14,10 +18,12 @@ interface Slide {
   template: require('./tutorial.html')
 })
 export class TutorialPage {
-  slides: Slide[];
-  showSkip = true;
+  private slides: Slide[];
+  private showSkip = true;
 
-  constructor(private nav: NavController, private menu: MenuController) {
+  constructor(private authSoreService: AuthStoreService,
+              private nav: NavController,
+              private menu: MenuController) {
     this.slides = [
       {
         title: 'Welcome to <b>ICA</b>',
@@ -41,11 +47,7 @@ export class TutorialPage {
   }
 
   startApp() {
-    if (AuthService.authenticated()) {
-      this.nav.push(TabsPage);
-    } else {
-      this.nav.setRoot(LoginPage);
-    }
+    this.authSoreService.dispatchCheckToken();
   }
 
   onSlideChangeStart(slider) {
@@ -61,5 +63,4 @@ export class TutorialPage {
     // enable the root left menu when leaving the tutorial page
     this.menu.enable(true);
   }
-
 }

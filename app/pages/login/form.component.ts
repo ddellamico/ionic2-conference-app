@@ -4,7 +4,7 @@
  * @license   GPL-3.0
  */
 
-import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { Component, Input, Output, EventEmitter, ChangeDetectionStrategy } from '@angular/core';
 import { REACTIVE_FORM_DIRECTIVES, FormGroup, FormBuilder } from '@angular/forms';
 import { Validators } from '@angular/common';
 import { FormValidators } from '../../core/helpers/validators';
@@ -12,6 +12,7 @@ import { FormValidators } from '../../core/helpers/validators';
 @Component({
   selector: 'auth-form',
   directives: [REACTIVE_FORM_DIRECTIVES],
+  changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
      <form [formGroup]="authForm" 
         (ngSubmit)="onLogin.emit({credentials: authForm.value, isValid: authForm.valid})" novalidate>
@@ -41,7 +42,7 @@ import { FormValidators } from '../../core/helpers/validators';
     </form>
   `
 })
-export class AuthFormComponent {
+export class FormComponent {
 
   private authForm: FormGroup;
 

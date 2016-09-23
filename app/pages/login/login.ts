@@ -10,17 +10,14 @@ import { Component } from '@angular/core';
 import { NavController, AlertController } from 'ionic-angular';
 import { Observable } from 'rxjs/Observable';
 import { Subscription } from 'rxjs/Subscription';
-import { Store } from '@ngrx/store';
 import { TabsPage } from '../tabs/tabs';
 import { SignupPage } from '../signup/signup';
 import { NotificationService } from '../../core/helpers/notifications';
 import { UxMessage } from '../../core/constants/ux-message';
-import { AppState } from '../../core/reducers/index';
-import { AuthSelector } from '../../core/selectors/auth-selector';
-import { AuthActions } from '../../core/actions/auth-action';
-import { AuthFormComponent } from './auth-form.component';
+import { FormComponent } from './form.component';
 import { BasePage } from '../base-page';
 import { LoadingComponent } from '../../components/loading/loading.component';
+import { AuthStoreService } from '../../core/store/auth.service';
 
 @Component({
   template: `
@@ -45,7 +42,7 @@ import { LoadingComponent } from '../../components/loading/loading.component';
     </ion-list>
   </ion-content>
   `,
-  directives: [AuthFormComponent, LoadingComponent]
+  directives: [FormComponent, LoadingComponent]
 })
 export class LoginPage extends BasePage {
 
@@ -53,30 +50,28 @@ export class LoginPage extends BasePage {
   private isFetching$: Observable<boolean>;
   private error$: Observable<string>;
 
-  private subscription: Subscription;
+  private authSub: Subscription;
   private submitted = false;
 
-  constructor(private store: Store<AppState>,
-              private authActions: AuthActions,
+  constructor(private authStoreService: AuthStoreService,
               private nav: NavController,
               private notification: NotificationService,
               protected alertCtrl: AlertController) {
 
     super(alertCtrl);
 
-    this.isFetching$ = this.store.let(AuthSelector.isLoading());
-    this.error$ = this.store.let(AuthSelector.getErrorMessage());
-    this.loggedIn$ = this.store.let(AuthSelector.isLoggedIn());
+    this.isFetching$ = this.authStoreService.isLoading();
+    this.error$ = this.authStoreService.getErrorMessage();
+    this.loggedIn$ = this.authStoreService.isLoggedIn();
 
-    this.subscription = this.loggedIn$
-      .subscribe(loggedIn => {
-        if (!this.submitted) return;
-        if (loggedIn) {
-          this.nav.push(TabsPage);
-        } else {
-          this.notification.showAlert(UxMessage.INVALID_CREDENTIALS);
-        }
-      });
+    this.authSub = this.loggedIn$.subscribe(loggedIn => {
+      if (!this.submitted) return;
+      if (loggedIn) {
+        this.nav.push(TabsPage);
+      } else {
+        this.notification.showAlert(UxMessage.INVALID_CREDENTIALS);
+      }
+    });
   }
 
   onLogin({credentials, isValid}) {
@@ -84,12 +79,8 @@ export class LoginPage extends BasePage {
       this.notification.showAlert(UxMessage.INVALID_CREDENTIALS);
       return;
     }
-
     const {username, password} = credentials;
-
-    this.store.dispatch(
-      this.authActions.auth(username, password)
-    );
+    this.authStoreService.auth(username, password);
     this.submitted = true;
   }
 
@@ -99,6 +90,6 @@ export class LoginPage extends BasePage {
 
   ngOnDestroy() {
     // always remember to unsubscribe in ngOnDestroy
-    this.subscription.unsubscribe();
+    this.authSub.unsubscribe();
   }
 }

@@ -13,6 +13,7 @@ import { ConferenceApp } from './app';
 import { Observable } from 'rxjs/Observable';
 import { AuthService } from './core/providers/auth/auth-service';
 import { ConferenceService } from './core/providers/conference/conference-service';
+import { AuthStoreService } from './core/store/auth.service';
 
 // Mock out Ionic's platform class
 class PlatformMock {
@@ -48,12 +49,13 @@ describe('ConferenceApp', () => {
   ]);
 
   let platform;
-  beforeEach(inject([Events, AuthService, ConferenceService, Platform], (_events: Events, _authService: AuthService,
-                                                                         _conferenceService: ConferenceService,
-                                                                         _platform: Platform) => {
+  beforeEach(inject([Events, AuthStoreService, ConferenceService, Platform], (_events: Events,
+                                                                              _authStoreService: AuthStoreService,
+                                                                              _conferenceService: ConferenceService,
+                                                                              _platform: Platform) => {
     platform = _platform;
     spyOn(_platform, 'ready').and.callThrough();
-    conferenceApp = new ConferenceApp(_events, _authService, _conferenceService, _platform);
+    conferenceApp = new ConferenceApp(_events, _authStoreService, _conferenceService, _platform);
   }));
 
   it('should initialize with an app', () => {
@@ -65,7 +67,7 @@ describe('ConferenceApp', () => {
   });
 
   it('should call platform ready', () => {
-    expect(platform.ready ).toHaveBeenCalled();
+    expect(platform.ready).toHaveBeenCalled();
   });
 
   it('should have 4 main pages', () => {

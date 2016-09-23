@@ -88,10 +88,10 @@ export class ScheduleSelector {
       });
   }
 
-  /*  private static _isLoaded(): Function {
-   return (state$: Observable<ScheduleState>) => state$
-   .select(s => s.loaded);
-   }*/
+/*  private static _isLoaded() {
+    return (state$: Observable<ScheduleState>) => state$
+      .select(s => s.loaded);
+  }*/
 
   private static _isLoading(): Function {
     return (state$: Observable<ScheduleState>) => state$

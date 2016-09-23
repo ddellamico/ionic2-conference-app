@@ -9,10 +9,6 @@ export class AuthEvents {
     return 'user:signup';
   }
 
-  public static get USER_LOGOUT(): string {
-    return 'user:logout';
-  }
-
   public static get USER_UNAUTHORIZED(): string {
     return 'user:unauthorized';
   }

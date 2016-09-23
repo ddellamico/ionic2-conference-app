@@ -7,7 +7,7 @@
 export interface AuthState {
   loaded: boolean;
   loading: boolean;
-  loggedIn: boolean;
+  loggedIn?: boolean;
   error: string;
 }
 
@@ -15,6 +15,6 @@ export interface AuthState {
 export const defaultState: AuthState = {
   loaded: false,
   loading: false,
-  loggedIn: false,
+  loggedIn: null,
   error: null
 };

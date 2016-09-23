@@ -1,8 +1,9 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, ChangeDetectionStrategy } from '@angular/core';
 import { LoadingController } from 'ionic-angular';
 
 @Component({
   selector: 'loading',
+  changeDetection: ChangeDetectionStrategy.OnPush,
   template: ``
 })
 export class LoadingComponent {

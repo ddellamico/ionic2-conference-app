@@ -9,7 +9,6 @@ import { Http, Response, Headers, RequestOptions, URLSearchParams } from '@angul
 import { Observable } from 'rxjs/Observable';
 import { JwtHelper, tokenNotExpired } from 'angular2-jwt';
 import { Storage, Events } from 'ionic-angular';
-import { AuthEvents } from '../../constants';
 import { BaseService } from '../base-service';
 import { UserModel } from './user-model';
 
@@ -20,10 +19,10 @@ export class AuthService extends BaseService {
   private USER_KEY: string = 'user_key';
   private TOKEN_KEY: string = 'id_token';
 
-  public static authenticated() {
+  public static authenticated(): Observable<boolean> {
     const _authenticated: boolean = tokenNotExpired() || false;
     console.log('_authenticated ===>', _authenticated);
-    return _authenticated;
+    return Observable.of(_authenticated);
   }
 
   constructor(private http: Http,
@@ -106,9 +105,8 @@ export class AuthService extends BaseService {
     return Observable.forkJoin(
       Observable.fromPromise(this.storage.remove(this.TOKEN_KEY)),
       Observable.fromPromise(this.storage.remove(this.USER_KEY))
-    ).map(() => {
+    ).do(() => {
       this.loggedUser = null;
-      this.events.publish(AuthEvents.USER_LOGOUT);
     }).catch((err: any) => this.handleError(err));
   }
 
