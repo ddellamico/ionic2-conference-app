@@ -1,3 +1,4 @@
+import { UserModel } from '../../providers/auth/user-model';
 /**
  * @author    Damien Dell'Amico <damien.dellamico@gmail.com>
  * @copyright Copyright (c) 2016
@@ -7,14 +8,15 @@
 export interface AuthState {
   loaded: boolean;
   loading: boolean;
-  loggedIn?: boolean;
+  loggedIn: boolean;
+  currentUser: UserModel;
   error: string;
 }
-
 
 export const defaultState: AuthState = {
   loaded: false,
   loading: false,
-  loggedIn: null,
+  loggedIn: false,
+  currentUser: null,
   error: null
 };

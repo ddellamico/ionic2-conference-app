@@ -5,7 +5,6 @@
  */
 
 import { Injectable } from '@angular/core';
-import { Events } from 'ionic-angular';
 import { Observable } from 'rxjs/Observable';
 import { cloneDeep }  from 'lodash';
 import { ScheduleService } from '../schedule/schedule-service';
@@ -24,10 +23,9 @@ export class ConferenceService extends BaseService {
 
   private conferenceModelCached: ConferenceModel = null;
 
-  constructor(events: Events,
-              private scheduleService: ScheduleService,
+  constructor(private scheduleService: ScheduleService,
               private speakerService: SpeakerService) {
-    super(events);
+    super();
   }
 
   public clearCache(): void {

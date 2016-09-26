@@ -17,7 +17,8 @@ import { UxMessage } from '../../core/constants/ux-message';
 import { FormComponent } from './form.component';
 import { BasePage } from '../base-page';
 import { LoadingComponent } from '../../components/loading/loading.component';
-import { AuthStoreService } from '../../core/store/auth.service';
+import { AuthStoreService } from '../../core/store/auth-store.service';
+import { UserModel } from '../../core/providers/auth/user-model';
 
 @Component({
   template: `
@@ -46,7 +47,7 @@ import { AuthStoreService } from '../../core/store/auth.service';
 })
 export class LoginPage extends BasePage {
 
-  private loggedIn$: Observable<boolean>;
+  private currentUser$: Observable<UserModel>;
   private isFetching$: Observable<boolean>;
   private error$: Observable<string>;
 
@@ -59,14 +60,17 @@ export class LoginPage extends BasePage {
               protected alertCtrl: AlertController) {
 
     super(alertCtrl);
+  }
+
+  ngOnInit() {
 
     this.isFetching$ = this.authStoreService.isLoading();
     this.error$ = this.authStoreService.getErrorMessage();
-    this.loggedIn$ = this.authStoreService.isLoggedIn();
+    this.currentUser$ = this.authStoreService.getCurrentUser();
 
-    this.authSub = this.loggedIn$.subscribe(loggedIn => {
+    this.authSub = this.currentUser$.subscribe((user: UserModel) => {
       if (!this.submitted) return;
-      if (loggedIn) {
+      if (user && user._id) {
         this.nav.push(TabsPage);
       } else {
         this.notification.showAlert(UxMessage.INVALID_CREDENTIALS);

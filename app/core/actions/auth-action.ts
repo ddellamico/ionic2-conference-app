@@ -6,6 +6,7 @@
 
 import { Injectable } from '@angular/core';
 import { Action } from '@ngrx/store';
+import { UserModel } from '../providers/auth/user-model';
 
 /**
  * Instead of passing around action string constants and manually recreating
@@ -30,12 +31,12 @@ export class AuthActions {
     };
   }
 
-  static AUTH_SUCCESS = '[Auth] Login Success';
+  static AUTH_COMPLETED = '[Auth] Login Completed';
 
-  authSuccess(loggedIn: boolean): Action {
+  authCompleted(user: UserModel = null): Action {
     return {
-      type: AuthActions.AUTH_SUCCESS,
-      payload: loggedIn
+      type: AuthActions.AUTH_COMPLETED,
+      payload: user
     };
   }
 
@@ -56,12 +57,20 @@ export class AuthActions {
     };
   }
 
-  static CHECK_TOKEN_SUCCESS = '[Auth] Check Token Success';
+  static CHECK_TOKEN_COMPLETED = '[Auth] Check Token Completed';
 
-  checkTokenSuccess(loggedIn: boolean): Action {
+  checkTokenCompleted(user: UserModel = null): Action {
     return {
-      type: AuthActions.CHECK_TOKEN_SUCCESS,
-      payload: loggedIn
+      type: AuthActions.CHECK_TOKEN_COMPLETED,
+      payload: user
+    };
+  }
+
+  static UNAUTHORIZED = '[Auth] Unauthorized';
+
+  unauthorized(): Action {
+    return {
+      type: AuthActions.UNAUTHORIZED
     };
   }
 

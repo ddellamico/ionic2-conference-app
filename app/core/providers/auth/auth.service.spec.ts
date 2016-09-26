@@ -9,7 +9,7 @@ import { beforeEachProviders, inject } from '@angular/core/testing';
 import { BaseRequestOptions, Http, Response, ResponseOptions } from '@angular/http';
 import { MockBackend, MockConnection } from '@angular/http/testing';
 import { JwtHelper } from 'angular2-jwt';
-import { AuthService } from './auth-service';
+import { AuthService } from './auth.service';
 import { LocalStorage, Storage, Events } from 'ionic-angular';
 
 describe('AuthService', () => {
@@ -83,7 +83,7 @@ describe('AuthService', () => {
     backend.connections.subscribe((c: MockConnection) => c.mockRespond(baseResponse));
 
     return authService.token('user', 'passwd').subscribe(() => {
-        return authService.getLoggedUser().then(loggedUser => {
+        return authService.getLoggedUser().subscribe(loggedUser => {
           expect(storage.set).toHaveBeenCalledWith('user_key', JSON.stringify(loggedUser));
         });
       }

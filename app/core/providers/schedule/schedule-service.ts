@@ -4,19 +4,18 @@
  * @license   GPL-3.0
  */
 
-import { Events } from 'ionic-angular';
 import { Injectable } from '@angular/core';
 import { Response } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
-import { AuthHttp } from 'angular2-jwt';
 import { BaseService } from '../base-service';
 import { ScheduleModel } from './schedule-model';
+import { JwtAuthHttp } from '../auth-http';
 
 @Injectable()
 export class ScheduleService extends BaseService {
 
-  constructor(private authHttp: AuthHttp, events: Events) {
-    super(events);
+  constructor(private authHttp: JwtAuthHttp) {
+    super();
   }
 
   public getSchedules(): Observable<Array<ScheduleModel>> {

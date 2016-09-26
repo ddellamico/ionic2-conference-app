@@ -6,7 +6,11 @@
 
 import { Component } from '@angular/core';
 import { NavController, MenuController } from 'ionic-angular';
-import { AuthStoreService } from '../../core/store/auth.service';
+import { AuthStoreService } from '../../core/store/auth-store.service';
+import { TabsPage } from '../tabs/tabs';
+import { UserModel } from '../../core/providers/auth/user-model';
+import { LoginPage } from '../login/login';
+import { Subscription } from 'rxjs/Subscription';
 
 interface Slide {
   title: string;
@@ -20,10 +24,13 @@ interface Slide {
 export class TutorialPage {
   private slides: Slide[];
   private showSkip = true;
+  private authSub: Subscription;
 
-  constructor(private authSoreService: AuthStoreService,
+  constructor(private authStoreService: AuthStoreService,
               private nav: NavController,
               private menu: MenuController) {
+
+    this.initAuth();
     this.slides = [
       {
         title: 'Welcome to <b>ICA</b>',
@@ -46,8 +53,17 @@ export class TutorialPage {
     ];
   }
 
+  private initAuth(): void {
+    this.authSub = this.authStoreService.getCurrentUser()
+      .subscribe((user: UserModel) => {
+        if (user !== null && user._id) {
+          this.nav.push(TabsPage);
+        }
+      });
+  }
+
   startApp() {
-    this.authSoreService.dispatchCheckToken();
+    this.nav.setRoot(LoginPage);
   }
 
   onSlideChangeStart(slider) {
@@ -57,10 +73,16 @@ export class TutorialPage {
   ionViewDidEnter() {
     // the root left menu should be disabled on the tutorial page
     this.menu.enable(false);
+    this.authStoreService.dispatchCheckToken();
   }
 
   ionViewWillLeave() {
     // enable the root left menu when leaving the tutorial page
     this.menu.enable(true);
+  }
+
+  ngOnDestroy() {
+    // don't forget to clean up the subscriptions
+    this.authSub.unsubscribe();
   }
 }

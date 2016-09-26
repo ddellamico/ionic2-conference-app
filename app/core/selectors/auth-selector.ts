@@ -8,6 +8,7 @@ import { Observable } from 'rxjs/Observable';
 import { compose } from '@ngrx/core/compose';
 import { AppState } from '../reducers/index';
 import { AuthState } from '../reducers/auth/auth-state';
+import { UserModel } from '../providers/auth/user-model';
 
 /**
  * reference : https://gist.github.com/btroncone/a6e4347326749f938510#extracting-selectors-for-reuse
@@ -32,6 +33,10 @@ export class AuthSelector {
     return compose(this._getErrorMessage(), this.getAuthState());
   }
 
+  public static getCurrentUser(): (selector: Observable<AppState>) => Observable<UserModel> {
+    return compose(this._getCurrentUser(), this.getAuthState());
+  }
+
   public static isLoading(): (selector: Observable<AppState>) => Observable<boolean> {
     return compose(this._isLoading(), this.getAuthState());
   }
@@ -47,6 +52,12 @@ export class AuthSelector {
   private static _getErrorMessage() {
     return (state$: Observable<AuthState>) => state$.select(s => {
       return s.error;
+    });
+  }
+
+  private static _getCurrentUser() {
+    return (state$: Observable<AuthState>) => state$.select(s => {
+      return s.currentUser;
     });
   }
 

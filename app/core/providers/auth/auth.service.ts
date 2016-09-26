@@ -8,7 +8,7 @@ import { Injectable } from '@angular/core';
 import { Http, Response, Headers, RequestOptions, URLSearchParams } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 import { JwtHelper, tokenNotExpired } from 'angular2-jwt';
-import { Storage, Events } from 'ionic-angular';
+import { Storage } from 'ionic-angular';
 import { BaseService } from '../base-service';
 import { UserModel } from './user-model';
 
@@ -21,18 +21,16 @@ export class AuthService extends BaseService {
 
   public static authenticated(): Observable<boolean> {
     const _authenticated: boolean = tokenNotExpired() || false;
-    console.log('_authenticated ===>', _authenticated);
     return Observable.of(_authenticated);
   }
 
   constructor(private http: Http,
               private jwtHelper: JwtHelper,
-              private storage: Storage,
-              events: Events) {
-    super(events);
+              private storage: Storage) {
+    super();
   }
 
-  public token(username: string, password: string): Observable<boolean> {
+  public token(username: string, password: string): Observable<UserModel> {
     const url: string = `${process.env.API_URL}/auth/token`;
 
     const headers = new Headers({'Content-Type': 'application/x-www-form-urlencoded'});
@@ -52,33 +50,31 @@ export class AuthService extends BaseService {
         if (user && user._id) {
           this.loggedUser = user;
         }
-        return !!(this.loggedUser);
+        return this.loggedUser;
       })
       .catch((err: any) => this.handleError(err));
   }
 
-  // TODO convert to Observable
-  public getLoggedUser(): Promise<UserModel> {
-    if (this.loggedUser && this.loggedUser._id) {
-      return Promise.resolve(this.loggedUser);
+  public getLoggedUser(): Observable<UserModel> {
+    if (!tokenNotExpired()) {
+      return Observable.throw('Invalid token');
     }
-    return new Promise((resolve, reject) => {
-      if (!tokenNotExpired()) {
-        return reject('Invalid token');
+    if (this.loggedUser !== null) {
+      return Observable.of(this.loggedUser);
+    }
+    const userKey$ = Observable.fromPromise(this.storage.get(this.USER_KEY));
+    return userKey$.map((data) => {
+      const _user: UserModel = JSON.parse(data);
+      if (_user && _user._id) {
+        this.loggedUser = new UserModel(_user._id, _user.firstName, _user.lastName, _user.username, _user.roles);
+        return this.loggedUser;
+      } else {
+        this.loggedUser = null;
+        return null;
       }
-      this.storage.get(this.USER_KEY).then((data) => {
-        const _user = JSON.parse(data);
-        if (_user && _user._id) {
-          this.loggedUser = new UserModel(_user._id, _user.firstName, _user.lastName, _user.username, _user.roles);
-          resolve(this.loggedUser);
-        } else {
-          reject('Invalid user data');
-        }
-      }).catch((err) => {
-        reject(err);
-      });
-    });
+    }).catch((err: any) => this.handleError(err));
   }
+
 
   public signUp(firstName: string, lastName: string, username: string, password: string): Observable<boolean> {
     const url: string = `${process.env.API_URL}/users`;
@@ -121,7 +117,7 @@ export class AuthService extends BaseService {
       const _user = decoded.user;
       const userModel = new UserModel(_user._id, _user.firstName, _user.lastName, _user.username, _user.roles);
       return Observable.fromPromise(
-        this.storage.set(this.USER_KEY, JSON.stringify(this.loggedUser)).then(() => userModel)
+        this.storage.set(this.USER_KEY, JSON.stringify(userModel)).then(() => userModel)
       );
     });
   }

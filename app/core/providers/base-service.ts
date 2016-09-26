@@ -4,21 +4,16 @@
  * @license   GPL-3.0
  */
 
-import { Events } from 'ionic-angular';
 import { Observable } from 'rxjs/Observable';
-import { AuthEvents } from '../constants';
 
 export class BaseService {
-  constructor(public events: Events) {
+  constructor() {
   }
 
   // TODO manage "unauthorized" extending AuthHttp class
   protected handleError(error: any): Observable<any> {
     const errMsg = (error.message) ? error.message :
       error.status ? `${error.status} - ${error.statusText}` : 'Server error';
-    if (error.status === 401) {
-      this.events.publish(AuthEvents.USER_UNAUTHORIZED);
-    }
     return Observable.throw(errMsg);
   }
 }

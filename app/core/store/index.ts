@@ -4,7 +4,7 @@
  * @license   GPL-3.0
  */
 
-import { AuthStoreService } from './auth.service';
+import { AuthStoreService } from './auth-store.service';
 
 export default [
   AuthStoreService

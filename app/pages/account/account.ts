@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
-import { AuthService } from '../../core/providers/auth/auth-service';
+import { AuthService } from '../../core/providers/auth/auth.service';
 import { LoginPage } from '../login/login';
 import { UserModel } from '../../core/providers/auth/user-model';
 
@@ -23,7 +23,7 @@ export class AccountPage {
   }
 
   getUsername() {
-    this.authService.getLoggedUser().then((profileData: UserModel) => {
+    this.authService.getLoggedUser().subscribe((profileData: UserModel) => {
       this.profile = profileData;
     });
   }

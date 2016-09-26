@@ -10,11 +10,14 @@ import { Observable } from 'rxjs/Observable';
 import { AuthActions } from '../actions/auth-action';
 import { AppState } from '../reducers/index';
 import { AuthSelector } from '../selectors/auth-selector';
+import { UserModel } from '../providers/auth/user-model';
+import { AuthEffect } from '../effects/auth-effect';
 
 @Injectable()
 export class AuthStoreService {
 
   constructor(private store: Store<AppState>,
+              private authEffects: AuthEffect,
               private authActions: AuthActions) {
   }
 
@@ -30,8 +33,22 @@ export class AuthStoreService {
     );
   }
 
+  public dispatchUnauthorized(): void {
+    this.store.dispatch(
+      this.authActions.unauthorized()
+    );
+  }
+
+  public logout(): any {
+    return this.authEffects.logout$;
+  }
+
   public isLoggedIn(): Observable<boolean> {
     return this.store.let(AuthSelector.isLoggedIn());
+  }
+
+  public getCurrentUser(): Observable<UserModel> {
+    return this.store.let(AuthSelector.getCurrentUser());
   }
 
   public isLoading(): Observable<boolean> {

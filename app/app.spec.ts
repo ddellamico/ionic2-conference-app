@@ -11,9 +11,9 @@ import { beforeEachProviders, inject } from '@angular/core/testing';
 import { Events, Platform } from 'ionic-angular';
 import { ConferenceApp } from './app';
 import { Observable } from 'rxjs/Observable';
-import { AuthService } from './core/providers/auth/auth-service';
+import { AuthService } from './core/providers/auth/auth.service';
 import { ConferenceService } from './core/providers/conference/conference-service';
-import { AuthStoreService } from './core/store/auth.service';
+import { AuthStoreService } from './core/store/auth-store.service';
 
 // Mock out Ionic's platform class
 class PlatformMock {
@@ -55,7 +55,7 @@ describe('ConferenceApp', () => {
                                                                               _platform: Platform) => {
     platform = _platform;
     spyOn(_platform, 'ready').and.callThrough();
-    conferenceApp = new ConferenceApp(_events, _authStoreService, _conferenceService, _platform);
+    conferenceApp = new ConferenceApp(_authStoreService, _platform);
   }));
 
   it('should initialize with an app', () => {

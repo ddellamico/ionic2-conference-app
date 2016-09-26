@@ -4,7 +4,7 @@ import { REACTIVE_FORM_DIRECTIVES, FormGroup, FormBuilder } from '@angular/forms
 import { NavController } from 'ionic-angular';
 import { TabsPage } from '../tabs/tabs';
 import { FormValidators } from '../../core/helpers/validators';
-import { AuthService } from '../../core/providers/auth/auth-service';
+import { AuthService } from '../../core/providers/auth/auth.service';
 import { NotificationService } from '../../core/helpers/notifications';
 import { UxMessage } from '../../core/constants/ux-message';
 
