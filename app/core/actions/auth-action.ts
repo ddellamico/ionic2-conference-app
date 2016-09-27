@@ -7,6 +7,7 @@
 import { Injectable } from '@angular/core';
 import { Action } from '@ngrx/store';
 import { UserModel } from '../providers/auth/user-model';
+import { SignupModel } from '../providers/auth/signup-model';
 
 /**
  * Instead of passing around action string constants and manually recreating
@@ -40,11 +41,39 @@ export class AuthActions {
     };
   }
 
+
   static AUTH_FAILED = '[Auth] Login Failed';
 
   authError(err: any): Action {
     return {
       type: AuthActions.AUTH_FAILED,
+      payload: err
+    };
+  }
+
+  static SIGNUP = '[Auth] Signup';
+
+  signUp(data: SignupModel): Action {
+    return {
+      type: AuthActions.SIGNUP,
+      payload: data
+    };
+  }
+
+  static SIGNUP_COMPLETED = '[Auth] Signup Completed';
+
+  signUpCompleted(user: UserModel = null): Action {
+    return {
+      type: AuthActions.SIGNUP_COMPLETED,
+      payload: user
+    };
+  }
+
+  static SIGNUP_FAILED = '[Auth] Signup Failed';
+
+  signUpFailed(err: any): Action {
+    return {
+      type: AuthActions.SIGNUP_FAILED,
       payload: err
     };
   }

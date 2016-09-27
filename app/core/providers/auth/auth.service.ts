@@ -11,6 +11,7 @@ import { JwtHelper, tokenNotExpired } from 'angular2-jwt';
 import { Storage } from 'ionic-angular';
 import { BaseService } from '../base-service';
 import { UserModel } from './user-model';
+import { SignupModel } from './signup-model';
 
 @Injectable()
 export class AuthService extends BaseService {
@@ -19,9 +20,8 @@ export class AuthService extends BaseService {
   private USER_KEY: string = 'user_key';
   private TOKEN_KEY: string = 'id_token';
 
-  public static authenticated(): Observable<boolean> {
-    const _authenticated: boolean = tokenNotExpired() || false;
-    return Observable.of(_authenticated);
+  public static authenticated(): boolean {
+    return tokenNotExpired();
   }
 
   constructor(private http: Http,
@@ -75,14 +75,13 @@ export class AuthService extends BaseService {
     }).catch((err: any) => this.handleError(err));
   }
 
-
-  public signUp(firstName: string, lastName: string, username: string, password: string): Observable<boolean> {
+  public signUp(data: SignupModel): Observable<UserModel> {
     const url: string = `${process.env.API_URL}/users`;
     const body = JSON.stringify({
-      firstName,
-      lastName,
-      username,
-      password
+      firstName: data.firstName,
+      lastName: data.lastName,
+      username: data.username,
+      password: data.password
     });
     const headers = new Headers({'Content-Type': 'application/json'});
     const options = new RequestOptions({headers: headers});
@@ -90,7 +89,7 @@ export class AuthService extends BaseService {
     return this.http.post(url, body, options)
       .map((res: Response) => <any>res.json())
       .mergeMap((user: any) => {
-        return this.token(username, password);
+        return this.token(data.username, data.password);
       })
       .catch((err: any) => {
         return this.handleError(err);

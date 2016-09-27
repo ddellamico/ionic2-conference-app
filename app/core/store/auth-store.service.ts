@@ -12,6 +12,7 @@ import { AppState } from '../reducers/index';
 import { AuthSelector } from '../selectors/auth-selector';
 import { UserModel } from '../providers/auth/user-model';
 import { AuthEffect } from '../effects/auth-effect';
+import { SignupModel } from '../providers/auth/signup-model';
 
 @Injectable()
 export class AuthStoreService {
@@ -27,6 +28,18 @@ export class AuthStoreService {
     );
   }
 
+  public dispachAuth(username: string, password: string) {
+    this.store.dispatch(
+      this.authActions.auth(username, password)
+    );
+  }
+
+  public dispachSignin(data: SignupModel) {
+    this.store.dispatch(
+      this.authActions.signUp(data)
+    );
+  }
+
   public dispatchLogout(): void {
     this.store.dispatch(
       this.authActions.logout()
@@ -39,12 +52,12 @@ export class AuthStoreService {
     );
   }
 
-  public logout(): any {
-    return this.authEffects.logout$;
+  public signedOut(): any {
+    return this.authEffects.signUpSuccess$;
   }
 
-  public isLoggedIn(): Observable<boolean> {
-    return this.store.let(AuthSelector.isLoggedIn());
+  public loggedOut(): any {
+    return this.authEffects.logout$;
   }
 
   public getCurrentUser(): Observable<UserModel> {
@@ -57,11 +70,5 @@ export class AuthStoreService {
 
   public getErrorMessage(): Observable<string> {
     return this.store.let(AuthSelector.getErrorMessage());
-  }
-
-  public auth(username: string, password: string) {
-    this.store.dispatch(
-      this.authActions.auth(username, password)
-    );
   }
 }

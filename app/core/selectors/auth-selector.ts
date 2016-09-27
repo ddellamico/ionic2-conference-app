@@ -25,10 +25,6 @@ export class AuthSelector {
    * reducer's _getAuthItems selector, finally returning an observable
    * of search results.
    */
-  public static isLoggedIn(): (selector: Observable<AppState>) => Observable<boolean> {
-    return compose(this._isLoggedIn(), this.getAuthState());
-  }
-
   public static getErrorMessage(): (selector: Observable<AppState>) => Observable<string> {
     return compose(this._getErrorMessage(), this.getAuthState());
   }
@@ -41,38 +37,19 @@ export class AuthSelector {
     return compose(this._isLoading(), this.getAuthState());
   }
 
-  public static isLoaded(): (selector: Observable<AppState>) => Observable<boolean> {
-    return compose(this._isLoaded(), this.getAuthState());
-  }
-
   private static getAuthState() {
     return (state$: Observable<AppState>) => state$.select(s => s.auth);
   }
 
   private static _getErrorMessage() {
-    return (state$: Observable<AuthState>) => state$.select(s => {
-      return s.error;
-    });
+    return (state$: Observable<AuthState>) => state$.select(s => s.error);
   }
 
   private static _getCurrentUser() {
-    return (state$: Observable<AuthState>) => state$.select(s => {
-      return s.currentUser;
-    });
-  }
-
-  private static _isLoggedIn() {
-    return (state$: Observable<AuthState>) => state$
-      .select(s => s.loggedIn);
-  }
-
-  private static _isLoaded() {
-    return (state$: Observable<AuthState>) => state$
-      .select(s => s.loaded);
+    return (state$: Observable<AuthState>) => state$.select(s => s.currentUser);
   }
 
   private static _isLoading() {
-    return (state$: Observable<AuthState>) => state$
-      .select(s => s.loading);
+    return (state$: Observable<AuthState>) => state$.select(s => s.loading);
   }
 }

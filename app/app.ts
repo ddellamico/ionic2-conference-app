@@ -89,7 +89,7 @@ export class ConferenceApp {
       Splashscreen.hide();
 
       this.currentUser$ = this.authStoreService.getCurrentUser();
-      this.logoutSub = this.authStoreService.logout()
+      this.logoutSub = this.authStoreService.loggedOut()
         .subscribe(s => this.nav.setRoot(LoginPage));
     });
   }

@@ -12,6 +12,7 @@ import { AppState } from '../reducers/index';
 import { AuthService } from '../providers/auth/auth.service';
 import { UserModel } from '../providers/auth/user-model';
 import { ConferenceService } from '../providers/conference/conference-service';
+import { SignupModel } from '../providers/auth/signup-model';
 
 @Injectable()
 export class AuthEffect {
@@ -45,13 +46,27 @@ export class AuthEffect {
       )
     );
 
+  @Effect() signUp$ = this.updates$
+    .whenAction(AuthActions.SIGNUP)
+    .map<any>(toPayload)
+    .switchMap((payload: SignupModel) => this.authService.signUp(payload)
+      .map((user: UserModel) => this.authActions.signUpCompleted(user))
+      .catch((err) =>
+        Observable.of(this.authActions.signUpFailed(err))
+      )
+    );
+
+  @Effect() signUpSuccess$ = this.updates$
+    .whenAction(AuthActions.SIGNUP_COMPLETED)
+    .do(() => this.conferenceService.clearCache());
+
   @Effect() logout$ = this.updates$
     .whenAction(AuthActions.LOGOUT, AuthActions.UNAUTHORIZED)
     .switchMap(() => this.authService.logout()
-      .map((loggedIn: boolean) => this.authActions.logoutSuccess())
+      .map(() => this.authActions.logoutSuccess())
     );
 
-  @Effect() logoutNav$ = this.updates$
+  @Effect() logoutSuccess$ = this.updates$
     .whenAction(AuthActions.LOGOUT_SUCCESS)
     .do(() => this.conferenceService.clearCache())
     .ignoreElements();

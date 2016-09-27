@@ -84,7 +84,7 @@ export class LoginPage extends BasePage {
       return;
     }
     const {username, password} = credentials;
-    this.authStoreService.auth(username, password);
+    this.authStoreService.dispachAuth(username, password);
     this.submitted = true;
   }
 

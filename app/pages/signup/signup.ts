@@ -1,53 +1,78 @@
+/**
+ * @author    Damien Dell'Amico <damien.dellamico@gmail.com>
+ * @copyright Copyright (c) 2016
+ * @license   GPL-3.0
+ */
+
 import { Component } from '@angular/core';
-import { Validators } from '@angular/common';
-import { REACTIVE_FORM_DIRECTIVES, FormGroup, FormBuilder } from '@angular/forms';
 import { NavController } from 'ionic-angular';
 import { TabsPage } from '../tabs/tabs';
-import { FormValidators } from '../../core/helpers/validators';
-import { AuthService } from '../../core/providers/auth/auth.service';
+import { Observable } from 'rxjs/Observable';
 import { NotificationService } from '../../core/helpers/notifications';
 import { UxMessage } from '../../core/constants/ux-message';
+import { SignUpFormComponent } from './form.component';
+import { AuthStoreService } from '../../core/store/auth-store.service';
+import { SignupModel } from '../../core/providers/auth/signup-model';
+import { Subscription } from 'rxjs/Subscription';
 
 @Component({
-  template: require('./signup.html'),
-  directives: [REACTIVE_FORM_DIRECTIVES]
+  template: `
+  <ion-header>
+    <ion-navbar>
+      <button menuToggle>
+        <ion-icon name="menu"></ion-icon>
+      </button>
+      <ion-title>Signup</ion-title>
+    </ion-navbar>
+  </ion-header>
+  <ion-content class="login-page">
+    <signup-form (onSignup)="onSignup($event)"></signup-form>
+  </ion-content>
+  `,
+  directives: [SignUpFormComponent]
 })
 export class SignupPage {
-  signUpForm: FormGroup;
 
-  constructor(private nav: NavController,
-              private securityService: AuthService,
-              private notification: NotificationService,
-              private fb: FormBuilder) {
-  }
+  private errSub: Subscription;
+  private signupSub: Subscription;
+  private isFetching$: Observable<boolean>;
+  private error$: Observable<string>;
 
-  ngOnInit() {
-    this.signUpForm = this.fb.group({
-      username: ['', [Validators.required, FormValidators.emailValidator]],
-      password: ['', [Validators.required, Validators.minLength(3)]],
-      firstName: ['', [Validators.required, Validators.minLength(3)]],
-      lastName: ['', [Validators.required, Validators.minLength(3)]]
+  constructor(private authStoreService: AuthStoreService,
+              private nav: NavController,
+              private notification: NotificationService) {
+
+    this.error$ = this.authStoreService.getErrorMessage();
+    this.isFetching$ = this.authStoreService.isLoading();
+
+    this.errSub = this.error$.subscribe((err: any) => {
+      if (err) {
+        this.notification.showAlert(UxMessage.SIGNUP_ERROR);
+        console.log(err);
+      }
     });
+
+    this.signupSub = this.authStoreService.signedOut()
+      .subscribe(s => this.nav.setRoot(TabsPage),
+        err => {
+          this.notification.showAlert(UxMessage.UNKNOWN_ERROR);
+          console.log(err);
+        }
+      );
   }
 
-  onSignup(model: any, isValid: boolean) {
+  onSignup({data, isValid}) {
     if (!isValid) {
       this.notification.showAlert(UxMessage.SIGNUP_ERROR);
       return;
     }
-    this.securityService.signUp(model.firstName, model.lastName,
-      model.username, model.password).subscribe(
-      loggedIn => {
-        if (loggedIn) {
-          this.nav.push(TabsPage);
-        } else {
-          this.notification.showAlert(UxMessage.SIGNUP_ERROR);
-        }
-      },
-      error => {
-        this.notification.showAlert(UxMessage.UNKNOWN_ERROR);
-        console.log(error);
-      }
-    );
+
+    this.authStoreService.dispachSignin(new SignupModel(data.firstName, data.lastName,
+      data.username, data.password));
+  }
+
+  ngOnDestroy() {
+    this.errSub.unsubscribe();
+    this.signupSub.unsubscribe();
   }
 }

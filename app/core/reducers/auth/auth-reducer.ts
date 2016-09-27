@@ -17,50 +17,37 @@ export const authReducer: ActionReducer<AuthState> = (state: AuthState = default
     case AuthActions.UNAUTHORIZED:
     case AuthActions.LOGOUT: {
       return Object.assign({}, state, {
-        loaded: false,
+        currentUser: null,
         loading: true,
-        loggedIn: false,
         error: null
       });
     }
 
-    case AuthActions.AUTH_COMPLETED: {
-      const user: UserModel = action.payload;
-      return Object.assign({}, state, {
-        loaded: true,
-        loading: false,
-        loggedIn: true,
-        currentUser: user,
-        error: null
-      });
-    }
-
+    case AuthActions.SIGNUP_COMPLETED:
+    case AuthActions.AUTH_COMPLETED:
     case AuthActions.CHECK_TOKEN_COMPLETED: {
       const user: UserModel = action.payload;
       return Object.assign({}, state, {
-        loaded: true,
-        loading: false,
         currentUser: user,
+        loading: false,
         error: null
       });
     }
 
-    case AuthActions.AUTH_FAILED: {
+    case AuthActions.AUTH_FAILED:
+    case AuthActions.SIGNUP_FAILED: {
       const error: any = action.payload;
       return Object.assign({}, state, {
-        error,
-        loaded: true,
+        currentUser: null,
         loading: false,
-        loggedIn: false
+        error,
       });
     }
 
     case AuthActions.LOGOUT_SUCCESS: {
       return Object.assign({}, state, {
-        loaded: true,
-        loading: false,
-        loggedIn: false,
         currentUser: null,
+        loading: false,
         error: null
       });
     }
