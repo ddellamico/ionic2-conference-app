@@ -1,17 +1,14 @@
 import { Observable } from 'rxjs/Observable';
 import { Component } from '@angular/core';
 import { App, ModalController, AlertController, NavController } from 'ionic-angular';
-import { Store } from '@ngrx/store';
-import { AppState } from '../../core/reducers/index';
 import { ScheduleFilterPage } from '../schedule-filter/schedule-filter';
 import { SessionDetailPage } from '../session-detail/session-detail';
 import { UserModel } from '../../core/providers/auth/user-model';
 import { TimelineFilter } from '../../core/providers/conference/timeline-filter-model';
-import { ScheduleActions } from '../../core/actions/schedule-action';
 import { ScheduleModel } from '../../core/providers/schedule/schedule-model';
-import { ScheduleSelector } from '../../core/selectors/schedule-selector';
 import { SessionModel } from '../../core/providers/schedule/session-model';
 import { ScheduleListComponent } from './schedule-list.component';
+import { ScheduleStoreService } from '../../core/store/schedule-store.service';
 
 @Component({
   template: `
@@ -64,14 +61,13 @@ export class SchedulePage {
   private isFetching$: Observable<boolean>;
 
   constructor(private app: App,
-              private store: Store<AppState>,
+              private scheduleStoreService: ScheduleStoreService,
               private nav: NavController,
               private alertCtrl: AlertController,
-              private modalCtrl: ModalController,
-              private scheduleActions: ScheduleActions) {
+              private modalCtrl: ModalController) {
 
-    this.model$ = this.store.let(ScheduleSelector.getSchedule());
-    this.isFetching$ = this.store.let(ScheduleSelector.isLoading());
+    this.model$ = this.scheduleStoreService.getSchedule();
+    this.isFetching$ = this.scheduleStoreService.isLoading();
   }
 
   ionViewDidEnter() {
@@ -80,10 +76,7 @@ export class SchedulePage {
   }
 
   updateSchedule() {
-    // dispatch load action to store
-    this.store.dispatch(
-      this.scheduleActions.loadCollection(this.filter)
-    );
+    this.scheduleStoreService.dispatchLoadCollection(this.filter);
   }
 
   presentFilter() {

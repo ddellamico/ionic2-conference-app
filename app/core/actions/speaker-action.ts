@@ -19,9 +19,6 @@ import { SpeakerModel } from '../providers/speakers/speaker-model';
 @Injectable()
 export class SpeakerActions {
 
-  static ADD_SPEAKER = '[Speaker] Add Speaker';
-  static REMOVE_SPEAKER = '[Speaker] Remove Speaker';
-
   static LOAD_COLLECTION = '[Speaker] Load Collection';
 
   loadCollection(): Action {

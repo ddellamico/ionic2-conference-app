@@ -1,11 +1,8 @@
 import { Component } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
-import { Store } from '@ngrx/store';
 import { NavParams, ViewController } from 'ionic-angular';
-import { AppState } from '../../core/reducers/index';
-import { ScheduleActions } from '../../core/actions/schedule-action';
-import { ScheduleSelector } from '../../core/selectors/schedule-selector';
 import { TrackListComponent } from './track-list.component';
+import { ScheduleStoreService } from '../../core/store/schedule-store.service';
 
 @Component({
   template: `
@@ -21,14 +18,13 @@ import { TrackListComponent } from './track-list.component';
 export class ScheduleFilterPage {
   private tracks$: Observable<Array<{name: string, isChecked: boolean}>>;
 
-  constructor(private store: Store<AppState>,
-              private scheduleActions: ScheduleActions,
+  constructor(private scheduleStoreService: ScheduleStoreService,
               private navParams: NavParams,
               private viewCtrl: ViewController) {
 
     // passed in array of track names that should be excluded (unchecked)
     const excludedTrackNames = this.navParams.data;
-    this.tracks$ = this.store.let(ScheduleSelector.getTrackers(excludedTrackNames));
+    this.tracks$ = this.scheduleStoreService.getTrackers(excludedTrackNames);
   }
 
   ionViewDidEnter() {
@@ -36,13 +32,11 @@ export class ScheduleFilterPage {
   }
 
   getTracks() {
-    this.store.dispatch(
-      this.scheduleActions.loadTracks()
-    );
+    this.scheduleStoreService.dispatchloadTracks();
   }
 
   resetFilters() {
-    this.tracks$ = this.store.let(ScheduleSelector.getTrackers([]));
+    this.tracks$ = this.scheduleStoreService.getTrackers([]);
   }
 
   applyFilters(tracks) {

@@ -7,17 +7,13 @@
 import { Component } from '@angular/core';
 import { NavController, ActionSheetController } from 'ionic-angular';
 import { InAppBrowser } from 'ionic-native';
-import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs/Observable';
 
 import { SpeakerDetailPage } from '../speaker-detail/speaker-detail';
 import { SessionDetailPage } from '../session-detail/session-detail';
 import { SpeakerModel } from '../../core/providers/speakers/speaker-model';
-import { UtilService } from '../../core/helpers/utils';
-import { AppState } from '../../core/reducers/index';
-import { SpeakerSelector } from '../../core/selectors/speaker-selector';
-import { SpeakerActions } from '../../core/actions/speaker-action';
 import { SpeakerListComponent } from './speaker-list.component';
+import { SpeakerStoreService } from '../../core/store/speaker-store.service';
 
 @Component({
   template: `
@@ -32,16 +28,11 @@ import { SpeakerListComponent } from './speaker-list.component';
     <ion-content class="outer-content speaker-list">
       <speaker-list
         [speakers]="speakerList$ | async"
-        (removeSpeaker)="removeSpeaker($event)"
         (goToSessionDetail)="goToSessionDetail($event)"
         (goToSpeakerDetail)="goToSpeakerDetail($event)"
         (openSpeakerShare)="openSpeakerShare($event)"
         (goToSpeakerTwitter)="goToSpeakerTwitter($event)">
       </speaker-list>
-      <button (click)="addSpeaker()">
-        <ion-icon name="add"></ion-icon>
-        Add
-      </button>
     </ion-content>
   `,
   directives: [SpeakerListComponent]
@@ -50,25 +41,16 @@ export class SpeakerListPage {
   public speakerList$: Observable<SpeakerModel[]>;
   public isFetching$: Observable<boolean>;
 
-  constructor(private _store: Store<AppState>,
-              private nav: NavController,
-              private actionSheet: ActionSheetController,
-              private speakerActions: SpeakerActions) {
+  constructor(private nav: NavController,
+              private speakerStoreService: SpeakerStoreService,
+              private actionSheet: ActionSheetController) {
 
-    this.speakerList$ = this._store.let(SpeakerSelector.getSpeakerItems());
-    this.isFetching$ = this._store.let(SpeakerSelector.isLoading());
-
+    this.speakerList$ = this.speakerStoreService.getSpeakerItems();
+    this.isFetching$ = this.speakerStoreService.isLoading();
   }
 
   ionViewDidEnter() {
-    // dispatch load action to store
-    this._store.dispatch(
-      this.speakerActions.loadCollection()
-    );
-  }
-
-  removeSpeaker(id) {
-    this._store.dispatch({type: SpeakerActions.REMOVE_SPEAKER, payload: id});
+    this.speakerStoreService.dispatchLoadCollection();
   }
 
   goToSessionDetail(session) {
@@ -77,16 +59,6 @@ export class SpeakerListPage {
 
   goToSpeakerDetail(speaker: SpeakerModel) {
     this.nav.push(SpeakerDetailPage, speaker);
-  }
-
-  addSpeaker() {
-    this._store.dispatch({
-      type: SpeakerActions.ADD_SPEAKER,
-      payload: {
-        id: UtilService.uid(),
-        name: 'test'
-      }
-    });
   }
 
   goToSpeakerTwitter(speaker) {

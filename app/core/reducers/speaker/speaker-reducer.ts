@@ -31,19 +31,6 @@ export const speakerReducer: ActionReducer<SpeakerState> = (state: SpeakerState 
       });
     }
 
-    case SpeakerActions.ADD_SPEAKER: {
-      return Object.assign({}, state, {
-        speakerList: [...state.speakerList, new SpeakerModel(action.payload.id,
-          action.payload.name, [], 'twt', 'ff')]
-      });
-    }
-
-    case SpeakerActions.REMOVE_SPEAKER:
-      return Object.assign({}, state, {
-        speakerList: state.speakerList
-          .filter(s => s._id !== action.payload)
-      });
-
     default:
       return state;
   }
