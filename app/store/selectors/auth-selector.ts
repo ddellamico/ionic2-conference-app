@@ -8,7 +8,7 @@ import { Observable } from 'rxjs/Observable';
 import { compose } from '@ngrx/core/compose';
 import { AppState } from '../reducers/index';
 import { AuthState } from '../reducers/auth/auth-state';
-import { UserModel } from '../providers/auth/user-model';
+import { UserModel } from '../../core/providers/auth/user-model';
 
 /**
  * reference : https://gist.github.com/btroncone/a6e4347326749f938510#extracting-selectors-for-reuse

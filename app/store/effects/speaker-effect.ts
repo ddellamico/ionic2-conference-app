@@ -7,9 +7,9 @@
 import { Injectable } from '@angular/core';
 import { Effect, StateUpdates } from '@ngrx/effects';
 import { SpeakerActions } from '../actions/speaker-action';
-import { ConferenceService } from '../providers/conference/conference-service';
-import { SpeakerModel } from '../providers/speakers/speaker-model';
 import { AppState } from '../reducers/index';
+import { ConferenceService } from '../../core/providers/conference/conference-service';
+import { SpeakerModel } from '../../core/providers/speakers/speaker-model';
 
 @Injectable()
 export class SpeakerEffect {

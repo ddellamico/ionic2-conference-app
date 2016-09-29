@@ -6,7 +6,7 @@
 
 import { Injectable } from '@angular/core';
 import { Action } from '@ngrx/store';
-import { SpeakerModel } from '../providers/speakers/speaker-model';
+import { SpeakerModel } from '../../core/providers/speakers/speaker-model';
 
 /**
  * Instead of passing around action string constants and manually recreating

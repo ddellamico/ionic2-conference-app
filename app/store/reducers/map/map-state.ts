@@ -4,7 +4,7 @@
  * @license   GPL-3.0
  */
 
-import { MapModel } from '../../providers/map/map-model';
+import { MapModel } from '../../../core/providers/map/map-model';
 
 export interface MapState {
   loading: boolean;

@@ -1,10 +1,9 @@
+import { UserModel } from '../../../core/providers/auth/user-model';
 /**
  * @author    Damien Dell'Amico <damien.dellamico@gmail.com>
  * @copyright Copyright (c) 2016
  * @license   GPL-3.0
  */
-
-import { UserModel } from '../../providers/auth/user-model';
 
 export interface AuthState {
   loading: boolean;

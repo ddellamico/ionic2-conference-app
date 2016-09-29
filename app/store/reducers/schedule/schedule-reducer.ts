@@ -5,9 +5,9 @@
  */
 
 import { ActionReducer, Action } from '@ngrx/store';
-import { ScheduleModel } from '../../providers/schedule/schedule-model';
 import { ScheduleState } from './schedule-state';
 import { ScheduleActions } from '../../actions/schedule-action';
+import { ScheduleModel } from '../../../core/providers/schedule/schedule-model';
 
 const defaultState: ScheduleState = {
   loaded: false,

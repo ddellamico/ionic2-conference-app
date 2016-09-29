@@ -10,9 +10,9 @@ import { Injectable } from '@angular/core';
 import { Http, Request, Response, RequestOptionsArgs } from '@angular/http';
 import { AuthHttp, AuthConfig } from 'angular2-jwt';
 import { Observable } from 'rxjs/Observable';
-import { AuthActions } from '../actions/auth-action';
+import { AuthActions } from '../../store/actions/auth-action';
 import { Store } from '@ngrx/store';
-import { AppState } from '../reducers/index';
+import { AppState } from '../../store/reducers/index';
 
 @Injectable()
 export class JwtAuthHttp extends AuthHttp {

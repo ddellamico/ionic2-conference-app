@@ -8,9 +8,9 @@
 import { Injectable } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs/Observable';
-import { ScheduleActions } from '../actions/schedule-action';
-import { AppState } from '../reducers/index';
-import { ScheduleSelector } from '../selectors/schedule-selector';
+import { ScheduleActions } from '../../store/actions/schedule-action';
+import { AppState } from '../../store/reducers/index';
+import { ScheduleSelector } from '../../store/selectors/schedule-selector';
 import { ScheduleModel } from '../providers/schedule/schedule-model';
 import { TimelineFilter } from '../providers/conference/timeline-filter-model';
 

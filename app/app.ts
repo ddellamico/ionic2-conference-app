@@ -24,9 +24,9 @@ import { MapService } from './core/providers/map/map-service';
 
 import { NotificationService } from './core/helpers/notifications';
 
-import effects from './core/effects';
-import actions from './core/actions';
-import reducers from './core/reducers';
+import effects from './store/effects';
+import actions from './store/actions';
+import reducers from './store/reducers';
 import storeServices from './core/store';
 
 import { AuthStoreService } from './core/store/auth-store.service';
@@ -35,7 +35,7 @@ import { Observable } from 'rxjs/Observable';
 import { Subscription } from 'rxjs/Subscription';
 import { SideMenuComponent } from './components/menu/menu.component';
 import { JwtAuthHttp } from './core/providers/auth-http';
-import { AuthActions } from './core/actions/auth-action';
+import { AuthActions } from './store/actions/auth-action';
 
 @Component({
   template: `

@@ -7,7 +7,7 @@
 import { ActionReducer, Action } from '@ngrx/store';
 import { MapActions } from '../../actions/map-action';
 import { MapState } from './map-state';
-import { MapModel } from '../../providers/map/map-model';
+import { MapModel } from '../../../core/providers/map/map-model';
 
 const defaultState: MapState = {
   loading: false,

@@ -7,7 +7,7 @@
 import { ActionReducer, Action } from '@ngrx/store';
 import { AuthState, defaultState } from './auth-state';
 import { AuthActions } from '../../actions/auth-action';
-import { UserModel } from '../../providers/auth/user-model';
+import { UserModel } from '../../../core/providers/auth/user-model';
 
 export const authReducer: ActionReducer<AuthState> = (state: AuthState = defaultState, action: Action) => {
   switch (action.type) {

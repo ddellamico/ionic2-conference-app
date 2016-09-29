@@ -6,7 +6,7 @@
 
 import { Injectable } from '@angular/core';
 import { Action } from '@ngrx/store';
-import { MapModel } from '../providers/map/map-model';
+import { MapModel } from '../../core/providers/map/map-model';
 
 /**
  * Instead of passing around action string constants and manually recreating

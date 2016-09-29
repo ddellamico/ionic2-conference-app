@@ -6,8 +6,8 @@
 
 import { Injectable } from '@angular/core';
 import { Action } from '@ngrx/store';
-import { ScheduleModel } from '../providers/schedule/schedule-model';
-import { TimelineFilter } from '../providers/conference/timeline-filter-model';
+import { ScheduleModel } from '../../core/providers/schedule/schedule-model';
+import { TimelineFilter } from '../../core/providers/conference/timeline-filter-model';
 
 /**
  * Instead of passing around action string constants and manually recreating

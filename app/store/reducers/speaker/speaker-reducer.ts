@@ -6,8 +6,8 @@
 
 import { ActionReducer, Action } from '@ngrx/store';
 import { SpeakerState } from './speaker-state';
-import { SpeakerModel } from '../../providers/speakers/speaker-model';
 import { SpeakerActions } from '../../actions/speaker-action';
+import { SpeakerModel } from '../../../core/providers/speakers/speaker-model';
 
 const defaultState: SpeakerState = {
   loaded: false,

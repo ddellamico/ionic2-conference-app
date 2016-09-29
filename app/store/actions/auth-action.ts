@@ -6,8 +6,8 @@
 
 import { Injectable } from '@angular/core';
 import { Action } from '@ngrx/store';
-import { UserModel } from '../providers/auth/user-model';
-import { SignupModel } from '../providers/auth/signup-model';
+import { UserModel } from '../../core/providers/auth/user-model';
+import { SignupModel } from '../../core/providers/auth/signup-model';
 
 /**
  * Instead of passing around action string constants and manually recreating

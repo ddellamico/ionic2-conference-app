@@ -8,8 +8,8 @@ import { Injectable } from '@angular/core';
 import { Effect, StateUpdates } from '@ngrx/effects';
 import { MapActions } from '../actions/map-action';
 import { AppState } from '../reducers/index';
-import { MapService } from '../providers/map/map-service';
-import { MapModel } from '../providers/map/map-model';
+import { MapService } from '../../core/providers/map/map-service';
+import { MapModel } from '../../core/providers/map/map-model';
 
 @Injectable()
 export class MapEffect {

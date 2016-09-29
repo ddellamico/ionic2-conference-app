@@ -9,10 +9,10 @@ import { Effect, StateUpdates, toPayload } from '@ngrx/effects';
 import { Observable } from 'rxjs/Observable';
 import { AuthActions } from '../actions/auth-action';
 import { AppState } from '../reducers/index';
-import { AuthService } from '../providers/auth/auth.service';
-import { UserModel } from '../providers/auth/user-model';
-import { ConferenceService } from '../providers/conference/conference-service';
-import { SignupModel } from '../providers/auth/signup-model';
+import { ConferenceService } from '../../core/providers/conference/conference-service';
+import { AuthService } from '../../core/providers/auth/auth.service';
+import { UserModel } from '../../core/providers/auth/user-model';
+import { SignupModel } from '../../core/providers/auth/signup-model';
 
 @Injectable()
 export class AuthEffect {

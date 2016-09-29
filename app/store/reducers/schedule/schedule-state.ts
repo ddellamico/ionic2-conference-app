@@ -4,7 +4,7 @@
  * @license   GPL-3.0
  */
 
-import { ScheduleModel } from '../../providers/schedule/schedule-model';
+import { ScheduleModel } from '../../../core/providers/schedule/schedule-model';
 
 export interface ScheduleState {
   loaded: boolean;

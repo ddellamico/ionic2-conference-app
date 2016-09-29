@@ -8,7 +8,7 @@ import { Observable } from 'rxjs/Observable';
 import { compose } from '@ngrx/core/compose';
 import { AppState } from '../reducers/index';
 import { ScheduleState } from '../reducers/schedule/schedule-state';
-import { ScheduleModel } from '../providers/schedule/schedule-model';
+import { ScheduleModel } from '../../core/providers/schedule/schedule-model';
 
 /**
  * reference : https://gist.github.com/btroncone/a6e4347326749f938510#extracting-selectors-for-reuse

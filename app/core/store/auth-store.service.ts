@@ -7,11 +7,11 @@
 import { Injectable } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs/Observable';
-import { AuthActions } from '../actions/auth-action';
-import { AppState } from '../reducers/index';
-import { AuthSelector } from '../selectors/auth-selector';
+import { AuthActions } from '../../store/actions/auth-action';
+import { AppState } from '../../store/reducers/index';
+import { AuthSelector } from '../../store/selectors/auth-selector';
 import { UserModel } from '../providers/auth/user-model';
-import { AuthEffect } from '../effects/auth-effect';
+import { AuthEffect } from '../../store/effects/auth-effect';
 import { SignupModel } from '../providers/auth/signup-model';
 
 @Injectable()

@@ -8,7 +8,7 @@ import { Observable } from 'rxjs/Observable';
 import { compose } from '@ngrx/core/compose';
 import { AppState } from '../reducers/index';
 import { MapState } from '../reducers/map/map-state';
-import { MapModel } from '../providers/map/map-model';
+import { MapModel } from '../../core/providers/map/map-model';
 
 /**
  * reference : https://gist.github.com/btroncone/a6e4347326749f938510#extracting-selectors-for-reuse

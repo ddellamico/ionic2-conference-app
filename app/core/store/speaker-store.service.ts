@@ -8,9 +8,9 @@
 import { Injectable } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs/Observable';
-import { SpeakerActions } from '../actions/speaker-action';
-import { AppState } from '../reducers/index';
-import { SpeakerSelector } from '../selectors/speaker-selector';
+import { SpeakerActions } from '../../store/actions/speaker-action';
+import { AppState } from '../../store/reducers/index';
+import { SpeakerSelector } from '../../store/selectors/speaker-selector';
 import { SpeakerModel } from '../providers/speakers/speaker-model';
 
 @Injectable()

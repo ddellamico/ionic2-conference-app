@@ -4,7 +4,7 @@
  * @license   GPL-3.0
  */
 
-import { SpeakerModel } from '../../providers/speakers/speaker-model';
+import { SpeakerModel } from '../../../core/providers/speakers/speaker-model';
 
 export interface SpeakerState {
   loaded: boolean;
