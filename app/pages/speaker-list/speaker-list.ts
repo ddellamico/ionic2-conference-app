@@ -20,7 +20,31 @@ import { SpeakerSelector } from '../../core/selectors/speaker-selector';
 import { SpeakerActions } from '../../core/actions/speaker-action';
 
 @Component({
-  template: require('./speaker-list.html'),
+  template: `
+    <ion-header>
+      <ion-navbar>
+        <button menuToggle>
+          <ion-icon name="menu"></ion-icon>
+        </button>
+        <ion-title>Speakers</ion-title>
+      </ion-navbar>
+    </ion-header>
+    
+    <ion-content class="outer-content speaker-list">
+      <speaker-list
+        [speakers]="speakerList$ | async"
+        (removeSpeaker)="removeSpeaker($event)"
+        (goToSessionDetail)="goToSessionDetail($event)"
+        (goToSpeakerDetail)="goToSpeakerDetail($event)"
+        (openSpeakerShare)="openSpeakerShare($event)"
+        (goToSpeakerTwitter)="goToSpeakerTwitter($event)">
+      </speaker-list>
+      <button (click)="addSpeaker()">
+        <ion-icon name="add"></ion-icon>
+        Add
+      </button>
+    </ion-content>
+  `,
   directives: [SpeakerListComponent]
 })
 export class SpeakerListPage {
@@ -61,7 +85,7 @@ export class SpeakerListPage {
       type: SpeakerActions.ADD_SPEAKER,
       payload: {
         id: UtilService.uid(),
-        name: 'pippone123'
+        name: 'test'
       }
     });
   }

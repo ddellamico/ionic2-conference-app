@@ -4,5 +4,4 @@
  * @license   GPL-3.0
  */
 
-export { AuthEvents } from './auth-events';
 export { UxMessage } from './ux-message';

@@ -6,8 +6,12 @@
 
 import { SpeakerSelector } from './speaker-selector';
 import { ScheduleSelector } from './schedule-selector';
+import { MapSelector } from './map-selector';
+import { AuthSelector } from './auth-selector';
 
 export default [
+  AuthSelector,
   SpeakerSelector,
-  ScheduleSelector
+  ScheduleSelector,
+  MapSelector
 ];

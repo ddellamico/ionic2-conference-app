@@ -48,15 +48,18 @@ import { ScheduleState } from './schedule/schedule-state';
 import { scheduleReducer } from './schedule/schedule-reducer';
 import { authReducer } from './auth/auth-reducer';
 import { AuthState } from './auth/auth-state';
+import { MapState } from './map/map-state';
+import { mapReducer } from './map/map-reducer';
 
 /**
  * As mentioned, we treat each reducer like a table in a database. This means
  * our top level state interface is just a map of keys to inner state types.
  */
 export interface AppState {
-  speakers: SpeakerState;
-  schedules: ScheduleState;
   auth: AuthState;
+  schedules: ScheduleState;
+  speakers: SpeakerState;
+  map: MapState;
 }
 
 /**
@@ -67,6 +70,7 @@ export interface AppState {
  * the result from right to left.
  */
 export default compose(storeFreeze, storeLogger(), combineReducers)({
+  map: mapReducer,
   speakers: speakerReducer,
   schedules: scheduleReducer,
   auth: authReducer

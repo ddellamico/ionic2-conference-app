@@ -5,7 +5,9 @@
  */
 
 import { AuthStoreService } from './auth-store.service';
+import { MapStoreService } from './map-store.service';
 
 export default [
-  AuthStoreService
+  AuthStoreService,
+  MapStoreService
 ];
