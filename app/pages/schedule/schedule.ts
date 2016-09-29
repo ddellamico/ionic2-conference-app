@@ -6,16 +6,50 @@ import { AppState } from '../../core/reducers/index';
 import { ScheduleFilterPage } from '../schedule-filter/schedule-filter';
 import { SessionDetailPage } from '../session-detail/session-detail';
 import { UserModel } from '../../core/providers/auth/user-model';
-import { ScheduleComponent } from '../../components/schedule/schedule';
 import { TimelineFilter } from '../../core/providers/conference/timeline-filter-model';
 import { ScheduleActions } from '../../core/actions/schedule-action';
 import { ScheduleModel } from '../../core/providers/schedule/schedule-model';
 import { ScheduleSelector } from '../../core/selectors/schedule-selector';
 import { SessionModel } from '../../core/providers/schedule/session-model';
+import { ScheduleListComponent } from './schedule-list.component';
 
 @Component({
-  template: require('./schedule.html'),
-  directives: [ScheduleComponent]
+  template: `
+  <ion-header>
+    <ion-navbar no-border-bottom>
+      <button menuToggle>
+        <ion-icon name="menu"></ion-icon>
+      </button>
+      <ion-segment [(ngModel)]="filter.segment" (ionChange)="updateSchedule()">
+        <ion-segment-button value="all">
+          All
+        </ion-segment-button>
+        <ion-segment-button value="favorites">
+          Favorites
+        </ion-segment-button>
+      </ion-segment>
+      <ion-buttons end>
+        <button (click)="presentFilter()">
+          <ion-icon ios="ios-options-outline" md="md-options"></ion-icon>
+        </button>
+      </ion-buttons>
+    </ion-navbar>
+    <ion-toolbar no-border-top>
+      <ion-searchbar primary [(ngModel)]="filter.queryText" (ionInput)="updateSchedule()" placeholder="Search">
+      </ion-searchbar>
+    </ion-toolbar>
+  </ion-header>
+  <ion-content class="schedule">
+    <schedule-list [model]="model$ | async" [filter]="filter" (addFavorite)="addFavorite($event)"
+      (removeFavorite)="removeFavorite($event)"
+      (goToSessionDetail)="goToSessionDetail($event)">
+    </schedule-list>
+    <ion-list-header [hidden]="shownSessions > 0">
+      No Sessions Found
+    </ion-list-header>
+  </ion-content>
+  `,
+  directives: [ScheduleListComponent]
 })
 export class SchedulePage {
 

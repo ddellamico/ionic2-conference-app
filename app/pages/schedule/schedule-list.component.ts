@@ -51,7 +51,7 @@ import { TimelineFilter } from '../../core/providers/conference/timeline-filter-
     `
   }
 )
-export class ScheduleComponent {
+export class ScheduleListComponent {
   @Input() model: ScheduleModel;
   @Input() filter: TimelineFilter;
 

@@ -13,11 +13,11 @@ import { Observable } from 'rxjs/Observable';
 import { SpeakerDetailPage } from '../speaker-detail/speaker-detail';
 import { SessionDetailPage } from '../session-detail/session-detail';
 import { SpeakerModel } from '../../core/providers/speakers/speaker-model';
-import { SpeakerListComponent } from '../../components/speaker-list/speaker-list';
 import { UtilService } from '../../core/helpers/utils';
 import { AppState } from '../../core/reducers/index';
 import { SpeakerSelector } from '../../core/selectors/speaker-selector';
 import { SpeakerActions } from '../../core/actions/speaker-action';
+import { SpeakerListComponent } from './speaker-list.component';
 
 @Component({
   template: `
@@ -29,7 +29,6 @@ import { SpeakerActions } from '../../core/actions/speaker-action';
         <ion-title>Speakers</ion-title>
       </ion-navbar>
     </ion-header>
-    
     <ion-content class="outer-content speaker-list">
       <speaker-list
         [speakers]="speakerList$ | async"

@@ -8,11 +8,6 @@ import { Component, Input, Output, EventEmitter, ChangeDetectionStrategy } from 
 
 @Component({
   selector: 'speaker-list',
-  /*
-   with 'onpush' change detection, components which rely solely on
-   input can skip change detection until those input references change,
-   this can supply a significant performance boost
-   */
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
   <ion-card *ngFor="let speaker of speakers" class="speaker">
@@ -62,4 +57,5 @@ export class SpeakerListComponent {
   @Output() goToSpeakerDetail = new EventEmitter();
   @Output() goToSpeakerTwitter = new EventEmitter();
   @Output() openSpeakerShare = new EventEmitter();
+
 }
