@@ -11,8 +11,8 @@ import { Observable } from 'rxjs/Observable';
 import { NotificationService } from '../../core/helpers/notifications';
 import { UxMessage } from '../../core/constants/ux-message';
 import { SignUpFormComponent } from './form.component';
-import { AuthStoreService } from '../../core/store/auth-store.service';
-import { SignupModel } from '../../core/providers/auth/signup-model';
+import { AuthService } from '../../core/services/auth.service';
+import { SignupModel } from '../../core/providers/auth/signup.model';
 import { Subscription } from 'rxjs/Subscription';
 
 @Component({
@@ -38,7 +38,7 @@ export class SignupPage {
   private isFetching$: Observable<boolean>;
   private error$: Observable<string>;
 
-  constructor(private authStoreService: AuthStoreService,
+  constructor(private authStoreService: AuthService,
               private nav: NavController,
               private notification: NotificationService) {
 

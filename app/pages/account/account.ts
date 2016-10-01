@@ -5,8 +5,8 @@
  */
 
 import { Component } from '@angular/core';
-import { UserModel } from '../../core/providers/auth/user-model';
-import { AuthStoreService } from '../../core/store/auth-store.service';
+import { UserModel } from '../../core/providers/auth/user.model';
+import { AuthService } from '../../core/services/auth.service';
 import { Observable } from 'rxjs/Observable';
 import { ProfileComponent } from './profile.component';
 
@@ -33,7 +33,7 @@ import { ProfileComponent } from './profile.component';
 export class AccountPage {
   private profile$: Observable<UserModel>;
 
-  constructor(private authStoreService: AuthStoreService) {
+  constructor(private authStoreService: AuthService) {
     this.profile$ = this.authStoreService.getCurrentUser();
   }
 

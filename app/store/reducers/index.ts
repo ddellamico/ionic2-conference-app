@@ -42,14 +42,14 @@ import { storeFreeze } from 'ngrx-store-freeze';
 import { combineReducers } from '@ngrx/store';
 
 
-import { speakerReducer } from './speaker/speaker-reducer';
-import { SpeakerState } from './speaker/speaker-state';
-import { ScheduleState } from './schedule/schedule-state';
-import { scheduleReducer } from './schedule/schedule-reducer';
-import { authReducer } from './auth/auth-reducer';
-import { AuthState } from './auth/auth-state';
-import { MapState } from './map/map-state';
-import { mapReducer } from './map/map-reducer';
+import { speakerReducer } from './speaker/speaker.reducer';
+import { SpeakerState } from './speaker/speaker.state';
+import { ScheduleState } from './schedule/schedule.state';
+import { scheduleReducer } from './schedule/schedule.reducer';
+import { authReducer } from './auth/auth.reducer';
+import { AuthState } from './auth/auth.state';
+import { MapState } from './map/map.state';
+import { mapReducer } from './map/map.reducer';
 
 /**
  * As mentioned, we treat each reducer like a table in a database. This means

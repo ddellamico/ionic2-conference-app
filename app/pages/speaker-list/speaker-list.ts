@@ -11,9 +11,9 @@ import { Observable } from 'rxjs/Observable';
 
 import { SpeakerDetailPage } from '../speaker-detail/speaker-detail';
 import { SessionDetailPage } from '../session-detail/session-detail';
-import { SpeakerModel } from '../../core/providers/speakers/speaker-model';
+import { SpeakerModel } from '../../core/providers/speakers/speaker.model';
 import { SpeakerListComponent } from './speaker-list.component';
-import { SpeakerStoreService } from '../../core/store/speaker-store.service';
+import { SpeakerService } from '../../core/services/speaker.service';
 
 @Component({
   template: `
@@ -42,7 +42,7 @@ export class SpeakerListPage {
   public isFetching$: Observable<boolean>;
 
   constructor(private nav: NavController,
-              private speakerStoreService: SpeakerStoreService,
+              private speakerStoreService: SpeakerService,
               private actionSheet: ActionSheetController) {
 
     this.speakerList$ = this.speakerStoreService.getSpeakerItems();

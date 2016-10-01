@@ -3,12 +3,12 @@ import { Component } from '@angular/core';
 import { App, ModalController, AlertController, NavController } from 'ionic-angular';
 import { ScheduleFilterPage } from '../schedule-filter/schedule-filter';
 import { SessionDetailPage } from '../session-detail/session-detail';
-import { UserModel } from '../../core/providers/auth/user-model';
-import { TimelineFilter } from '../../core/providers/conference/timeline-filter-model';
-import { ScheduleModel } from '../../core/providers/schedule/schedule-model';
-import { SessionModel } from '../../core/providers/schedule/session-model';
+import { UserModel } from '../../core/providers/auth/user.model';
+import { TimelineFilter } from '../../core/providers/conference/timeline-filter.model';
+import { ScheduleModel } from '../../core/providers/schedule/schedule.model';
+import { SessionModel } from '../../core/providers/schedule/session.model';
 import { ScheduleListComponent } from './schedule-list.component';
-import { ScheduleStoreService } from '../../core/store/schedule-store.service';
+import { ScheduleService } from '../../core/services/schedule.service';
 
 @Component({
   template: `
@@ -61,7 +61,7 @@ export class SchedulePage {
   private isFetching$: Observable<boolean>;
 
   constructor(private app: App,
-              private scheduleStoreService: ScheduleStoreService,
+              private scheduleStoreService: ScheduleService,
               private nav: NavController,
               private alertCtrl: AlertController,
               private modalCtrl: ModalController) {

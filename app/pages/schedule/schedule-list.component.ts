@@ -6,8 +6,8 @@
 
 import { Component, Input, Output, ViewChild, EventEmitter, ChangeDetectionStrategy } from '@angular/core';
 import { List } from 'ionic-angular';
-import { ScheduleModel } from '../../core/providers/schedule/schedule-model';
-import { TimelineFilter } from '../../core/providers/conference/timeline-filter-model';
+import { ScheduleModel } from '../../core/providers/schedule/schedule.model';
+import { TimelineFilter } from '../../core/providers/conference/timeline-filter.model';
 
 @Component({
     selector: 'schedule-list',

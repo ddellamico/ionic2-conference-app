@@ -8,9 +8,9 @@ import { provide } from '@angular/core';
 import { beforeEach, beforeEachProviders, describe, expect, it, inject, async } from '@angular/core/testing';
 import { ComponentFixture, TestComponentBuilder }     from '@angular/compiler/testing';
 import { NavController, ActionSheetController } from 'ionic-angular';
-import { ConferenceService } from '../../core/providers/conference/conference-service';
+import { ConferenceProvider } from '../../core/providers/conference/conference.provider';
 import { SpeakerListPage } from './speaker-list';
-import { ConferenceServiceMock } from '../../core/providers/conference/conference-service-mock';
+import { ConferenceProviderMock } from '../../core/providers/conference/conference.mock';
 
 describe('SpeakerListPage', () => {
 
@@ -23,13 +23,13 @@ describe('SpeakerListPage', () => {
     TestComponentBuilder,
     NavController,
     ActionSheetController,
-    provide(ConferenceService, {useClass: ConferenceServiceMock}),
+    provide(ConferenceProvider, {useClass: ConferenceProviderMock}),
     provide(ActionSheetController, {useClass: ActionSheetControllerMock}),
   ]);
 
-  let tcb: TestComponentBuilder, conferenceService: ConferenceServiceMock;
-  beforeEach(async(inject([TestComponentBuilder, ConferenceService], (_tcb: TestComponentBuilder,
-                                                                      _conferenceService: ConferenceServiceMock) => {
+  let tcb: TestComponentBuilder, conferenceService: ConferenceProviderMock;
+  beforeEach(async(inject([TestComponentBuilder, ConferenceProvider], (_tcb: TestComponentBuilder,
+                                                                       _conferenceService: ConferenceProviderMock) => {
     tcb = _tcb;
     conferenceService = _conferenceService;
   })));

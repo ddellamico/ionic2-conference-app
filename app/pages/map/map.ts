@@ -5,8 +5,8 @@
  */
 
 import { Component, ViewChild } from '@angular/core';
-import { MapModel } from '../../core/providers/map/map-model';
-import { MapStoreService } from '../../core/store/map-store.service';
+import { MapModel } from '../../core/providers/map/map.model';
+import { MapService } from '../../core/services/map.service';
 import { Observable } from 'rxjs/Observable';
 import { Subscription } from 'rxjs';
 import { UxMessage } from '../../core/constants/ux-message';
@@ -35,7 +35,7 @@ export class MapPage {
   @ViewChild('map') mapCanvas;
   private map: any = null;
 
-  constructor(private mapStoreService: MapStoreService,
+  constructor(private mapStoreService: MapService,
               private notification: NotificationService) {
 
     this.markers$ = this.mapStoreService.getMapItems();

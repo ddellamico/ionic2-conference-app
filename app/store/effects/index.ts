@@ -4,10 +4,10 @@
  * @license   GPL-3.0
  */
 
-import { SpeakerEffect } from './speaker-effect';
-import { ScheduleEffect } from './schedule-effect';
-import { AuthEffect } from './auth-effect';
-import { MapEffect } from './map-effect';
+import { SpeakerEffect } from './speaker.effect';
+import { ScheduleEffect } from './schedule.effect';
+import { AuthEffect } from './auth.effect';
+import { MapEffect } from './map.effect';
 
 export default [
   AuthEffect,

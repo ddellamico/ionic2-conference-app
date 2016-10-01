@@ -16,26 +16,26 @@ import { runEffects } from '@ngrx/effects';
 
 import { AccountPage, LoginPage, SignupPage, TabsPage, TutorialPage } from './pages';
 
-import { ConferenceService } from './core/providers/conference/conference-service';
-import { AuthService } from './core/providers/auth/auth.service';
-import { ScheduleService } from './core/providers/schedule/schedule-service';
-import { SpeakerService } from './core/providers/speakers/speaker-service';
-import { MapService } from './core/providers/map/map-service';
+import { ConferenceProvider } from './core/providers/conference/conference.provider';
+import { AuthProvider } from './core/providers/auth/auth.provider';
+import { ScheduleProvider } from './core/providers/schedule/schedule.provider';
+import { SpeakerProvider } from './core/providers/speakers/speaker.provider';
+import { MapProvider } from './core/providers/map/map.provider';
 
 import { NotificationService } from './core/helpers/notifications';
 
 import effects from './store/effects';
 import actions from './store/actions';
 import reducers from './store/reducers';
-import storeServices from './core/store';
+import storeServices from './core/services';
 
-import { AuthStoreService } from './core/store/auth-store.service';
-import { UserModel } from './core/providers/auth/user-model';
+import { AuthService } from './core/services/auth.service';
+import { UserModel } from './core/providers/auth/user.model';
 import { Observable } from 'rxjs/Observable';
 import { Subscription } from 'rxjs/Subscription';
 import { SideMenuComponent } from './components/menu/menu.component';
 import { JwtAuthHttp } from './core/providers/auth-http';
-import { AuthActions } from './store/actions/auth-action';
+import { AuthActions } from './store/actions/auth.action';
 
 @Component({
   template: `
@@ -81,7 +81,7 @@ export class ConferenceApp {
   // @ViewChild(Nav) gets a reference to the app's root nav
   @ViewChild(Nav) private nav: Nav;
 
-  constructor(private authStoreService: AuthStoreService,
+  constructor(private authStoreService: AuthService,
               private platform: Platform) {
     // Call any initial plugins when ready
     platform.ready().then(() => {
@@ -122,8 +122,8 @@ export class ConferenceApp {
 // See the theming docs for the default values:
 // http://ionicframework.com/docs/v2/theming/platform-specific-styles/
 
-ionicBootstrap(ConferenceApp, [HTTP_PROVIDERS, AuthService, ConferenceService,
-  storeServices, ScheduleService, SpeakerService, MapService, NotificationService,
+ionicBootstrap(ConferenceApp, [HTTP_PROVIDERS, AuthProvider, ConferenceProvider,
+  storeServices, ScheduleProvider, SpeakerProvider, MapProvider, NotificationService,
   disableDeprecatedForms(), // disable deprecated forms
   provideForms(), // enable new forms module
   provide(JwtHelper, {useFactory: () => new JwtHelper()}),

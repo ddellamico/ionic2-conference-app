@@ -11,9 +11,9 @@ import { beforeEachProviders, inject } from '@angular/core/testing';
 import { Events, Platform } from 'ionic-angular';
 import { ConferenceApp } from './app';
 import { Observable } from 'rxjs/Observable';
-import { AuthService } from './core/providers/auth/auth.service';
-import { ConferenceService } from './core/providers/conference/conference-service';
-import { AuthStoreService } from './core/store/auth-store.service';
+import { AuthProvider } from './core/providers/auth/auth.provider';
+import { ConferenceProvider } from './core/providers/conference/conference.provider';
+import { AuthService } from './core/services/auth.service';
 
 // Mock out Ionic's platform class
 class PlatformMock {
@@ -42,17 +42,17 @@ describe('ConferenceApp', () => {
   // provide our implementations or mocks to the dependency injector
   beforeEachProviders(() => [
     Events,
-    ConferenceService,
-    provide(AuthService, {useClass: AuthServiceMock}),
-    provide(ConferenceService, {useClass: ConferenceServiceMock}),
+    ConferenceProvider,
+    provide(AuthProvider, {useClass: AuthServiceMock}),
+    provide(ConferenceProvider, {useClass: ConferenceServiceMock}),
     provide(Platform, {useClass: PlatformMock}),
   ]);
 
   let platform;
-  beforeEach(inject([Events, AuthStoreService, ConferenceService, Platform], (_events: Events,
-                                                                              _authStoreService: AuthStoreService,
-                                                                              _conferenceService: ConferenceService,
-                                                                              _platform: Platform) => {
+  beforeEach(inject([Events, AuthService, ConferenceProvider, Platform], (_events: Events,
+                                                                          _authStoreService: AuthService,
+                                                                          _conferenceService: ConferenceProvider,
+                                                                          _platform: Platform) => {
     platform = _platform;
     spyOn(_platform, 'ready').and.callThrough();
     conferenceApp = new ConferenceApp(_authStoreService, _platform);

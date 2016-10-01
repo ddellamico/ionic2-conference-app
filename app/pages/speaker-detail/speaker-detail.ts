@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
 import { SessionDetailPage } from '../session-detail/session-detail';
-import { SpeakerModel } from '../../core/providers/speakers/speaker-model';
+import { SpeakerModel } from '../../core/providers/speakers/speaker.model';
 
 @Component({
   template: require('./speaker-detail.html')

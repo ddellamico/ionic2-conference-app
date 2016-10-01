@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { NavParams, ViewController } from 'ionic-angular';
 import { TrackListComponent } from './track-list.component';
-import { ScheduleStoreService } from '../../core/store/schedule-store.service';
+import { ScheduleService } from '../../core/services/schedule.service';
 
 @Component({
   template: `
@@ -18,7 +18,7 @@ import { ScheduleStoreService } from '../../core/store/schedule-store.service';
 export class ScheduleFilterPage {
   private tracks$: Observable<Array<{name: string, isChecked: boolean}>>;
 
-  constructor(private scheduleStoreService: ScheduleStoreService,
+  constructor(private scheduleStoreService: ScheduleService,
               private navParams: NavParams,
               private viewCtrl: ViewController) {
 

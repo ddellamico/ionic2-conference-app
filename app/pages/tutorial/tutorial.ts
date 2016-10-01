@@ -6,9 +6,9 @@
 
 import { Component } from '@angular/core';
 import { NavController, MenuController } from 'ionic-angular';
-import { AuthStoreService } from '../../core/store/auth-store.service';
+import { AuthService } from '../../core/services/auth.service';
 import { TabsPage } from '../tabs/tabs';
-import { UserModel } from '../../core/providers/auth/user-model';
+import { UserModel } from '../../core/providers/auth/user.model';
 import { LoginPage } from '../login/login';
 import { Subscription } from 'rxjs/Subscription';
 
@@ -26,7 +26,7 @@ export class TutorialPage {
   private showSkip = true;
   private authSub: Subscription;
 
-  constructor(private authStoreService: AuthStoreService,
+  constructor(private authStoreService: AuthService,
               private nav: NavController,
               private menu: MenuController) {
 

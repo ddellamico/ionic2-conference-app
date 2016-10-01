@@ -7,7 +7,7 @@
 // Reference https://scotch.io/tutorials/using-angular-2s-model-driven-forms-with-formgroup-and-formcontrol
 
 import { Component } from '@angular/core';
-import { NavController, AlertController } from 'ionic-angular';
+import { NavController } from 'ionic-angular';
 import { Observable } from 'rxjs/Observable';
 import { Subscription } from 'rxjs/Subscription';
 import { TabsPage } from '../tabs/tabs';
@@ -15,10 +15,9 @@ import { SignupPage } from '../signup/signup';
 import { NotificationService } from '../../core/helpers/notifications';
 import { UxMessage } from '../../core/constants/ux-message';
 import { FormComponent } from './form.component';
-import { BasePage } from '../base-page';
 import { LoadingComponent } from '../../components/loading/loading.component';
-import { AuthStoreService } from '../../core/store/auth-store.service';
-import { UserModel } from '../../core/providers/auth/user-model';
+import { AuthService } from '../../core/services/auth.service';
+import { UserModel } from '../../core/providers/auth/user.model';
 
 @Component({
   template: `
@@ -45,7 +44,7 @@ import { UserModel } from '../../core/providers/auth/user-model';
   `,
   directives: [FormComponent, LoadingComponent]
 })
-export class LoginPage extends BasePage {
+export class LoginPage {
 
   private currentUser$: Observable<UserModel>;
   private isFetching$: Observable<boolean>;
@@ -54,16 +53,12 @@ export class LoginPage extends BasePage {
   private authSub: Subscription;
   private submitted = false;
 
-  constructor(private authStoreService: AuthStoreService,
+  constructor(private authStoreService: AuthService,
               private nav: NavController,
-              private notification: NotificationService,
-              protected alertCtrl: AlertController) {
-
-    super(alertCtrl);
+              private notification: NotificationService) {
   }
 
   ngOnInit() {
-
     this.isFetching$ = this.authStoreService.isLoading();
     this.error$ = this.authStoreService.getErrorMessage();
     this.currentUser$ = this.authStoreService.getCurrentUser();

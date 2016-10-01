@@ -5,7 +5,7 @@
  */
 
 import { Component, Input, Output, EventEmitter } from '@angular/core';
-import { UserModel } from '../../core/providers/auth/user-model';
+import { UserModel } from '../../core/providers/auth/user.model';
 
 @Component({
   selector: 'profile',

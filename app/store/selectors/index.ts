@@ -4,10 +4,10 @@
  * @license   GPL-3.0
  */
 
-import { SpeakerSelector } from './speaker-selector';
-import { ScheduleSelector } from './schedule-selector';
-import { MapSelector } from './map-selector';
-import { AuthSelector } from './auth-selector';
+import { SpeakerSelector } from './speaker.selector';
+import { ScheduleSelector } from './schedule.selector';
+import { MapSelector } from './map.selector';
+import { AuthSelector } from './auth.selector';
 
 export default [
   AuthSelector,
