@@ -1,21 +1,36 @@
 {
   "compilerOptions": {
     "target": "es5",
-    "module": "commonjs",
+    "module": "es2015",
+    "declaration": true,
     "moduleResolution": "node",
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
+    "allowSyntheticDefaultImports": true,
     "sourceMap": true,
-    "baseUrl": "./app",
-    "outDir": "build"
+    "noEmitHelpers": false,
+    "strictNullChecks": false,
+    "baseUrl": "./src",
+    "outDir": "./build",
+    "paths": [],
+    "lib": [
+      "dom",
+      "es2015"
+    ],
+    "types": [
+      "jasmine",
+      "node",
+      "google-maps"
+    ]
   },
+  "filesGlob": [
+    "**/*.ts",
+    "!node_modules/**/*"
+  ],
   "exclude": [
     "node_modules",
     "build"
   ],
-  "awesomeTypescriptLoaderOptions": {
-    "forkChecker": true
-  },
   "compileOnSave": false,
   "buildOnSave": false,
   "atom": {
