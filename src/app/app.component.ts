@@ -27,7 +27,7 @@ import { AuthService } from '../core/services/auth.service';
             </side-menu>
           </ion-content>
     </ion-menu>
-    <ion-nav [root]="rootPage" #content swipeBackEnabled="false"></ion-nav>
+    <ion-nav #content swipeBackEnabled="false"></ion-nav>
     `
 })
 export class ConferenceApp {
@@ -51,7 +51,7 @@ export class ConferenceApp {
   private isFetching$: Observable<boolean>;
 
   private logoutSub: Subscription;
-  private tokenSub: Subscription;
+  private loginSub: Subscription;
 
 
   // the root nav is a child of the root app component
@@ -69,7 +69,7 @@ export class ConferenceApp {
     this.isFetching$ = this.authService.isLoading();
 
     this.authService.dispatchCheckToken();
-    this.tokenSub = this.authService.loggedIn().subscribe((isLoggedIn) => {
+    this.loginSub = this.authService.loggedIn().subscribe((isLoggedIn) => {
       isLoggedIn ? this.nav.push(TabsPage) : this.nav.setRoot(_rootPage);
       _rootPage = LoginPage; //
     });
@@ -97,6 +97,6 @@ export class ConferenceApp {
 
   ngOnDestroy() {
     this.logoutSub.unsubscribe();
-    this.tokenSub.unsubscribe();
+    this.loginSub.unsubscribe();
   }
 }
