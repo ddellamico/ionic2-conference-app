@@ -58,7 +58,7 @@ Furthermore a lot of changes has been made in "providers" (app/core folder), in 
   
   go to [http://0.0.0.0:8100](http://0.0.0.0:8100) or [http://localhost:8100](http://localhost:8100) in your browser
 
-## Commands
+## Commands:
   
     ```bash
     $ npm run dev             --> run ionic serve
