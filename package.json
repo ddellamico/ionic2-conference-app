@@ -1,6 +1,6 @@
 {
   "name": "ionic-conference-app",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "Ionic Conference App",
   "keywords": [
     "ionic2",
@@ -29,7 +29,6 @@
     "deploy:before": "build",
     "build:before": "build",
     "run:before": "build",
-
     "ios:dev": "bnr ios:dev",
     "ios:release": "bnr ios:release",
     "android:dev": "bnr android:dev",
