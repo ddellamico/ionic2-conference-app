@@ -1,26 +1,29 @@
-#Ionic Conference App with JWT authentication
+#Ionic Conference App + NgRx and JWT authentication
 
 [![Build Status](https://travis-ci.org/ddellamico/ionic2-conference-app.svg?branch=master)](https://travis-ci.org/ddellamico/ionic2-conference-app) [![Commitizen friendly](https://img.shields.io/badge/commitizen-friendly-brightgreen.svg?style=flat-square)](http://commitizen.github.io/cz-cli/) [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square)](http://makeapullrequest.com)
 
-This project is an "extended" version of <https://github.com/driftyco/ionic-conference-app> that uses Webpack and consume REST API exposed by [API component](https://github.com/ddellamico/ionic-conference-api).
+This project is an "extended" version of [Ionic 2 Conference Application](https://github.com/driftyco/ionic-conference-app) using [ngrx](https://github.com/ngrx) suite and consuming REST API exposed by [backend API component](https://github.com/ddellamico/ionic-conference-api).
 The API component for this application can be found [here](https://github.com/ddellamico/ionic-conference-api).
 
-**Api component live demo:**: https://ion-conf-api.damiendev.com
+**Api component live demo/documentation:** https://ion-conf-api.damiendev.com
 
-The main goal for this project is to provide a simple way to add authentication to a ionic 2 application but also a more flexible and extensible build system ( using webpack ). 
+The main goal for this project is to provide a simple way to add jwt authentication utilizing ngrx libraries within a ionic 2 application. 
 
-Webpack configuration is heavily inspired from [survivejs.com](http://survivejs.com/webpack/introduction/)
+Check out the [Comprehensive Introduction to @ngrx/store](https://gist.github.com/btroncone/a6e4347326749f938510) for an overview.
 
-Furthermore a lot of changes has been made in "providers" (app/core folder), in order to mainly use RxJs instead of Promises. 
+Furthermore a lot of changes has been made in "providers" (app/core folder), in order to mainly use RxJs instead of Promises.
+
+If you are looking for a great Ionic 2 boilerplate, take a look [here](https://github.com/marcoturi/ionic2-boilerplate).
 
 **Note: This project is under development.**
 
 ## Features
-  * Ionic 2 beta 11 : <https://github.com/driftyco/ionic>
+  * [Ionic 2 Rc0](https://github.com/driftyco/ionic)
   * [TypeScript](http://www.typescriptlang.org/)
   * [RxJS](https://github.com/Reactive-Extensions/RxJS)
-  * JSON Web Token ([angular-jwt](https://github.com/auth0/angular-jwt)) authentication
-  * [Webpack](http://webpack.github.io/)
+  * [NgRx Store](https://github.com/ngrx/store/)
+  * [NgRx Effects](https://github.com/ngrx/effects/)
+  * [angular-jwt](https://github.com/auth0/angular-jwt)
   * [tslint](https://github.com/palantir/tslint)
   * [Codelyzer](https://github.com/mgechev/codelyzer)
   * [Typedoc](https://github.com/TypeStrong/typedoc)
@@ -38,29 +41,34 @@ Furthermore a lot of changes has been made in "providers" (app/core folder), in 
 
   and replace the values there.
   
-  > Clone the repo
   ```bash
-  $ git clone https://github.com/ddellamico/ionic-conference-app
+  # clone the repo
+  git clone https://github.com/ddellamico/ionic2-conference-app.git
   # change directory to our repo
-  cd ionic-conference-app
+  cd ionic2-conference-app
   # install the repo with npm
-  npm install
-  # start the server (webpack-dev-server)
+  npm install && ionic state restore
+  # start the server
   npm run dev
   ```
   
-  go to [http://0.0.0.0:8080](http://0.0.0.0:8080) or [http://localhost:8080](http://localhost:8080) in your browser
+  go to [http://0.0.0.0:8100](http://0.0.0.0:8100) or [http://localhost:8100](http://localhost:8100) in your browser
 
 ## Commands
-  ```bash
-  $ npm run dev             --> run dev server with webpack-dev-server ( development )
-  $ npm run build           --> build files inside www folder ( production )
-  $ npm run test            --> run test with Karma
-  $ npm run ios:dev         --> start ios simulator (ionic run ios)
-  $ npm run ios:release     --> build files for ios platform and generate xcodeproj (ionic build ios)
-  $ npm run android:dev     --> start android simulator (ionic run android)
-  $ npm run android:release --> build files for android platform and generate apk (ionic build android)
-  ```
+  
+  | Task              | Description                                            |
+  |-------------------|--------------------------------------------------------|
+  | `dev`             | run ionic serve                                        |
+  | `build`           | Full production build. Use `--dev` flag for dev build. |
+  | `release`         | generate changelog based on commits                    |
+  | `push`            | shortcut for git push origin master --follow-tags      |
+  | `lint`            | lint with tslint                                       |
+  | `docs`            | not working yet                                        |
+  | `outdated`        | search npm packages for outdated dependencies          |
+  | `ios:dev`         | build .ipa using dev environment vars                  |
+  | `ios:release`     | build .ipa with production environment vars            |
+  | `android:dev`     | build .apk using dev environment vars                  |
+  | `android:release` | build .apk with production environment vars            |
   
 ## Commit:
   
@@ -81,6 +89,9 @@ $ npm test
   
  This post help me a lot to setup test environment with karma : http://lathonez.github.io/2016/ionic-2-unit-testing/
  Thanks [Lathonez](http://lathonez.github.io) !
+ 
+ **NOTE:** With rc0, Ionic start using [rollupjs](http://rollupjs.org/) and to be honest, make test environment working is quite painful.
+  So, before reintroducing test, I would prefer waiting until ionic will be run test out of the box (probably using [ng-cli](https://github.com/angular/angular-cli#running-unit-tests))  
 
 ## Changelog
 
