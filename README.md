@@ -60,19 +60,18 @@ Furthermore a lot of changes has been made in "providers" (app/core folder), in 
 
 ## Commands
   
-  | Task              | Description                                            |
-  |-------------------|--------------------------------------------------------|
-  | `dev`             | run ionic serve                                        |
-  | `build`           | Full production build. Use `--dev` flag for dev build. |
-  | `release`         | generate changelog based on commits                    |
-  | `push`            | shortcut for git push origin master --follow-tags      |
-  | `lint`            | lint with tslint                                       |
-  | `docs`            | not working yet                                        |
-  | `outdated`        | search npm packages for outdated dependencies          |
-  | `ios:dev`         | build .ipa using dev environment vars                  |
-  | `ios:release`     | build .ipa with production environment vars            |
-  | `android:dev`     | build .apk using dev environment vars                  |
-  | `android:release` | build .apk with production environment vars            |
+    ```bash
+    $ npm run dev             --> run ionic serve
+    $ npm run build           --> full production build. Use `--dev` flag for dev build
+    $ npm run release         --> generate changelog based on commits
+    $ npm run push            --> shortcut for git push origin master --follow-tags
+    $ npm run lint            --> lint with tslint
+    $ npm run outdated        --> search npm packages for outdated dependencies
+    $ npm run ios:dev         --> start ios simulator (ionic run ios)
+    $ npm run ios:release     --> build files for ios platform and generate xcodeproj (ionic build ios)
+    $ npm run android:dev     --> start android simulator (ionic run android)
+    $ npm run android:release --> build files for android platform and generate apk (ionic build android)
+    ```
   
 ## Commit:
   
