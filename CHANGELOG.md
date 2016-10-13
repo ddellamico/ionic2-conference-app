@@ -9,22 +9,16 @@ All notable changes to this project will be documented in this file. See [standa
 ### Bug Fixes
 
 * **app:** fix NGC errors ([d28f668](https://github.com/ddellamico/ionic2-conference-app/commit/d28f668))
-* **test:** fix return value ([0696d96](https://github.com/ddellamico/ionic2-conference-app/commit/0696d96))
-
 
 ### Features
 
+* **app:** upgraded to Ionic RC0 ([e529b02](https://github.com/ddellamico/ionic2-conference-app/commit/e529b02))
 * **app:** introduce JwtAuthHttp class extending AuthHttp to manage unauthorized requests ([3387858](https://github.com/ddellamico/ionic2-conference-app/commit/3387858))
 * **app:** introduce store services and add new auth actions ([a2fef8b](https://github.com/ddellamico/ionic2-conference-app/commit/a2fef8b))
 * **app:** ngrx/store: add base structure for store, reducers, actions and selectors ([78259ae](https://github.com/ddellamico/ionic2-conference-app/commit/78259ae))
 * **app:** restructuring to use ngrx store ([2e90522](https://github.com/ddellamico/ionic2-conference-app/commit/2e90522))
-* **app:** Update project to Ionic2-rc0 ([e529b02](https://github.com/ddellamico/ionic2-conference-app/commit/e529b02))
-* **build:** add script commands for travis ci ([c3bf33d](https://github.com/ddellamico/ionic2-conference-app/commit/c3bf33d))
-* **build:** simplify build task ([e664998](https://github.com/ddellamico/ionic2-conference-app/commit/e664998))
 * **core:** introduce reducers, actions and effects ([b829c0f](https://github.com/ddellamico/ionic2-conference-app/commit/b829c0f))
-* **pages:** massive refactoring to pages components in order to use ngrx store ([25546ad](https://github.com/ddellamico/ionic2-conference-app/commit/25546ad))
-* **pages/map:** restructuring to use ngrx ([7115317](https://github.com/ddellamico/ionic2-conference-app/commit/7115317))
-
+* **pages:** massive refactoring in pages components in order to use ngrx store ([25546ad](https://github.com/ddellamico/ionic2-conference-app/commit/25546ad))
 
 
 <a name="0.2.0"></a>
