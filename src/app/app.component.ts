@@ -47,8 +47,8 @@ export class ConferenceApp {
     {title: 'Signup', component: SignupPage, icon: 'person-add'}
   ];
 
-  private currentUser$: Observable<UserModel>;
-  private isFetching$: Observable<boolean>;
+  currentUser$: Observable<UserModel>;
+  isFetching$: Observable<boolean>;
 
   private logoutSub: Subscription;
   private loginSub: Subscription;
@@ -56,7 +56,7 @@ export class ConferenceApp {
 
   // the root nav is a child of the root app component
   // @ViewChild(Nav) gets a reference to the app's root nav
-  @ViewChild(Nav) private nav: Nav;
+  @ViewChild(Nav) nav: Nav;
 
   constructor(private authService: AuthService,
               private platform: Platform) {

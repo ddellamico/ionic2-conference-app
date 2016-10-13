@@ -13,8 +13,8 @@ import { LoginPage } from '../login/login';
   templateUrl: 'tutorial.html'
 })
 export class TutorialPage {
-  private slides: Slide[];
-  private showSkip = true;
+  slides: Slide[];
+  showSkip = true;
 
   constructor(private nav: NavController,
               private menu: MenuController) {

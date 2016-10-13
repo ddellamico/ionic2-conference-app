@@ -20,15 +20,15 @@ import { FormValidators } from '../../core/helpers/validators';
         <ion-label floating color="primary">Email</ion-label>
         <ion-input type="email" value="" formControlName="username" spellcheck="false" autocapitalize="off"></ion-input>
       </ion-item>
-      <p *ngIf="!authForm.controls.username.valid && authForm.controls.username.touched" color="danger" padding-left>
-        Invalid email !
+      <p *ngIf="!authForm.controls['username'].valid && authForm.controls['username'].touched" 
+          color="danger" padding-left>Invalid email !
       </p>
       <ion-item>
         <ion-label floating color="primary">Password</ion-label>
         <ion-input type="password" value="" formControlName="password"></ion-input>
       </ion-item>
-      <p *ngIf="!authForm.controls.password.valid && authForm.controls.password.touched" color="danger" padding-left>
-        Password is required
+      <p *ngIf="!authForm.controls['password'].valid && authForm.controls['password'].touched" 
+          color="danger" padding-left>Password is required
       </p>
       <p *ngIf="errorMessage" color="danger" padding-left>Login failed :{{ errorMessage }}</p>
       <ion-row responsive-sm>
@@ -44,12 +44,12 @@ import { FormValidators } from '../../core/helpers/validators';
 })
 export class AuthFormComponent {
 
-  private authForm: FormGroup;
+  authForm: FormGroup;
 
   @Input() errorMessage: string;
 
-  @Output() onLogin = new EventEmitter();
-  @Output() onSignup = new EventEmitter();
+  @Output() onLogin = new EventEmitter(false);
+  @Output() onSignup = new EventEmitter(false);
 
   constructor(private fb: FormBuilder) {
   }

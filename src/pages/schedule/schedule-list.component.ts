@@ -55,6 +55,9 @@ import { TimelineFilter } from '../../core/providers/conference/timeline-filter.
       </ion-item-sliding>
     </ion-item-group>
     </ion-list>
+    <ion-list-header *ngIf="model.shownSessions > 0">
+      No Sessions Found
+    </ion-list-header>
     `
   }
 )

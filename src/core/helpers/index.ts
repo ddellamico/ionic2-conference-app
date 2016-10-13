@@ -7,7 +7,9 @@
 import { NotificationHelper } from './notifications';
 import { CommonHelper } from './common';
 
-export default [
-  NotificationHelper,
-  CommonHelper
-];
+export function helpers() {
+  return [
+    NotificationHelper,
+    CommonHelper
+  ];
+}

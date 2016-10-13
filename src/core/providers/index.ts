@@ -5,11 +5,13 @@ import { ScheduleProvider } from './schedule/schedule.provider';
 import { SpeakerProvider } from './speakers/speaker.provider';
 import { JwtAuthHttp } from './auth-http';
 
-export default [
-  JwtAuthHttp,
-  AuthProvider,
-  ConferenceProvider,
-  MapProvider,
-  ScheduleProvider,
-  SpeakerProvider
-];
+export function providers() {
+  return [
+    JwtAuthHttp,
+    AuthProvider,
+    ConferenceProvider,
+    MapProvider,
+    ScheduleProvider,
+    SpeakerProvider
+  ];
+}

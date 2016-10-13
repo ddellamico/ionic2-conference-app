@@ -22,15 +22,15 @@ import { Observable } from 'rxjs/Observable';
   </ion-header>
   <ion-content class="outer-content">
     <profile [profile]="profile$ | async"
-             (logout)="logout($event)"
-             (changePassword)="changePassword($event)"
-             (updatePicture)="updatePicture($event)">
+             (logout)="logout()"
+             (changePassword)="changePassword()"
+             (updatePicture)="updatePicture()">
     </profile>
   </ion-content>
   `
 })
 export class AccountPage {
-  private profile$: Observable<UserModel>;
+  profile$: Observable<UserModel>;
 
   constructor(private authStoreService: AuthService) {
     this.profile$ = this.authStoreService.getCurrentUser();

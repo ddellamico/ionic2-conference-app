@@ -17,8 +17,9 @@ import { AuthConst } from '../../constants';
 @Injectable()
 export class AuthProvider extends BaseProvider {
 
+  private jwtHelper: JwtHelper = new JwtHelper();
+
   constructor(private http: Http,
-              private jwtHelper: JwtHelper,
               private storage: Storage) {
     super();
   }

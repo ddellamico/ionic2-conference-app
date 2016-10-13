@@ -10,12 +10,13 @@ import { ScheduleService } from '../../core/services/schedule.service';
       [tracks]="tracks$ | async"
       (applyFilters)="applyFilters($event)"
       (dismiss)="dismiss($event)"
-      (resetFilters)="resetFilters($event)">
+      (resetFilters)="resetFilters()">
     </track-list>
   `
 })
 export class ScheduleFilterPage {
-  private tracks$: Observable<Array<{name: string, isChecked: boolean}>>;
+
+  tracks$: Observable<Array<{name: string, isChecked: boolean}>>;
 
   constructor(private scheduleStoreService: ScheduleService,
               private navParams: NavParams,

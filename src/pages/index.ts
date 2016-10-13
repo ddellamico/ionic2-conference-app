@@ -37,26 +37,30 @@ export * from './schedule/schedule';
 export * from './schedule-filter/schedule-filter';
 export * from './map/map';
 
-export default [
-  SideMenuComponent,
-  LoadingComponent,
-  AboutPage,
-  AccountPage,
-  ProfileComponent,
-  LoginPage,
-  AuthFormComponent,
-  MapPage,
-  PopoverPage,
-  SchedulePage,
-  ScheduleFilterPage,
-  ScheduleListComponent,
-  TrackListComponent,
-  SessionDetailPage,
-  SignupPage,
-  SignUpFormComponent,
-  SpeakerDetailPage,
-  SpeakerListPage,
-  SpeakerListComponent,
-  TabsPage,
-  TutorialPage
-];
+// using named function to make ngc happy ..
+
+export function components() {
+  return [
+    SideMenuComponent,
+    LoadingComponent,
+    AboutPage,
+    AccountPage,
+    ProfileComponent,
+    LoginPage,
+    AuthFormComponent,
+    MapPage,
+    PopoverPage,
+    SchedulePage,
+    ScheduleFilterPage,
+    ScheduleListComponent,
+    TrackListComponent,
+    SessionDetailPage,
+    SignupPage,
+    SignUpFormComponent,
+    SpeakerDetailPage,
+    SpeakerListPage,
+    SpeakerListComponent,
+    TabsPage,
+    TutorialPage
+  ];
+}

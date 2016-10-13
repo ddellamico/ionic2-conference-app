@@ -9,9 +9,11 @@ import { ScheduleActions } from './schedule.action';
 import { AuthActions } from './auth.action';
 import { MapActions } from './map.action';
 
-export default [
-  AuthActions,
-  SpeakerActions,
-  ScheduleActions,
-  MapActions
-];
+export function actions() {
+  return [
+    AuthActions,
+    SpeakerActions,
+    ScheduleActions,
+    MapActions
+  ];
+}

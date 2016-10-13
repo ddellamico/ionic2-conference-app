@@ -9,9 +9,11 @@ import { ScheduleEffect } from './schedule.effect';
 import { AuthEffect } from './auth.effect';
 import { MapEffect } from './map.effect';
 
-export default [
-  AuthEffect,
-  SpeakerEffect,
-  ScheduleEffect,
-  MapEffect
-];
+export function effects() {
+  return [
+    AuthEffect,
+    SpeakerEffect,
+    ScheduleEffect,
+    MapEffect
+  ];
+}

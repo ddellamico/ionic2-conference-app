@@ -5,9 +5,10 @@
   "keywords": [
     "ionic2",
     "angular2",
-    "webpack",
     "typescript",
-    "jwt"
+    "jwt",
+    "ngrx",
+    "rxjs"
   ],
   "author": {
     "name": "Damien Dell'Amico",
@@ -17,20 +18,18 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/ddellamico/ionic-conference-app.git"
+    "url": "https://github.com/ddellamico/ionic2-conference-app.git"
   },
   "scripts": {
     "dev": "bnr dev",
     "build": "bnr build",
-    "test": "bnr test",
-    "pree2e": "webdriver-manager update --chrome",
-    "e2e": "protractor config/protractor.conf.js",
     "watch": "ionic-app-scripts watch",
     "serve:before": "watch",
     "emulate:before": "build",
     "deploy:before": "build",
     "build:before": "build",
-    "run:before": "build --dev",
+    "run:before": "build",
+
     "ios:dev": "bnr ios:dev",
     "ios:release": "bnr ios:release",
     "android:dev": "bnr android:dev",
@@ -44,7 +43,7 @@
   },
   "betterScripts": {
     "dev": {
-      "command": "ionic serve --dev",
+      "command": "ionic serve",
       "env": {
         "NODE_ENV": "development",
         "PLATFORM": "web"
@@ -55,12 +54,6 @@
       "env": {
         "NODE_ENV": "production",
         "PLATFORM": "web"
-      }
-    },
-    "test": {
-      "command": "karma start ./config/karma.conf.js",
-      "env": {
-        "NODE_ENV": "test"
       }
     },
     "ios:dev": {

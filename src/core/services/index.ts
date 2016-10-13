@@ -9,9 +9,11 @@ import { MapService } from './map.service';
 import { ScheduleService } from './schedule.service';
 import { SpeakerService } from './speaker.service';
 
-export default [
-  AuthService,
-  MapService,
-  ScheduleService,
-  SpeakerService
-];
+export function services() {
+  return [
+    AuthService,
+    MapService,
+    ScheduleService,
+    SpeakerService
+  ];
+}

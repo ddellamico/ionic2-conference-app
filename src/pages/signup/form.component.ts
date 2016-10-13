@@ -21,7 +21,7 @@ import { FormValidators } from '../../core/helpers/validators';
         <ion-label floating color="primary">First name</ion-label>
         <ion-input type="text" value="" formControlName="firstName"></ion-input>
       </ion-item>
-      <p *ngIf="!signUpForm.controls.firstName.valid && signUpForm.controls.firstName.touched" 
+      <p *ngIf="!signUpForm.controls['firstName'].valid && signUpForm.controls['firstName'].touched" 
           color="danger" padding-left>
         First name is required (minimum 3 characters)
       </p>
@@ -29,7 +29,7 @@ import { FormValidators } from '../../core/helpers/validators';
         <ion-label floating color="primary">Last name</ion-label>
         <ion-input type="text" value="" formControlName="lastName"></ion-input>
       </ion-item>
-      <p *ngIf="!signUpForm.controls.lastName.valid && signUpForm.controls.lastName.touched" 
+      <p *ngIf="!signUpForm.controls['lastName'].valid && signUpForm.controls['lastName'].touched" 
           color="danger" padding-left>
         Last name is required (minimum 3 characters)
       </p>
@@ -37,7 +37,7 @@ import { FormValidators } from '../../core/helpers/validators';
         <ion-label floating color="primary">Email</ion-label>
         <ion-input type="email" value="" formControlName="username"></ion-input>
       </ion-item>
-      <p *ngIf="!signUpForm.controls.username.valid && signUpForm.controls.username.touched" 
+      <p *ngIf="!signUpForm.controls['username'].valid && signUpForm.controls['username'].touched" 
           color="danger" padding-left>
         Invalid email !
       </p>
@@ -45,12 +45,9 @@ import { FormValidators } from '../../core/helpers/validators';
         <ion-label floating color="primary">Password</ion-label>
         <ion-input type="password" value="" formControlName="password"></ion-input>
       </ion-item>
-      <p *ngIf="!signUpForm.controls.password.valid && signUpForm.controls.password.touched" 
+      <p *ngIf="!signUpForm.controls['password'].valid && signUpForm.controls['password'].touched" 
           color="danger" padding-left>
         Password is required
-      </p>
-      <p [hidden]="!errorMessage" color="danger" padding-left>
-        {{ errorMessage }}
       </p>
       <div padding>
         <button ion-button [disabled]="!signUpForm.valid" type="submit" color="primary" block>Create</button>
@@ -64,7 +61,7 @@ export class SignUpFormComponent {
 
   @Output() onSignup = new EventEmitter();
 
-  private signUpForm: FormGroup;
+  signUpForm: FormGroup;
 
   constructor(private fb: FormBuilder) {
   }

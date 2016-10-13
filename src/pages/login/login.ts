@@ -30,10 +30,9 @@ import { UxMessage } from '../../core/constants';
       <div class="logo">
         <img src="assets/img/appicon.svg">
       </div>
-      <loading [present]="isFetching$ | async"></loading>
       <auth-form [errorMessage]="error$ | async"
                  (onLogin)="onLogin($event)"
-                 (onSignup)="onSignup($event)">
+                 (onSignup)="onSignup()">
       </auth-form>
     </ion-list>
   </ion-content>
@@ -41,9 +40,9 @@ import { UxMessage } from '../../core/constants';
 })
 export class LoginPage {
 
-  private loggedIn$: Observable<boolean>;
-  private isFetching$: Observable<boolean>;
-  private error$: Observable<string>;
+  loggedIn$: Observable<boolean>;
+  isFetching$: Observable<boolean>;
+  error$: Observable<string>;
 
   private submitted = false;
 
@@ -58,14 +57,16 @@ export class LoginPage {
     this.loggedIn$ = this.authStoreService.loggedIn();
   }
 
-  onLogin({credentials, isValid}) {
-    if (!isValid) {
+  onLogin($event: {credentials: any, isValid: boolean}) {
+
+    if (!$event.isValid) {
       this.notification.showAlert(UxMessage.INVALID_CREDENTIALS);
       return;
     }
-    const {username, password} = credentials;
+    const {username, password} = $event.credentials;
     this.authStoreService.dispachAuth(username, password);
     this.submitted = true;
+
   }
 
   onSignup() {

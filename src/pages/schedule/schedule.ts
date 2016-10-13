@@ -44,23 +44,20 @@ import { ScheduleService } from '../../core/services/schedule.service';
       (removeFavorite)="removeFavorite($event)"
       (goToSessionDetail)="goToSessionDetail($event)">
     </schedule-list>
-    <ion-list-header [hidden]="shownSessions > 0">
-      No Sessions Found
-    </ion-list-header>
   </ion-content>
   `
 })
 export class SchedulePage {
 
-  private filter: TimelineFilter = {
+  filter: TimelineFilter = {
     dayIndex: 0,
     queryText: '',
     excludeTracks: [],
     segment: 'all'
   };
 
-  private model$: Observable<ScheduleModel>;
-  private isFetching$: Observable<boolean>;
+  model$: Observable<ScheduleModel>;
+  isFetching$: Observable<boolean>;
 
   constructor(private app: App,
               private scheduleStoreService: ScheduleService,
