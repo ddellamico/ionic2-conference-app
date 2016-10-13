@@ -2,7 +2,8 @@
 
 [![Build Status](https://travis-ci.org/ddellamico/ionic2-conference-app.svg?branch=master)](https://travis-ci.org/ddellamico/ionic2-conference-app) [![Commitizen friendly](https://img.shields.io/badge/commitizen-friendly-brightgreen.svg?style=flat-square)](http://commitizen.github.io/cz-cli/) [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square)](http://makeapullrequest.com)
 
-This project is an "extended" version of [Ionic 2 Conference Application](https://github.com/driftyco/ionic-conference-app) using [ngrx](https://github.com/ngrx) suite and consuming REST API exposed by [backend API component](https://github.com/ddellamico/ionic-conference-api).
+This project is an "extended" version of the [Ionic Conference Application](https://github.com/driftyco/ionic-conference-app) utilizing [ngrx](https://github.com/ngrx) state management and consuming REST API exposed by [backend API component](https://github.com/ddellamico/ionic-conference-api).
+
 The API component for this application can be found [here](https://github.com/ddellamico/ionic-conference-api).
 
 **Api component live demo/documentation:** https://ion-conf-api.damiendev.com
@@ -13,7 +14,7 @@ Check out the [Comprehensive Introduction to @ngrx/store](https://gist.github.co
 
 Furthermore a lot of changes has been made in "providers" (app/core folder), in order to mainly use RxJs instead of Promises.
 
-If you are looking for a great Ionic 2 boilerplate, take a look [here](https://github.com/marcoturi/ionic2-boilerplate).
+**If you are looking for a great Ionic 2 boilerplate, take a look [here](https://github.com/marcoturi/ionic2-boilerplate).**
 
 **Note: This project is under development.**
 
@@ -44,10 +45,13 @@ If you are looking for a great Ionic 2 boilerplate, take a look [here](https://g
   ```bash
   # clone the repo
   git clone https://github.com/ddellamico/ionic2-conference-app.git
+  
   # change directory to our repo
   cd ionic2-conference-app
+  
   # install the repo with npm
   npm install && ionic state restore
+  
   # start the server
   npm run dev
   ```
