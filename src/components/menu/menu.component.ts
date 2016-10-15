@@ -11,7 +11,7 @@ import { UserModel } from '../../core/providers/auth/user.model';
   selector: 'side-menu',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
-    <ion-list *ngIf="currentUser !== null">
+    <ion-list *ngIf="loggedIn">
       <ion-list-header>
         Navigate
       </ion-list-header>
@@ -20,7 +20,7 @@ import { UserModel } from '../../core/providers/auth/user.model';
         {{p.title}}
       </button>
     </ion-list>
-    <ion-list *ngIf="currentUser === null">
+    <ion-list *ngIf="!loggedIn">
       <ion-list-header>
         Account
       </ion-list-header>
@@ -29,7 +29,7 @@ import { UserModel } from '../../core/providers/auth/user.model';
         {{p.title}}
       </button>
     </ion-list>
-    <ion-list *ngIf="currentUser !== null">
+    <ion-list *ngIf="loggedIn">
       <ion-list-header>
         Account
       </ion-list-header>
@@ -44,11 +44,12 @@ import { UserModel } from '../../core/providers/auth/user.model';
 export class SideMenuComponent {
 
   @Input() currentUser: UserModel;
+  @Input() loggedIn: boolean;
   @Input() appPages: PageObj[];
   @Input() loggedOutPages: PageObj[];
   @Input() loggedInPages: PageObj[];
 
-  @Output() openPage = new EventEmitter();
+  @Output() openPage = new EventEmitter(false);
 
   constructor() {
   }

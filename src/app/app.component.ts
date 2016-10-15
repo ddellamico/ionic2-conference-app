@@ -21,7 +21,7 @@ import { AuthService } from '../core/services/auth.service';
             </ion-toolbar>
           </ion-header>
           <ion-content class="outer-content">
-            <side-menu [currentUser]="currentUser$ | async"
+            <side-menu [currentUser]="currentUser$ | async" [loggedIn]="loggedIn$ | async"
               [appPages]="appPages"
               [loggedOutPages]="loggedOutPages"
               [loggedInPages]="loggedInPages"
@@ -50,6 +50,7 @@ export class ConferenceApp {
   ];
 
   currentUser$: Observable<UserModel>;
+  loggedIn$: Observable<boolean>;
   isFetching$: Observable<boolean>;
 
   private logoutSub: Subscription;
@@ -68,10 +69,11 @@ export class ConferenceApp {
     let _rootPage: any = TutorialPage; // at the start it shows the tutorial page
 
     this.currentUser$ = this.authService.getCurrentUser();
+    this.loggedIn$ = this.authService.loggedIn();
     this.isFetching$ = this.authService.isLoading();
 
     this.authService.dispatchCheckToken();
-    this.loginSub = this.authService.loggedIn().subscribe((isLoggedIn) => {
+    this.loginSub = this.loggedIn$.subscribe((isLoggedIn) => {
       isLoggedIn ? this.nav.push(TabsPage) : this.nav.setRoot(_rootPage);
       _rootPage = LoginPage; //
     });
