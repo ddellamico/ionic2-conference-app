@@ -1,6 +1,6 @@
 {
   "name": "ionic-conference-app",
-  "version": "0.3.0",
+  "version": "0.4.0",
   "description": "Ionic Conference App",
   "keywords": [
     "ionic2",
@@ -95,7 +95,7 @@
     "@angular/platform-browser-dynamic": "^2.0.0",
     "@angular/platform-server": "^2.0.0",
     "ionic-angular": "^2.0.0-rc.1",
-    "ionicons" : "^3.0.0",
+    "ionicons": "^3.0.0",
     "@ionic/storage": "^1.0.3",
     "ionic-native": "^2.2.3",
     "rxjs": "5.0.0-beta.12",

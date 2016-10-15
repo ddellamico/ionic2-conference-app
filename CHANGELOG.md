@@ -2,6 +2,23 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="0.4.0"></a>
+# [0.4.0](https://github.com/ddellamico/ionic2-conference-app/compare/v0.3.0...v0.4.0) (2016-10-15)
+
+
+### Bug Fixes
+
+* **app:** fix app header template and remove unused html file ([880c381](https://github.com/ddellamico/ionic2-conference-app/commit/880c381))
+* **package.json:** fix deps issues with angular and ionic packages ([7c2f1bf](https://github.com/ddellamico/ionic2-conference-app/commit/7c2f1bf))
+* **schedules:** fix issue with schedule filter class ([214c145](https://github.com/ddellamico/ionic2-conference-app/commit/214c145))
+
+
+### Features
+
+* **ionic:** update to rc.1 ([e074dc4](https://github.com/ddellamico/ionic2-conference-app/commit/e074dc4))
+
+
+
 <a name="0.3.0"></a>
 # [0.3.0](https://github.com/ddellamico/ionic2-conference-app/compare/v0.2.0...v0.3.0) (2016-10-13)
 
