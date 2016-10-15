@@ -19,7 +19,7 @@ Furthermore a lot of changes has been made in "providers" (app/core folder), in 
 **Note: This project is under development.**
 
 ## Features
-  * [Ionic 2 Rc0](https://github.com/driftyco/ionic)
+  * [Ionic 2 Rc1](https://github.com/driftyco/ionic)
   * [TypeScript](http://www.typescriptlang.org/)
   * [RxJS](https://github.com/Reactive-Extensions/RxJS)
   * [NgRx Store](https://github.com/ngrx/store/)
@@ -60,18 +60,18 @@ Furthermore a lot of changes has been made in "providers" (app/core folder), in 
 
 ## Commands:
   
-    ```bash
-    $ npm run dev             --> run ionic serve
-    $ npm run build           --> full production build. Use `--dev` flag for dev build
-    $ npm run release         --> generate changelog based on commits
-    $ npm run push            --> shortcut for git push origin master --follow-tags
-    $ npm run lint            --> lint with tslint
-    $ npm run outdated        --> search npm packages for outdated dependencies
-    $ npm run ios:dev         --> start ios simulator (ionic run ios)
-    $ npm run ios:release     --> build files for ios platform and generate xcodeproj (ionic build ios)
-    $ npm run android:dev     --> start android simulator (ionic run android)
-    $ npm run android:release --> build files for android platform and generate apk (ionic build android)
-    ```
+```sh
+  $ npm run dev             --> run ionic serve
+  $ npm run build           --> full production build. Use `--dev` flag for dev build
+  $ npm run release         --> generate changelog based on commits
+  $ npm run push            --> shortcut for git push origin master --follow-tags
+  $ npm run lint            --> lint with tslint
+  $ npm run outdated        --> search npm packages for outdated dependencies
+  $ npm run ios:dev         --> start ios simulator (ionic run ios)
+  $ npm run ios:release     --> build files for ios platform and generate xcodeproj (ionic build ios)
+  $ npm run android:dev     --> start android simulator (ionic run android)
+  $ npm run android:release --> build files for android platform and generate apk (ionic build android)
+```
   
 ## Commit:
   
