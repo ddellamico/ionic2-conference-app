@@ -1,3 +1,9 @@
+/**
+ * @author    Damien Dell'Amico <damien.dellamico@gmail.com>
+ * @copyright Copyright (c) 2016
+ * @license   GPL-3.0
+ */
+
 import { Observable } from 'rxjs/Observable';
 import { Component } from '@angular/core';
 import { App, ModalController, AlertController, NavController } from 'ionic-angular';
@@ -17,7 +23,7 @@ import { ScheduleService } from '../../core/services/schedule.service';
     <button ion-button menuToggle>
       <ion-icon name="menu"></ion-icon>
     </button>
-    <ion-segment [(ngModel)]="filter.segment" (ionChange)="updateSchedule()">
+    <ion-segment [(ngModel)]="segment" (ionChange)="updateSchedule()">
       <ion-segment-button value="all">
         All
       </ion-segment-button>
@@ -33,7 +39,7 @@ import { ScheduleService } from '../../core/services/schedule.service';
     </ion-buttons>
   </ion-navbar>
     <ion-toolbar no-border-top>
-      <ion-searchbar color="primary" [(ngModel)]="filter.queryText" (ionInput)="updateSchedule()" placeholder="Search">
+      <ion-searchbar color="primary" [(ngModel)]="queryText" (ionInput)="updateSchedule()" placeholder="Search">
       </ion-searchbar>
     </ion-toolbar>
   </ion-header>
@@ -49,12 +55,9 @@ import { ScheduleService } from '../../core/services/schedule.service';
 })
 export class SchedulePage {
 
-  filter: TimelineFilter = {
-    dayIndex: 0,
-    queryText: '',
-    excludeTracks: [],
-    segment: 'all'
-  };
+  filter: TimelineFilter;
+  queryText: string = '';
+  segment: string = 'all';
 
   model$: Observable<ScheduleModel>;
   isFetching$: Observable<boolean>;
@@ -65,6 +68,7 @@ export class SchedulePage {
               private alertCtrl: AlertController,
               private modalCtrl: ModalController) {
 
+    this.filter = new TimelineFilter();
     this.model$ = this.scheduleStoreService.getSchedule();
     this.isFetching$ = this.scheduleStoreService.isLoading();
   }
@@ -75,16 +79,17 @@ export class SchedulePage {
   }
 
   updateSchedule() {
+    this.filter = new TimelineFilter(this.queryText, this.segment);
     this.scheduleStoreService.dispatchLoadCollection(this.filter);
   }
 
   presentFilter() {
-    const modal = this.modalCtrl.create(ScheduleFilterPage, this.filter.excludeTracks);
+    const modal = this.modalCtrl.create(ScheduleFilterPage, []);
     modal.present();
 
     modal.onDidDismiss((data: any[]) => {
       if (data) {
-        this.filter.excludeTracks = data;
+        this.filter = new TimelineFilter(this.queryText, this.segment, data);
         this.updateSchedule();
       }
     });

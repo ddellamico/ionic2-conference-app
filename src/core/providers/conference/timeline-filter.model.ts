@@ -4,10 +4,17 @@
  * @license   GPL-3.0
  */
 
+/*export interface TimelineFilter {
+  dayIndex: number;
+  queryText: string;
+  excludeTracks: Array<string>;
+  segment: string;
+}*/
+
 export class TimelineFilter {
-  constructor(public dayIndex: number = 0,
-              public queryText: string = '',
-              public excludeTracks: Array<string>,
-              public segment: string = 'all') {
+  constructor(public queryText: string = '',
+              public segment: string = 'all',
+              public excludeTracks: Array<string> = [],
+              public dayIndex: number = 0) {
   }
 }

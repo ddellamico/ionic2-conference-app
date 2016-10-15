@@ -32,29 +32,30 @@ export class ConferenceProvider extends BaseProvider {
     this.conferenceModelCached = null;
   }
 
-    public getSchedulesAndSpeakers(): Observable<ConferenceModel> {
-      if (this.conferenceModelCached) {
-        return Observable.of(_.cloneDeep(this.conferenceModelCached));
-      }
-      return Observable.forkJoin(
-        this.scheduleService.getSchedules(),
-        this.speakerService.getSpeakers()
-      ).map((data) => {
-        const _conferenceModel: ConferenceModel = (this.processData(data[0], data[1]) as ConferenceModel);
-        if (_conferenceModel.schedules.length && _conferenceModel.speakers.length) {
-          this.conferenceModelCached = _conferenceModel;
-        }
-        return _conferenceModel;
-      });
+  public getSchedulesAndSpeakers(): Observable<ConferenceModel> {
+    if (this.conferenceModelCached) {
+      return Observable.of(_.cloneDeep(this.conferenceModelCached));
     }
+    return Observable.forkJoin(
+      this.scheduleService.getSchedules(),
+      this.speakerService.getSpeakers()
+    ).map((data) => {
+      const _conferenceModel: ConferenceModel = (this.processData(data[0], data[1]) as ConferenceModel);
+      if (_conferenceModel.schedules.length && _conferenceModel.speakers.length) {
+        this.conferenceModelCached = _conferenceModel;
+      }
+      return _conferenceModel;
+    });
+  }
 
   public getTimeline(filters: TimelineFilter): Observable<ScheduleModel> {
     return this.getSchedulesAndSpeakers()
       .map((data: ConferenceModel) => {
+        console.log('Filters ==> ', filters);
         const day: ScheduleModel = data.schedules[filters.dayIndex];
         day.shownSessions = 0;
-        filters.queryText = filters.queryText.toLowerCase().replace(/,|\.|-/g, ' ');
-        const queryWords = filters.queryText.split(' ').filter(w => !!w.trim().length);
+        const queryText = filters.queryText.toLowerCase().replace(/,|\.|-/g, ' ');
+        const queryWords = queryText.split(' ').filter(w => !!w.trim().length);
 
         day.groups.forEach((group: ScheduleGroupModel) => {
           group.hide = true;
@@ -68,6 +69,7 @@ export class ConferenceProvider extends BaseProvider {
             }
           });
         });
+
         return day;
       })
       .catch((err: any) => this.handleError(err));

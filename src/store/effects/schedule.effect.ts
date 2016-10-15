@@ -8,10 +8,10 @@ import { Injectable } from '@angular/core';
 import { Effect, toPayload, Actions } from '@ngrx/effects';
 import { ScheduleActions } from '../actions/schedule.action';
 import { ConferenceProvider } from '../../core/providers/conference/conference.provider';
-import { TimelineFilter } from '../../core/providers/conference/timeline-filter.model';
 import { ScheduleModel } from '../../core/providers/schedule/schedule.model';
 import { Action } from '@ngrx/store';
 import { Observable } from 'rxjs/Observable';
+import { TimelineFilter } from '../../core/providers/conference/timeline-filter.model';
 
 @Injectable()
 export class ScheduleEffect {
