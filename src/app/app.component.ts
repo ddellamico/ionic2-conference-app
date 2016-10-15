@@ -15,9 +15,11 @@ import { AuthService } from '../core/services/auth.service';
 @Component({
   template: `
     <ion-menu [content]="content">
-        <ion-toolbar>
-          <ion-title>Menu</ion-title>
-        </ion-toolbar>
+          <ion-header>
+            <ion-toolbar>
+              <ion-title>Menu</ion-title>
+            </ion-toolbar>
+          </ion-header>
           <ion-content class="outer-content">
             <side-menu [currentUser]="currentUser$ | async"
               [appPages]="appPages"
