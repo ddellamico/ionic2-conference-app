@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="0.4.1"></a>
+## [0.4.1](https://github.com/ddellamico/ionic2-conference-app/compare/v0.4.0...v0.4.1) (2016-10-22)
+
+
+### Bug Fixes
+
+* **app:** fix issue "angular2-jwt has no exported member 'AUTH_PROVIDERS'", close [#1](https://github.com/ddellamico/ionic2-conference-app/issues/1) ([2c063ad](https://github.com/ddellamico/ionic2-conference-app/commit/2c063ad))
+
+
+
 <a name="0.4.0"></a>
 # [0.4.0](https://github.com/ddellamico/ionic2-conference-app/compare/v0.3.0...v0.4.0) (2016-10-15)
 
