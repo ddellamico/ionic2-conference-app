@@ -38,6 +38,9 @@
     "push": "git push --follow-tags origin master",
     "lint": "tslint \"src/**/*.ts\" --exclude=src/**/*.d.ts",
     "docs": "typedoc --options typedoc.json --exclude '**/*.spec.ts' ./src/",
+    "precompile": "npm run clean",
+    "clean": "rm -rf build/*",
+    "compile:ts": "tsc --outDir ./build",
     "outdated": "npm outdated --depth 0"
   },
   "betterScripts": {
@@ -109,7 +112,7 @@
     "angular2-jwt": "0.1.23"
   },
   "devDependencies": {
-    "@ionic/app-scripts": "^0.0.30",
+    "@ionic/app-scripts": "^0.0.36",
     "@types/google-maps": "^3.1.28",
     "@types/jasmine": "2.5.35",
     "@types/lodash": "^4.14.37",

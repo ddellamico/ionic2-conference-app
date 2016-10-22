@@ -1,38 +1,21 @@
 {
   "compilerOptions": {
-    "target": "es5",
-    "module": "es2015",
+    "allowSyntheticDefaultImports": true,
     "declaration": true,
-    "moduleResolution": "node",
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
-    "allowSyntheticDefaultImports": true,
-    "sourceMap": true,
-    "noEmitHelpers": false,
-    "strictNullChecks": false,
-    "baseUrl": "./src",
-    "outDir": "./build",
-    "paths": [],
     "lib": [
       "dom",
       "es2015"
     ],
-    "types": [
-      "jasmine",
-      "node",
-      "google-maps"
-    ]
+    "module": "es2015",
+    "moduleResolution": "node",
+    "target": "es5"
   },
-  "filesGlob": [
-    "**/*.ts",
-    "!node_modules/**/*"
-  ],
   "exclude": [
-    "node_modules",
-    "build"
+    "node_modules"
   ],
   "compileOnSave": false,
-  "buildOnSave": false,
   "atom": {
     "rewriteTsconfig": false
   }
