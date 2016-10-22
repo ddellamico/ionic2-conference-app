@@ -5,7 +5,7 @@
  */
 
 import { NgModule } from '@angular/core';
-import { AuthConfig, AUTH_PROVIDERS } from 'angular2-jwt';
+import { AuthConfig } from 'angular2-jwt';
 import { ReactiveFormsModule } from '@angular/forms';
 import { IonicApp, IonicModule } from 'ionic-angular';
 import { Storage } from '@ionic/storage';
@@ -85,7 +85,7 @@ import { MapEffect } from '../store/effects/map.effect';
     ConferenceApp,
     components()
   ],
-  providers: [AUTH_PROVIDERS, providers(), services(), helpers(), Storage, actions(),
+  providers: [providers(), services(), helpers(), Storage, actions(),
     {
       provide: JwtAuthHttp, useFactory: getAuthHttp, deps: [Http, AuthActions, Store, Storage]
     }
