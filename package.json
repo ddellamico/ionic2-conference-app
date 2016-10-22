@@ -38,9 +38,7 @@
     "push": "git push --follow-tags origin master",
     "lint": "tslint \"src/**/*.ts\" --exclude=src/**/*.d.ts",
     "docs": "typedoc --options typedoc.json --exclude '**/*.spec.ts' ./src/",
-    "precompile": "npm run clean",
-    "clean": "rm -rf build/*",
-    "compile:ts": "tsc --outDir ./build",
+    "compile:ts": "rm -rf ./build/* && tsc --outDir ./build",
     "outdated": "npm outdated --depth 0"
   },
   "betterScripts": {
